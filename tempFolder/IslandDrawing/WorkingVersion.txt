@@ -1,0 +1,28 @@
+This code was working
+
+// Jacob Schwartz - 12/12/2020
+// Practice making graphics with Java
+
+import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class IslandDrawing extends JFrame {
+    JLabel label;
+
+    public IslandDrawing() {
+        ImageIcon image = new ImageIcon(getClass().getResource("res/tlink.jpg"));
+       // ImageIcon image = new ImageIcon(getClass().getResource("res/OceanBackground.jpg"));
+        label = new JLabel(image);
+        this.add(label, BorderLayout.CENTER);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new IslandDrawing();
+    }
+}
