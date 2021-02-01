@@ -4,6 +4,8 @@ public class theIsleOfLaeso{
 
     	/**
     	*@Author Maximilian C. Sutton
+	*@Author Jacob Schwartz 
+	*@Author
     	*@Version 0.01
     	*@Since 2021-2-1
     	*/
