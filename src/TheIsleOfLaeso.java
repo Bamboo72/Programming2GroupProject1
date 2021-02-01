@@ -5,7 +5,7 @@ public class theIsleOfLaeso{
     	/**
     	*@Author Maximilian C. Sutton
     	*@Version 0.01
-    	*@Since 2020-12-09
+    	*@Since 2021-2-1
     	*/
 
 	boolean run = true;
