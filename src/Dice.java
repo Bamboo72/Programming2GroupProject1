@@ -2,7 +2,7 @@
  * This class is a die to be used in the game.
  * @author Andrew Blodgett
  * @version 1.0
- * @since 2020-12-9
+ * @since 2020-2-1
  */
 
 import java.util.Random;
@@ -15,9 +15,10 @@ import java.util.Random;
     /**
      * The constructor for a new Dice object
      * @param sides
-     * @param amount
      */
-    public Dice(int sides, int amount) {}
+    public Dice(int sides) {
+        this.sides = sides;
+    }
 
     /**
      * Rolls the die by choosing a random number between 1 and the number of sides
