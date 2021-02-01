@@ -9,6 +9,7 @@ public class theIsleOfLaeso{
     	*/
 
 	boolean run = true;
+	int i = 0;
 
 
 	/**
@@ -24,11 +25,13 @@ public class theIsleOfLaeso{
 	*checks if the win conditition is met (probably at end of turn)
 	*/
 	public static void checkWin(){
-
+		if (i = 1){
+			System.out.println("How did you change i");
+		}
 	}
 
 
 	public static void main(String[] args) {
-		
+		System.out.println("Something");
 	}	
 }
