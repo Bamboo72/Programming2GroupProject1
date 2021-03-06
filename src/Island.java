@@ -2,28 +2,46 @@
  * This class is the island/game board.
  * @author Andrew Blodgett
  * @version 1.0
- * @since 2020-12-9
+ * @since 2021-3-6
  */
+
 public class Island {
-  String[][] board = new String[10][10]; // It made me put a size; I don't know how big the board should be
+    private BoardSpace[][] board = {
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+        {new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("village"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water")},
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+        {new BoardSpace("water"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("village"), new BoardSpace(), new BoardSpace("village"), new BoardSpace(), new BoardSpace("water")},
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+        {new BoardSpace("water"), new BoardSpace(), new BoardSpace("magic"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("volcano"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water")},
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("volcano"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+        {new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("waste"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water")},
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+        {new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("magic"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water")},
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("village"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("hills"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+        {new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("magic"), new BoardSpace(), new BoardSpace("trees"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("field"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water")},
+        {new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace(), new BoardSpace("water"), new BoardSpace()},
+    };
 
-  /**
-   * This method is used to generate the map of the island and place resources in the required spots.
-   */
-  public void generate() {}
-
-  /**
-   * The method used to remove an element from the game board
-   * @param x 
-   * @param y
-   */
-  public void remove(int x, int y) {}
-
-  /**
-   * the method used to add an element to the game board
-   * @param x
-   * @param y
-   */
-  public void add(int x, int y) {}
-
-}
+    /**
+     * Returns the board representing the island
+     * @return the game board
+     */
+    public BoardSpace[][] getBoard() {
+        return board;
+    }
+  
+    /**
+     * The method used to remove an element from the game board
+     * @param x 
+     * @param y
+     */
+    public void remove(int x, int y) {}
+  
+    /**
+     * the method used to add an element to the game board
+     * @param x
+     * @param y
+     */
+    public void add(int x, int y) {}
+  
+  }
