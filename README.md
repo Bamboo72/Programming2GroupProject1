@@ -15,7 +15,7 @@ All graphics were created in Adobe Illustrator by Jacob Schwartz, and are displa
 - Maximilian Sutton: Settings, Character Creation, and Game Turn Logic Programming
 - Jacob Schwartz: Graphics, Project Management, and GUI Programming 
 
-![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.jpg)
+![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
 ![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
 
 ## Documentation: 
