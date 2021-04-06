@@ -1,7 +1,7 @@
 # Programming 2 Group Project: The Isle of Laeso
 This is our group project for Programming 2. We wanted to make a Catan style board game where you are stranded on an island with rivals and you are racing to survive and develop. 
 
-![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/res/BackgroundBoard.png)
+![TheIsleOfLaeso](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/res/BackgroundBoard.png)
 
 When the game starts out every player is on their own part of the Isle of Laeso. In turn they each roll the die, move, and collect resources. Once enough resources are gathered players can build structures such as storehouses, forts, or even ports. The goal of the game is to collect enough resources to build a port and survive the sea voyage off the island. It's a race against the other players to escape the Isle of Laeso!
 
@@ -15,8 +15,8 @@ All graphics were created in Adobe Illustrator by Jacob Schwartz, and are displa
 - Maximilian Sutton: Settings, Character Creation, and Game Turn Logic Programming
 - Jacob Schwartz: Graphics, Project Management, and GUI Programming 
 
-![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.jpg)
+![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
 
 ## Documentation: 
 *
