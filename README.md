@@ -3,7 +3,7 @@ This is our group project for Programming 2. We wanted to make a Catan style boa
 
 ![TheIsleOfLaeso](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/res/BackgroundBoard.png)
 
-When the game starts out every player is on their own part of the Isle of Laeso. In turn they each roll the die, move, and collect resources. Once enough resources are gathered players can build structures such as storehouses, forts, or even ports. The goal of the game is to collect enough resources to build a port and survive the sea voyage off the island. It's a race against the other players to escape the Isle of Laeso!
+When the game starts out every player is on their own part of the Isle of Laeso. In turn they each roll the die, move, and collect resources. Once enough resources are gathered players can build structures such as storehouses, forts, or even ports. The main goal of the game is to collect enough resources to build a port and survive the sea voyage off the island, but there are a few different ways to win. It's a race against the other players to survive the Isle of Laeso!
 
 We decided on a viking theme to make the game interesting and distinct. From our initial research into viking mythology we learned about an island mentioned in Norse tales that is suspected to be the modern Danish island of [Læsø](https://en.wikipedia.org/wiki/L%C3%A6s%C3%B8). This was our inspiration for the name of our game.
 
