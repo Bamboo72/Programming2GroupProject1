@@ -7,7 +7,7 @@ public class IOSettings {
   /**
   *@Author Maximilian C. Sutton
   *@Version 1.00
-  *@Since 2021-04-12
+  *@Since 2021-04-13
   */
 
   public static File settings = new File("Setting.dat");  
