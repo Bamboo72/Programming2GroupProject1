@@ -60,17 +60,19 @@ Updated IOSettings class 2021-4-5 - HoldMyTyr
  - Added DefSetting.dat - HoldMyTyr
  - Added Setting.dat - HoldMyTyr
 
-Updated Graohic 2021-4-6 - Bamboo72, andrewblodgett, HoldMyTyr
+Updated Graphics 2021-4-6 - Bamboo72, andrewblodgett, HoldMyTyr
 
-Updated Graohic 2021-4-7 - Bamboo72
+Updated Graphics 2021-4-7 - Bamboo72
 
 Updated Island class 2020-7 - andrewblodgett
 
-Updated Graohic 2021-4-8 - Bamboo72
+Updated Graphics 2021-4-8 - Bamboo72
 
-Updated Graohic 2021-4-12 - Bamboo72
+Updated Graphics 2021-4-12 - Bamboo72
 
 Updated IOSettings class 2021-4-13 - HoldMyTyr
  - Updated IOSettings.java - HoldMyTyr
  - Updated DefSetting.dat - HoldMyTyr
  - Updated Setting.dat - HoldMyTyr
+
+Updated Graphics 2021-4-13 - Bamboo72
