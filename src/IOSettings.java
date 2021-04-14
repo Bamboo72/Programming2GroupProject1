@@ -13,26 +13,12 @@ public class IOSettings {
   public static File settings = new File("Setting.dat");  
   public static File defSettings = new File("DefSetting.dat");
 
-  public static void addsSet(String diceColor, String spawnRate) throws FileNotFoundException {
-    //if nothing is called by mistake
-    if(diceColor == "" && spawnRate == ""){
-      //fisrst make sure that something is passed in
-    } else if(diceColor == ""){
-      //adds the new spawn rate
-      diceColor = empty("dc");
-      PrintWriter out = new PrintWriter(settings);
-      out.println("\n" + diceColor + "\n\n" + spawnRate);
-      out.close();
-    } else if(spawnRate == ""){
-      //adds the new dice color
-      spawnRate = empty("sr");
-      PrintWriter out = new PrintWriter(settings);
-      out.println("\n" + diceColor + "\n\n" + spawnRate);
-      out.close();
+  public static void addsSet(String diceColor, String spawnRate, boolean naturalDis) throws FileNotFoundException {
+    if(diceColor == "" || spawnRate == ""){
+      System.out.println("Error: peram not passed in");
     } else {
-      //adds both the new die color, and spawn rate
       PrintWriter out = new PrintWriter(settings);
-      out.println("\n" + diceColor + "\n\n" + spawnRate);
+      out.println("\n" + diceColor + "\n\n" + spawnRate + "\n\nnaturalDis" + naturalDis);
       out.close();
     }
   }
@@ -50,21 +36,6 @@ public class IOSettings {
     out.close();
   }
 
-  public static String empty(String line) throws FileNotFoundException {
-    Scanner inE = new Scanner(settings);
-    String oldSpice = "";     
-    if(line == "dc"){
-      oldSpice = inE.nextLine();
-      oldSpice = inE.nextLine();
-    } else {
-      oldSpice = inE.nextLine();
-      oldSpice = inE.nextLine();
-      oldSpice = inE.nextLine();
-    }
-    inE.close();
-    return oldSpice;
-  }
-
   public static String findDie() throws FileNotFoundException {
     Scanner inD = new Scanner(settings);
     String die = inD.nextLine();
@@ -75,9 +46,18 @@ public class IOSettings {
   public static String findSpawnRate() throws FileNotFoundException {
     Scanner inS = new Scanner(settings);
     String spawn = inS.nextLine();
-    spawn = inS.nextLine();
-    spawn = inS.nextLine();
-    spawn = inS.nextLine();
+    for(int i = 0; i < 3; i++){
+      spawn = inS.nextLine();
+    }
+    return spawn;
+  }
+
+  public static String findNaturalDis() throws FileNotFoundException {
+    Scanner inS = new Scanner(settings);
+    String spawn = inS.nextLine();
+    for(int i = 0; i < 5; i++){
+      spawn = inS.nextLine();
+    }
     return spawn;
   }
 }
