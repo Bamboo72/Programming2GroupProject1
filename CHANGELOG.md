@@ -77,4 +77,6 @@ Updated IOSettings class 2021-4-13 - HoldMyTyr
 
 Updated Graphics 2021-4-13 - Bamboo72
 
-Updated Graphics 2020-4-18 - Bamboo72
+Updated Graphics 2021-4-18 - Bamboo72
+
+Updated Player 2021-4-26 - HoldMyTyr
