@@ -86,3 +86,5 @@ Updated Player 2021-4-27 - HoldMyTyr
 Updated Player 2021-4-28 - HoldMyTyr
 
 Updated Player and entry point (TheIsleOfLaeso) classes 2021-4-29 - HoldMyTyr
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-6 - HoldMyTyr
