@@ -11,14 +11,24 @@ public class TheIsleOfLaeso{
   *@Since 2021-2-1
   */
 
-
+  static Graphics g = new Graphics();
 
   static private boolean run = true;
   static private boolean play = false;
   static private int apRoll;
   static private int moveLeft;
   static private int collectsLeft;
-  static private int phase;
+  static private int phase = 0;
+
+  static int numOfPlayer = 4;
+
+  static int[] inventory = new int[6];
+  static String name = "duhadaway";
+  static String hat = "Casual";
+  static String clothes = "Casual";
+  static String color = "Red";
+
+  static Dice dice = new Dice(6);
 
   /** 
   *manages the turn and intitalises one players turn
@@ -36,7 +46,7 @@ public class TheIsleOfLaeso{
     }
   }
 
-  public static void incPhase(int phase){
+  public static void incPhase(){
     if(phase >= 3){
       phase = 0;
     } else {
@@ -63,14 +73,6 @@ public class TheIsleOfLaeso{
     boolean run = true;
     boolean play = false;
 
-    int numOfPlayer = 4;
-
-    int[] inventory = new int[6];
-    String name = "duhadaway";
-    String hat = "aHat";
-    String clothes = "normal";
-    String color = "blue";
-
     Player a = new Player(6, 6, name, hat, clothes, color, inventory, 3);
     Player b = new Player(6, 6, name, hat, clothes, color, inventory, -3);
     if(numOfPlayer == 4) {
@@ -81,7 +83,9 @@ public class TheIsleOfLaeso{
     }
 
     IOSettings s = new IOSettings();
-    Dice Dice = new Dice(6);
+   
+    g.sceneDisplay(0); 
+    g.refresh();
    
   }	
 }
