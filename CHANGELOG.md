@@ -93,6 +93,10 @@ Added mosuseLissener 2021-5-9 - Bamboo72
 
 Updated Graphics 2021-5-9 - Bamboo72
 
+Updated Player class 2021-5-9 - Bamboo72
+
 Updated entry point (TheIsleOfLaeso) class 2021-5-9 - Bamboo72
 
 Updated entry point (TheIsleOfLaeso) class 2021-5-11 - HoldMyTyr
+
+Updated Player class 2021-5-11 - HoldMyTyr
