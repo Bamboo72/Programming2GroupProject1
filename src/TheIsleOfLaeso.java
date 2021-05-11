@@ -20,8 +20,6 @@ public class TheIsleOfLaeso{
   static private int collectsLeft;
   static private int phase = 0;
 
-  static int numOfPlayer = 4;
-
   static int[] inventory = new int[6];
   static String name = "duhadaway";
   static String hat = "Casual";
@@ -73,6 +71,9 @@ public class TheIsleOfLaeso{
     boolean run = true;
     boolean play = false;
 
+    //needs to be here because it needs to be defind under run but befor play
+    int numOfPlayer = 4;
+    
     Player a = new Player(6, 6, name, hat, clothes, color, inventory, 3);
     Player b = new Player(6, 6, name, hat, clothes, color, inventory, -3);
     if(numOfPlayer == 4) {
