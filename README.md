@@ -14,6 +14,7 @@ All graphics were created in Adobe Illustrator by Jacob Schwartz, and are displa
 - Andrew Blodgett: Dice, Board, and Resource Programming
 - Maximilian Sutton: Settings, Character Creation, and Game Turn Logic Programming
 - Jacob Schwartz: Graphics, Project Management, and GUI Programming 
+- Brandon Winters: Natural Events and Event Generation
 
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
 ![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
