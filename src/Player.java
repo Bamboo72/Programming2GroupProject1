@@ -17,9 +17,8 @@ public class Player {
 
     /**
      * a constructure
-     * 
-     * @param x,        y, playerNum
-     * @param name,     hat, clothes, color, dirFace
+     * @param x, y, playerNum
+     * @param name, hat, clothes, color, dirFace
      * @param inventory
      */
     public Player(int x, int y, String name, String hat, String clothes, String color, int[] inventory, int health) {
@@ -68,7 +67,6 @@ public class Player {
 
     /**
      * a function to control movment
-     * 
      * @param dirFace
      */
     public void move(String direction) {
@@ -107,7 +105,6 @@ public class Player {
 
     /**
      * a functionn to get a resource in players inventory
-     * 
      * @param resource
      * @returns amount
      */
@@ -142,7 +139,6 @@ public class Player {
 
     /**
      * a functionn to add to a recorce to a players inventory
-     * 
      * @param resource
      */
     public void addResource(String resource) {
@@ -173,7 +169,6 @@ public class Player {
 
     /**
      * a functionn to add to a players inventory, can add more than one
-     * 
      * @param resource
      * @param amount
      */
