@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 
@@ -45,9 +46,12 @@ public class Graphics extends JFrame {
     ArrayList<JPanel> resourceList = new ArrayList<JPanel>();
     ArrayList<JPanel> playerList = new ArrayList<JPanel>();
     ArrayList<JPanel> buildingList = new ArrayList<JPanel>();
+    JTextField activeTextField;
 
     static int hmp = 2;
     String boardText = "Welcome to the Isle of Laeso!";
+
+    String playerName = "[type name here]";
 
     /**
      * This is the constructor for the graphics class which sets up some of the
@@ -105,21 +109,22 @@ public class Graphics extends JFrame {
                 settingsButton.setBounds(930, 620, 311, 85);
                 buttonList.add(settingsButton);
 
-                int[] tempInventory = new int[5];
-                Player joey = new Player(100, 100, "Joey", "Armor", "Casual", "Yellow", tempInventory, 3);
-                displayPlayer(joey);
+                /* These lines are just practice for displaying players, resources, and buildings */
+                // int[] tempInventory = new int[5];
+                // Player joey = new Player(100, 100, "Joey", "Armor", "Casual", "Yellow", tempInventory, 3);
+                // displayPlayer(joey);
 
-                displayResource(0, 200, 100);
-                displayResource(1, 200, 130);
-                displayResource(2, 200, 160);
-                displayResource(3, 200, 190);
-                displayResource(4, 200, 220);
-                displayResource(5, 200, 250);
+                // displayResource(0, 200, 100);
+                // displayResource(1, 200, 130);
+                // displayResource(2, 200, 160);
+                // displayResource(3, 200, 190);
+                // displayResource(4, 200, 220);
+                // displayResource(5, 200, 250);
 
-                displayBuilding(0, "Red", 300, 100);
-                displayBuilding(1, "Yellow", 300, 150);
-                displayBuilding(2, "Green", 300, 200);
-                displayBuilding(3, "Blue", 300, 250);
+                // displayBuilding(0, "Red", 300, 100);
+                // displayBuilding(1, "Yellow", 300, 150);
+                // displayBuilding(2, "Green", 300, 200);
+                // displayBuilding(3, "Blue", 300, 250);
 
                 con.add(settingsButton);
                 con.add(creditsButton);
@@ -164,7 +169,108 @@ public class Graphics extends JFrame {
                 backButton2.setBounds(1200, 10, 64, 64);
                 buttonList.add(backButton2);
 
+                // This button was added later, and I had to make it different so I added a 3 to
+                // the end of everything
+                ImageIcon checkButtonImage3 = new ImageIcon(".//res//ButtonCheck.png");
+                JButton checkButton3 = new JButton(checkButtonImage3);
+                ActionListener checkListener3 = new GoToTitle(); // This might need to be a unique button that saves the settings
+                checkButton3.addActionListener(checkListener3);
+                checkButton3.setBounds(1200, 620, 64, 64);
+                buttonList.add(checkButton3);
+
+                // ____________________ DICE BUTTONS ____________________
+
+                // Solution to make the button background and border disapear from
+                // https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
+                ImageIcon die1Image = new ImageIcon(".//res//Die1.png");
+                JButton die1Button = new JButton(die1Image);
+                ActionListener die1Listener = new SetDie1();
+                die1Button.addActionListener(die1Listener);
+                die1Button.setBounds(469, 288, 117, 117);
+                buttonList.add(die1Button);
+
+                ImageIcon die2Image = new ImageIcon(".//res//Die2.png");
+                JButton die2Button = new JButton(die2Image);
+                ActionListener die2Listener = new SetDie2();
+                die2Button.addActionListener(die2Listener);
+                die2Button.setBounds(591, 288, 117, 117);
+                buttonList.add(die2Button);
+
+                ImageIcon die3Image = new ImageIcon(".//res//Die3.png");
+                JButton die3Button = new JButton(die3Image);
+                ActionListener die3Listener = new SetDie3();
+                die3Button.addActionListener(die3Listener);
+                die3Button.setBounds(713, 288, 117, 117);
+                buttonList.add(die3Button);
+
+                ImageIcon die4Image = new ImageIcon(".//res//Die4.png");
+                JButton die4Button = new JButton(die4Image);
+                ActionListener die4Listener = new SetDie4();
+                die4Button.addActionListener(die4Listener);
+                die4Button.setBounds(835, 288, 117, 117);
+                buttonList.add(die4Button);
+
+                // ____________________ RESOURCE RATES BUTTONS ____________________
+
+                ImageIcon lowImage = new ImageIcon(".//res//ButtonLow.png");
+                JButton lowButton = new JButton(lowImage);
+                ActionListener lowListener = new SetSpawnLow();
+                lowButton.addActionListener(lowListener);
+                lowButton.setBounds(469, 420, 117, 117);
+                buttonList.add(lowButton);
+
+                ImageIcon medImage = new ImageIcon(".//res//ButtonMed.png");
+                JButton medButton = new JButton(medImage);
+                ActionListener medListener = new SetSpawnMed();
+                medButton.addActionListener(medListener);
+                medButton.setBounds(591, 420, 117, 117);
+                buttonList.add(medButton);
+
+                ImageIcon highImage = new ImageIcon(".//res//ButtonHigh.png");
+                JButton highButton = new JButton(highImage);
+                ActionListener highListener = new SetSpawnHigh();
+                highButton.addActionListener(highListener);
+                highButton.setBounds(713, 420, 117, 117);
+                buttonList.add(highButton);
+
+                // ____________________ NATURAL DISASTER BUTTONS ____________________
+
+                ImageIcon onImage = new ImageIcon(".//res//ButtonOn.png");
+                JButton onButton = new JButton(onImage);
+                ActionListener onListener = new SetDisastersOn();
+                onButton.addActionListener(onListener);
+                onButton.setBounds(469, 557, 117, 117);
+                buttonList.add(onButton);
+
+                ImageIcon offImage = new ImageIcon(".//res//ButtonOff.png");
+                JButton offButton = new JButton(offImage);
+                ActionListener offListener = new SetDisastersOff();
+                offButton.addActionListener(offListener);
+                offButton.setBounds(591, 557, 117, 117);
+                buttonList.add(offButton);
+
+                displayText("Preferred:", 275, 308, 200, 200, 36f);
+                displayText("Die:", 275, 348, 200, 200, 36f);
+                displayText("Resource", 275, 440, 200, 200, 36f);
+                displayText("Spawn Rate:", 275, 480, 200, 200, 36f);
+                displayText("Natural", 275, 577, 200, 200, 36f);
+                displayText("Disasters:", 275, 617, 200, 200, 36f);
+
                 con.add(backButton2);
+                con.add(checkButton3);
+
+                con.add(die1Button);
+                con.add(die2Button);
+                con.add(die3Button);
+                con.add(die4Button);
+
+                con.add(lowButton);
+                con.add(medButton);
+                con.add(highButton);
+
+                con.add(onButton);
+                con.add(offButton);
+
                 con.add(settingsPanel);
 
                 break;
@@ -255,6 +361,31 @@ public class Graphics extends JFrame {
                 checkButton2.addActionListener(checkListener2);
                 checkButton2.setBounds(1200, 620, 64, 64);
                 buttonList.add(checkButton2);
+
+                JTextField nameInput = new JTextField(playerName);
+                nameInput.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+                nameInput.setBounds(490, 170, 517, 97);
+                nameInput.setBackground(new Color(0, 150, 150));
+                nameInput.setForeground(new Color(40, 40, 40));
+                activeTextField = nameInput;
+
+                Font customFont = null;
+                try {
+                    // create the font to use. Specify the size!
+                    customFont = Font.createFont(Font.TRUETYPE_FONT, new File(".//res//Norse-Bold.otf"))
+                            .deriveFont(42f);
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    // register the font
+                    ge.registerFont(customFont);
+                } catch (IOException | FontFormatException e) {
+                    e.printStackTrace();
+                }
+                nameInput.setFont(customFont);
+
+                JPanel textFieldBorderPanel = new JPanel();
+                textFieldBorderPanel.setBackground(new Color(78, 87, 102));
+                textFieldBorderPanel.setBounds(488, 168, 521, 101);
+                textPanelList.add(textFieldBorderPanel);
 
                 // ____________________ COLOR BUTTONS ____________________
 
@@ -359,6 +490,9 @@ public class Graphics extends JFrame {
                 con.add(checkButton2);
                 con.add(backButton4);
 
+                con.add(nameInput);
+                con.add(textFieldBorderPanel);
+
                 con.add(redButton);
                 con.add(yellowButton);
                 con.add(greenButton);
@@ -419,7 +553,7 @@ public class Graphics extends JFrame {
                 con.add(boardPanel);
 
                 break;
-            case 6:
+            case 6: // Instructions
                 ImageIcon instructionsImage = new ImageIcon(".//res//BackgroundInstructions.png");
                 JLabel instructionsLabel = new JLabel(instructionsImage);
                 JPanel instructionsPanel = new JPanel();
@@ -473,7 +607,9 @@ public class Graphics extends JFrame {
         for (JPanel panel : buildingList) {
             panel.setVisible(false);
         }
-
+        if (activeTextField != null) {
+            activeTextField.setVisible(false);
+        }
     }
 
     public void hidePlayers() { // Not used...
@@ -483,6 +619,9 @@ public class Graphics extends JFrame {
     }
 
     public void refreshPlayerCreation() {
+        if (activeTextField != null) {
+            playerName = activeTextField.getText();
+        }
         hideActivePanel();
         sceneDisplay(4);
         refresh();
@@ -845,10 +984,106 @@ class GoToBoard implements ActionListener {
 class GoToTitle implements ActionListener { // This should also call a reset method to reset the players and board
 
     public void actionPerformed(ActionEvent event) {
+        if (TheIsleOfLaeso.g.activeTextField != null) {
+            TheIsleOfLaeso.g.playerName = "[type name here]";
+        }
+
         TheIsleOfLaeso.g.hideActivePanel();
         TheIsleOfLaeso.g.sceneDisplay(0);
         TheIsleOfLaeso.g.refresh();
 
+    }
+}
+
+// ____________________ SETTINGS ____________________
+
+/**
+ * This class makes the button that sets the die to die1.
+ */
+class SetDie1 implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The die was changed to die1");
+    }
+}
+
+/**
+ * This class makes the button that sets the die to die2.
+ */
+class SetDie2 implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The die was changed to die2");
+    }
+}
+
+/**
+ * This class makes the button that sets the die to die3.
+ */
+class SetDie3 implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The die was changed to die3");
+    }
+}
+
+/**
+ * This class makes the button that sets the die to die4.
+ */
+class SetDie4 implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The die was changed to die4");
+    }
+}
+
+/**
+ * This class makes the button that sets the resource spawn rate to low.
+ */
+class SetSpawnLow implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The spawn rate was changed to low");
+    }
+}
+
+/**
+ * This class makes the button that sets the resource spawn rate to medium.
+ */
+class SetSpawnMed implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The spawn rate was changed to med");
+    }
+}
+
+/**
+ * This class makes the button that sets the resource spawn rate to high.
+ */
+class SetSpawnHigh implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("The spawn rate was changed to high");
+    }
+}
+
+/**
+ * This class makes the button that turns on natural disasters.
+ */
+class SetDisastersOn implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("Natural disasters were turned on");
+    }
+}
+
+/**
+ * This class makes the button that turns on natural disasters.
+ */
+class SetDisastersOff implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        System.out.println("Natural disasters were turned off");
     }
 }
 
@@ -904,11 +1139,14 @@ class SetColorRed implements ActionListener {
 /**
  * This class makes the button that sets a player's color to yellow.
  */
-class SetColorYellow implements ActionListener {
-
+class SetColorYellow implements ActionListener { // NOTE MY ATTEMPT TO MAKE COLORS APPLY TO ONLY ONE PLAYER. I still
+                                                 // need the code for multiple character creations though
+    // boolean taken = false;
     public void actionPerformed(ActionEvent event) {
+        // if(!taken){
         TheIsleOfLaeso.color = "Yellow";
         TheIsleOfLaeso.g.refreshPlayerCreation();
+        // }
     }
 }
 
