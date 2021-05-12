@@ -100,3 +100,7 @@ Updated entry point (TheIsleOfLaeso) class 2021-5-9 - Bamboo72
 Updated entry point (TheIsleOfLaeso) class 2021-5-11 - HoldMyTyr
 
 Updated Player class 2021-5-11 - HoldMyTyr
+
+Updated Graphics 2021-5-11 - Bamboo72
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-12 - HoldMyTyr
