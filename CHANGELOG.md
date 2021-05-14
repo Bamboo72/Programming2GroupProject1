@@ -106,3 +106,5 @@ Updated Graphics 2021-5-11 - Bamboo72
 Updated entry point (TheIsleOfLaeso) class 2021-5-12 - HoldMyTyr
 
 Added Structure.java 2021-5-13 - andrewblodgett
+
+Updated Island class 2021-5-13 - andrewblodgett
