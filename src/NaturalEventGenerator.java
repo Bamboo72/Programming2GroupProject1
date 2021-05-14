@@ -111,9 +111,12 @@ public class NaturalEventGenerator {
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
     public static String generateEvent(int eventID, Player impactedPlayer) {
+        double random;
+        int lostWood;
+        int food;
         switch (eventID) {
-            case TORNADO -> {
-                double random = Math.random();
+            case TORNADO:
+                random = Math.random();
                 String direction;
                 if (random < 0.25) {
                     direction = "lu";
@@ -126,11 +129,13 @@ public class NaturalEventGenerator {
                 }
                 impactedPlayer.move(direction);
                 System.out.println("Warning: The player may have moved off the board.");
-            } case FIRE -> {
-                int lostWood = -(int)(Math.random() * 3) - 1;
+                break;
+            case FIRE:
+                lostWood = -(int)(Math.random() * 3) - 1;
                 impactedPlayer.addResource("wood", lostWood);
-            } case LIGHTNING -> {
-                double random = Math.random();
+                break;
+            case LIGHTNING:
+                random = Math.random();
                 if (random < 0.1) {
                     impactedPlayer.addResource("stone", -1);
                 }
@@ -142,11 +147,13 @@ public class NaturalEventGenerator {
                     impactedPlayer.damage();
                 }
                 impactedPlayer.addResource("people", -1);
-            } case BUGS -> {
+                break;
+            case BUGS:
                 int lostFood = -(int)(Math.random() * 2) - 1;
                 impactedPlayer.addResource("food", lostFood);
-            } case PLAGUE -> {
-                double random = Math.random();
+                break;
+            case PLAGUE:
+                random = Math.random();
                 if (random < 0.5) {
                     impactedPlayer.addResource("food", -1);
                 }
@@ -154,18 +161,22 @@ public class NaturalEventGenerator {
                     impactedPlayer.addResource("people", -1);
                 }
                 impactedPlayer.addResource("people", -1);
-            } case EXPLOSION -> {
+                break;
+            case EXPLOSION:
                 int lostStone = -(int)(Math.random() * 3) - 1;
                 impactedPlayer.addResource("stone", lostStone);
-            } case ABDUCTION -> {
+                break;
+            case ABDUCTION:
                 int trade = (int)(Math.random() * 2) + 1;
                 impactedPlayer.addResource("people", -trade);
                 impactedPlayer.addResource("stone", trade);
-            } case ADOPTION -> {
+                break;
+            case ADOPTION:
                 int newPeople = (int)(Math.random() * 2) + 1;
                 impactedPlayer.addResource("people", newPeople);
-            } case TSUNAMI -> {
-                double random = Math.random();
+                break;
+            case TSUNAMI:
+                random = Math.random();
                 if (random < 0.5) {
                     impactedPlayer.addResource("food", 2);
                 }
@@ -177,22 +188,26 @@ public class NaturalEventGenerator {
                 if (random < 0.5) {
                     impactedPlayer.addResource("wood", -2);
                 }
-            } case FAMINE -> {
+                break;
+            case FAMINE:
                 int lostFoodAndPeople = -(int)(Math.random() * 2) - 1;
                 impactedPlayer.addResource("food", lostFoodAndPeople);
                 impactedPlayer.addResource("people", lostFoodAndPeople);
-            } case RAIN -> {
-                int food = (int)(Math.random() * 2) + 2;
+                break;
+            case RAIN:
+                food = (int)(Math.random() * 2) + 2;
                 impactedPlayer.addResource("food", food);
-            } case EARTHQUAKE -> {
+                break;
+            case EARTHQUAKE:
                 int wood = (int) (Math.random() * 2) + 1;
                 impactedPlayer.addResource("wood", wood);
                 for (int i = 0; i < wood; i++) {
                     if (Math.random() < 0.5)
                         impactedPlayer.addResource("people", -1);
                 }
-            } case FLOOD -> {
-                int food = (int)(Math.random() * 2) + 1;
+                break;
+            case FLOOD:
+                food = (int)(Math.random() * 2) + 1;
                 if (Math.random() < 0.5) {
                     food = -food;
                 }
@@ -200,9 +215,9 @@ public class NaturalEventGenerator {
                 if (Math.random() < 0.1) {
                     impactedPlayer.addResource("wood", 1);
                 }
-            } default -> {
+                break;
+            default:
                 return generateEvent(generateRandomEventID(), impactedPlayer);
-            }
         }
         return getEventIDName(eventID);
     }
@@ -303,22 +318,22 @@ public class NaturalEventGenerator {
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
     public static String getEventIDName(int eventID) {
-        return switch (eventID) {
-            case TORNADO -> "Tornado!";
-            case FIRE -> "Fire!";
-            case LIGHTNING -> "Lightning!";
-            case BUGS -> "Bugs!";
-            case PLAGUE -> "Plague!";
-            case EXPLOSION -> "Explosion!";
-            case ABDUCTION -> "Abduction!";
-            case ADOPTION -> "Adoption!";
-            case TSUNAMI -> "Tsunami!";
-            case FAMINE -> "Famine!";
-            case RAIN -> "Rain!";
-            case EARTHQUAKE -> "Earthquake!";
-            case FLOOD -> "Flood!";
-            default -> "???";
-        };
+        switch (eventID) {
+            case TORNADO: return "Tornado!";
+            case FIRE: return "Fire!";
+            case LIGHTNING: return "Lightning!";
+            case BUGS: return "Bugs!";
+            case PLAGUE: return "Plague!";
+            case EXPLOSION: return "Explosion!";
+            case ABDUCTION: return "Abduction!";
+            case ADOPTION: return "Adoption!";
+            case TSUNAMI: return "Tsunami!";
+            case FAMINE: return "Famine!";
+            case RAIN: return "Rain!";
+            case EARTHQUAKE: return "Earthquake!";
+            case FLOOD: return "Flood!";
+            default: return "???";
+        }
     }
 
     /**
