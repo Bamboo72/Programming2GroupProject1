@@ -108,3 +108,5 @@ Updated entry point (TheIsleOfLaeso) class 2021-5-12 - HoldMyTyr
 Added Structure.java 2021-5-13 - andrewblodgett
 
 Updated Island class 2021-5-13 - andrewblodgett
+
+Added NaturalEventGenerator.java 2021-5-14 - bran214
