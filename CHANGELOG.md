@@ -110,3 +110,5 @@ Added Structure.java 2021-5-13 - andrewblodgett
 Updated Island class 2021-5-13 - andrewblodgett
 
 Added NaturalEventGenerator.java 2021-5-14 - bran214
+
+Updated Graphics class and button classes to use code made by other group members 2021-5-16 - Bamboo72
