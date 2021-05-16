@@ -9,8 +9,6 @@
 /*
 TODO:
 
-- Make a way to stop buttons from working? - Maybe a boolean called active that is turned on/off when conditions are met?
-
 */
 
 import javax.swing.JFrame;
@@ -32,6 +30,7 @@ import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.GraphicsEnvironment;
 
@@ -51,7 +50,11 @@ public class Graphics extends JFrame {
     static int hmp = 2;
     String boardText = "Welcome to the Isle of Laeso!";
 
+    boolean diceRolled = false;
+
     String playerName = "[type name here]";
+    String colorTaken = "";
+    String toBeBuilt = null;
 
     /**
      * This is the constructor for the graphics class which sets up some of the
@@ -109,10 +112,15 @@ public class Graphics extends JFrame {
                 settingsButton.setBounds(930, 620, 311, 85);
                 buttonList.add(settingsButton);
 
-                /* These lines are just practice for displaying players, resources, and buildings */
+                /*
+                 * These lines are just practice for displaying players, resources, and
+                 * buildings
+                 */
                 // int[] tempInventory = new int[5];
-                // Player joey = new Player(100, 100, "Joey", "Armor", "Casual", "Yellow", tempInventory, 3);
+                // Player joey = new Player(100, 100, "Joey", "Casual", "Traditional", "Red",
+                // tempInventory, 3);
                 // displayPlayer(joey);
+                // displaySmallPlayer(joey);
 
                 // displayResource(0, 200, 100);
                 // displayResource(1, 200, 130);
@@ -173,7 +181,8 @@ public class Graphics extends JFrame {
                 // the end of everything
                 ImageIcon checkButtonImage3 = new ImageIcon(".//res//ButtonCheck.png");
                 JButton checkButton3 = new JButton(checkButtonImage3);
-                ActionListener checkListener3 = new GoToTitle(); // This might need to be a unique button that saves the settings
+                ActionListener checkListener3 = new GoToTitle(); // This might need to be a unique button that saves the
+                                                                 // settings
                 checkButton3.addActionListener(checkListener3);
                 checkButton3.setBounds(1200, 620, 64, 64);
                 buttonList.add(checkButton3);
@@ -249,6 +258,19 @@ public class Graphics extends JFrame {
                 offButton.setBounds(591, 557, 117, 117);
                 buttonList.add(offButton);
 
+                // ____________________ DEFAULT BUTTON ____________________
+
+                ImageIcon defaultImage = new ImageIcon(".//res//ButtonDefault.png");
+                JButton defaultButton = new JButton(defaultImage);
+                ActionListener defaultListener = new SettingsDefault();
+                defaultButton.addActionListener(defaultListener);
+                defaultButton.setBounds(835, 557, 117, 117);
+                buttonList.add(defaultButton);
+                displayText("Default is", 935, 577, 200, 200, 18f);
+                displayText("The first die color,", 935, 597, 200, 200, 18f);
+                displayText("medium spawn rate,", 935, 617, 200, 200, 18f);
+                displayText("and disasters off.", 935, 637, 200, 200, 18f);
+
                 displayText("Preferred:", 275, 308, 200, 200, 36f);
                 displayText("Die:", 275, 348, 200, 200, 36f);
                 displayText("Resource", 275, 440, 200, 200, 36f);
@@ -270,6 +292,8 @@ public class Graphics extends JFrame {
 
                 con.add(onButton);
                 con.add(offButton);
+
+                con.add(defaultButton);
 
                 con.add(settingsPanel);
 
@@ -335,7 +359,8 @@ public class Graphics extends JFrame {
                 break;
             case 4: // Character Creation
 
-                displayText("Player 1:", 40, 200, 200, 200, 36f); // This will change based off the turn variable.
+                displayText("Player " + TheIsleOfLaeso.playerTurn + ":", 1050, 570, 200, 200, 36f);
+                displayText(colorTaken, 760, 330, 600, 200, 21f);
 
                 ImageIcon characterCreationImage = new ImageIcon(".//res//BackgroundCharacterCreate.png");
                 JLabel characterCreationLabel = new JLabel(characterCreationImage);
@@ -361,6 +386,13 @@ public class Graphics extends JFrame {
                 checkButton2.addActionListener(checkListener2);
                 checkButton2.setBounds(1200, 620, 64, 64);
                 buttonList.add(checkButton2);
+
+                ImageIcon nextPlayerImage = new ImageIcon(".//res//ButtonCheck.png");
+                JButton nextPlayerButton = new JButton(nextPlayerImage);
+                ActionListener nextPlayer = new GoToNextPlayer();
+                nextPlayerButton.addActionListener(nextPlayer);
+                nextPlayerButton.setBounds(1200, 620, 64, 64);
+                buttonList.add(nextPlayerButton);
 
                 JTextField nameInput = new JTextField(playerName);
                 nameInput.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -487,7 +519,12 @@ public class Graphics extends JFrame {
 
                 previewPlayer();
 
-                con.add(checkButton2);
+                if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
+                    con.add(nextPlayerButton);
+                } else {
+                    con.add(checkButton2);
+                }
+
                 con.add(backButton4);
 
                 con.add(nameInput);
@@ -528,9 +565,21 @@ public class Graphics extends JFrame {
                 buildButton.setBounds(435, 589, 138, 138);
                 buttonList.add(buildButton);
 
-                ImageIcon dieImage = new ImageIcon(".//res//Die1.png"); // We'll have to add an if statement here to
-                                                                        // display
-                                                                        // the correct die depending on the settings
+                ImageIcon dieImage = new ImageIcon();
+                try {
+                    if (IOSettings.findDie().equals("Die1")) {
+                        dieImage = new ImageIcon(".//res//Die1.png");
+                    } else if (IOSettings.findDie().equals("Die2")) {
+                        dieImage = new ImageIcon(".//res//Die2.png");
+                    } else if (IOSettings.findDie().equals("Die3")) {
+                        dieImage = new ImageIcon(".//res//Die3.png");
+                    } else if (IOSettings.findDie().equals("Die4")) {
+                        dieImage = new ImageIcon(".//res//Die4.png");
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
                 JButton dieButton = new JButton(dieImage);
                 ActionListener dieListener = new DiceRoll();
                 dieButton.addActionListener(dieListener);
@@ -539,15 +588,68 @@ public class Graphics extends JFrame {
 
                 ImageIcon attackImage = new ImageIcon(".//res//ButtonAttack.png");
                 JButton attackButton = new JButton(attackImage);
-                ActionListener attackListener = new Build();
+                ActionListener attackListener = new Attack();
                 attackButton.addActionListener(attackListener);
                 attackButton.setBounds(707, 589, 138, 138);
                 buttonList.add(attackButton);
 
+                ImageIcon endTurnImage = new ImageIcon(".//res//ButtonEndTurn.png");
+                JButton endTurnButton = new JButton(endTurnImage);
+                ActionListener endTurnListener = new EndTurn();
+                endTurnButton.addActionListener(endTurnListener);
+                endTurnButton.setBounds(571, 589, 138, 138);
+                buttonList.add(endTurnButton);
+
                 MousePressListener mpl = new MousePressListener();
                 activePanel.addMouseListener(mpl);
 
-                con.add(dieButton);
+                /*
+                 * These lines were made for testing displaying the profiles int[] inventory =
+                 * new int[6]; Player profilePlayer = new Player(79, 630, "Billy Bob", "Armor",
+                 * "Armor", "Green", inventory, 3); profilePlayer.addResource("wood", 3);
+                 * profilePlayer.addResource("ore", 99);
+                 * 
+                 * Player profilePlayer2 = new Player(297, 630, "Billy Bob", "Armor", "Armor",
+                 * "Green", inventory, 3);
+                 * 
+                 * Player profilePlayer3 = new Player(1135, 630, "Billy Bob", "Armor", "Armor",
+                 * "Green", inventory, 3);
+                 * 
+                 * Player profilePlayer4 = new Player(915, 630, "Billy Bob", "Armor", "Armor",
+                 * "Green", inventory, 3);
+                 * 
+                 * profileDisplay(profilePlayer); profileDisplay(profilePlayer2);
+                 * profileDisplay(profilePlayer3); profileDisplay(profilePlayer4);
+                 * 
+                 * // displayWin(0, profilePlayer);
+                 */
+
+                // Depending on the number of players, display in different places
+                // 2: X O O X
+                // 3: O O O X
+                // 4: O O O O
+
+                // 79, 630 \ 297, 630 \ 915, 630 \ 1135, 630
+                if (TheIsleOfLaeso.numOfPlayer == 4) {
+                    profileDisplay(TheIsleOfLaeso.players[0], 79, 630);
+                    profileDisplay(TheIsleOfLaeso.players[1], 297, 630);
+                    profileDisplay(TheIsleOfLaeso.players[2], 915, 630);
+                    profileDisplay(TheIsleOfLaeso.players[3], 1135, 630);
+                } else if (TheIsleOfLaeso.numOfPlayer == 3) {
+                    profileDisplay(TheIsleOfLaeso.players[0], 79, 630);
+                    profileDisplay(TheIsleOfLaeso.players[1], 297, 630);
+                    profileDisplay(TheIsleOfLaeso.players[2], 915, 630);
+                } else if (TheIsleOfLaeso.numOfPlayer == 2) {
+                    profileDisplay(TheIsleOfLaeso.players[0], 297, 630);
+                    profileDisplay(TheIsleOfLaeso.players[1], 915, 630);
+                }
+
+                if (!diceRolled) {
+                    con.add(dieButton);
+                } else {
+                    con.add(endTurnButton);
+                }
+
                 con.add(buildButton);
                 con.add(attackButton);
                 con.add(boardPanel);
@@ -570,6 +672,97 @@ public class Graphics extends JFrame {
 
                 con.add(backButton5);
                 con.add(instructionsPanel);
+                break;
+            case 7: // Build Menu
+
+                displayText("Click on the building you want to construct.", 0, 15, 1280, 60, 30f);
+                if (toBeBuilt != null) {
+                    displayText("Build a ", 950, 557, 90, 60, 30f);
+                    displayText(toBeBuilt + "?", 930, 587, 130, 60, 30f);
+                }
+                displayText("Cancel", 990, 85, 70, 70, 30f);
+
+                ImageIcon settingsImage2 = new ImageIcon(".//res//BackgroundSettings.png");
+                JLabel settingsLabel2 = new JLabel(settingsImage2);
+                JPanel settingsPanel2 = new JPanel();
+                settingsPanel2.setBounds(0, 0, 1280, 720);
+                activePanel = settingsPanel2;
+                settingsPanel2.add(settingsLabel2);
+
+                ImageIcon buildMenuImage = new ImageIcon();
+                buildMenuImage = new ImageIcon(".//res//BuildMenu.png");
+                JLabel buildMenuLabel = new JLabel(buildMenuImage);
+                JPanel buildMenuPanel = new JPanel();
+                buildMenuPanel.setBackground(new Color(0, 0, 0, 0));
+                buildMenuPanel.setBounds(203, 10, 873, 697);
+                buildMenuPanel.add(buildMenuLabel);
+                playerList.add(buildMenuPanel);
+
+                // This button was copied from the credits display scene, but I had to make it
+                // different so I added a 6 to the end of everything
+                ImageIcon backButtonImage6 = new ImageIcon(".//res//ButtonX.png");
+                JButton backButton6 = new JButton(backButtonImage6);
+                ActionListener backListener6 = new GoBackToBoard();
+                backButton6.addActionListener(backListener6);
+                backButton6.setBounds(1000, 19, 64, 64);
+                buttonList.add(backButton6);
+
+                // This button was copied from the HMP display scene, but I had to make it
+                // different so I added a 4 to the end of everything
+                ImageIcon checkButtonImage4 = new ImageIcon(".//res//ButtonCheck.png");
+                JButton checkButton4 = new JButton(checkButtonImage4);
+                ActionListener checkListener4 = new GoToBoardToBuild();
+                checkButton4.addActionListener(checkListener4);
+                checkButton4.setBounds(1000, 635, 64, 64);
+                buttonList.add(checkButton4);
+
+                BuildMenuMousePressListener bmmpl = new BuildMenuMousePressListener();
+                activePanel.addMouseListener(bmmpl);
+
+                con.add(backButton6);
+                con.add(checkButton4);
+                con.add(buildMenuPanel);
+                con.add(settingsPanel2);
+
+                break;
+            case 8: // Win Screen
+
+                ImageIcon settingsImage3 = new ImageIcon(".//res//BackgroundSettings.png");
+                JLabel settingsLabel3 = new JLabel(settingsImage3);
+                JPanel settingsPanel3 = new JPanel();
+                settingsPanel3.setBounds(0, 0, 1280, 720);
+                activePanel = settingsPanel3;
+                settingsPanel3.add(settingsLabel3);
+
+                // This button was copied from the credits display scene, but I had to make it
+                // different so I added a 7 to the end of everything
+                ImageIcon backButtonImage7 = new ImageIcon(".//res//ButtonX.png");
+                JButton backButton7 = new JButton(backButtonImage7);
+                ActionListener backListener7 = new GoToTitle();
+                backButton7.addActionListener(backListener7);
+                backButton7.setBounds(217, 652, 64, 64);
+                buttonList.add(backButton7);
+
+                // This button was copied from the HMP display scene, but I had to make it
+                // different so I added a 5 to the end of everything
+                ImageIcon checkButtonImage5 = new ImageIcon(".//res//ButtonCheck.png");
+                JButton checkButton5 = new JButton(checkButtonImage5);
+                ActionListener checkListener5 = new GoToBoard(); // THIS NEEDS TO CALL THE RESET GAME METHOD OR
+                                                                 // SOMETHING
+                checkButton5.addActionListener(checkListener5);
+                checkButton5.setBounds(1000, 652, 64, 64);
+                buttonList.add(checkButton5);
+
+                JPanel extraPanel = new JPanel();
+                extraPanel.setBackground(new Color(255, 255, 255));
+                extraPanel.setBounds(203, 650, 873, 70); // 203, 10, 873, 639
+                textPanelList.add(extraPanel);
+
+                con.add(backButton7);
+                con.add(checkButton5);
+                con.add(extraPanel);
+                con.add(settingsPanel3);
+
                 break;
             default:
                 System.out.println("Unknown number/ not yet implemented");
@@ -703,12 +896,13 @@ public class Graphics extends JFrame {
     }
 
     /**
-     * This method displays the character depending on the ___
+     * This method displays the character depending on the Player object's x and y
+     * and traits (Note that this is the big version used for the preview Player and
+     * profiles)
      * 
-     * @param x
-     * @param y
+     * @param p
      */
-    public void displayPlayer(Player p) {
+    public void displayPlayer(Player p, int x, int y) {
 
         ImageIcon characterHat = new ImageIcon();
         ImageIcon characterColor = new ImageIcon();
@@ -746,19 +940,87 @@ public class Graphics extends JFrame {
         JLabel hatLabel = new JLabel(characterHat);
         JPanel hatPanel = new JPanel();
         hatPanel.setBackground(new Color(0, 0, 0, 0));
-        hatPanel.setBounds(p.getXPos(), p.getYPos() - 3, 64, 74);
+        hatPanel.setBounds(x, y - 3, 64, 74);
         hatPanel.add(hatLabel);
 
         JLabel colorLabel = new JLabel(characterColor);
         JPanel colorPanel = new JPanel();
         colorPanel.setBackground(new Color(0, 0, 0, 0));
-        colorPanel.setBounds(p.getXPos(), p.getYPos() + 10, 64, 74);
+        colorPanel.setBounds(x, y + 10, 64, 74);
         colorPanel.add(colorLabel);
 
         JLabel bodyLabel = new JLabel(characterBody);
         JPanel bodyPanel = new JPanel();
         bodyPanel.setBackground(new Color(0, 0, 0, 0));
-        bodyPanel.setBounds(p.getXPos(), p.getYPos() + 40, 64, 74);
+        bodyPanel.setBounds(x, y + 40, 64, 74);
+        bodyPanel.add(bodyLabel);
+
+        playerList.add(hatPanel);
+        playerList.add(colorPanel);
+        playerList.add(bodyPanel);
+        con.add(hatPanel);
+        con.add(colorPanel);
+        con.add(bodyPanel);
+
+    }
+
+    /**
+     * This method displays the character depending on the Player object's x and y
+     * and traits (Note that this is the small version used for displaying a player
+     * on the board)
+     * 
+     */
+    public void displaySmallPlayer(Player p) {
+
+        ImageIcon characterHat = new ImageIcon();
+        ImageIcon characterColor = new ImageIcon();
+        ImageIcon characterBody = new ImageIcon();
+
+        characterColor = new ImageIcon(".//res//CharacterN.png");
+        characterBody = new ImageIcon(".//res//CharacterN.png");
+
+        if (p.getHat().equals("Casual")) {
+            characterHat = new ImageIcon(".//res//CasualHatSmall.png");
+        } else if (p.getHat().equals("Armor")) {
+            characterHat = new ImageIcon(".//res//ArmorHatSmall.png");
+        } else if (p.getHat().equals("Traditional")) {
+            characterHat = new ImageIcon(".//res//TraditionalHatSmall.png");
+        }
+
+        if (p.getColor().equals("Red")) {
+            characterColor = new ImageIcon(".//res//HeadRedSmall.png");
+        } else if (p.getColor().equals("Yellow")) {
+            characterColor = new ImageIcon(".//res//HeadYellowSmall.png");
+        } else if (p.getColor().equals("Green")) {
+            characterColor = new ImageIcon(".//res//HeadGreenSmall.png");
+        } else if (p.getColor().equals("Blue")) {
+            characterColor = new ImageIcon(".//res//HeadBlueSmall.png");
+        }
+
+        if (p.getClothes().equals("Casual")) {
+            characterBody = new ImageIcon(".//res//CasualBodySmall.png");
+        } else if (p.getClothes().equals("Armor")) {
+            characterBody = new ImageIcon(".//res//ArmorBodySmall.png");
+        } else if (p.getClothes().equals("Traditional")) {
+            characterBody = new ImageIcon(".//res//TraditionalBodySmall.png");
+        }
+
+        JLabel hatLabel = new JLabel(characterHat);
+        JPanel hatPanel = new JPanel();
+        hatPanel.setBackground(new Color(0, 0, 0, 0));
+        hatPanel.setBounds(p.getXPos(), p.getYPos() - 2, 64, 74);
+        hatPanel.add(hatLabel);
+
+        JLabel colorLabel = new JLabel(characterColor);
+        JPanel colorPanel = new JPanel();
+        colorPanel.setBackground(new Color(0, 0, 0, 0));
+        colorPanel.setBounds(p.getXPos(), p.getYPos() + 6, 64, 74);
+        colorPanel.add(colorLabel);
+
+        JLabel bodyLabel = new JLabel(characterBody);
+        JPanel bodyPanel = new JPanel();
+        bodyPanel.setBackground(new Color(0, 0, 0, 0));
+        bodyPanel.setBounds(p.getXPos(), p.getYPos() + 26, 64, 74);
         bodyPanel.add(bodyLabel);
 
         playerList.add(hatPanel);
@@ -829,7 +1091,7 @@ public class Graphics extends JFrame {
 
         } else if (type == 1) { // Fort
             if (color.equals("Brown")) {
-                buildingImage = new ImageIcon(".//res//FortBrown.png");
+                buildingImage = new ImageIcon(".//res//FortGrey.png");
             } else if (color.equals("Red")) {
                 buildingImage = new ImageIcon(".//res//FortRed.png");
             } else if (color.equals("Yellow")) {
@@ -865,6 +1127,18 @@ public class Graphics extends JFrame {
             } else if (color.equals("Blue")) {
                 buildingImage = new ImageIcon(".//res//StorehouseBlue.png");
             }
+        } else if (type == 4) { // Boat
+            if (color.equals("Brown")) {
+                buildingImage = new ImageIcon(".//res//Boat.png");
+            } else if (color.equals("Red")) {
+                buildingImage = new ImageIcon(".//res//BoatRed.png");
+            } else if (color.equals("Yellow")) {
+                buildingImage = new ImageIcon(".//res//BoatYellow.png");
+            } else if (color.equals("Green")) {
+                buildingImage = new ImageIcon(".//res//BoatGreen.png");
+            } else if (color.equals("Blue")) {
+                buildingImage = new ImageIcon(".//res//BoatBlue.png");
+            }
         }
 
         JLabel buildingLabel = new JLabel(buildingImage);
@@ -876,12 +1150,102 @@ public class Graphics extends JFrame {
         con.add(buildingPanel);
     }
 
+    public void displayHeart(int x, int y) {
+        ImageIcon heartImage = new ImageIcon();
+        heartImage = new ImageIcon(".//res//Heart.png");
+        JLabel heartLabel = new JLabel(heartImage);
+        JPanel heartPanel = new JPanel();
+        heartPanel.setBackground(new Color(0, 0, 0, 0));
+        heartPanel.setBounds(x, y, 30, 30);
+        heartPanel.add(heartLabel);
+        playerList.add(heartPanel);
+        con.add(heartPanel);
+
+    }
+
+    /**
+     * This method displays what the player's character will look like.
+     */
     public void previewPlayer() {
         Player tempPlayer = new Player(1100, 620, TheIsleOfLaeso.name, TheIsleOfLaeso.hat, TheIsleOfLaeso.clothes,
                 TheIsleOfLaeso.color, null, 3);
-        displayPlayer(tempPlayer);
+        displayPlayer(tempPlayer, 1100, 620);
     }
 
+    /**
+     * This method displays a player's profile.
+     * 
+     * @param p
+     */
+    public void profileDisplay(Player p, int x, int y) {
+
+        // int x = p.getXPos();
+        // int y = p.getYPos();
+
+        // - Display player name
+        // displayText(p.getName(), x - 96, y - 40, 150, 40, 27f);
+        displayText(p.getName(), x - 56, y - 40, 110, 40, 27f);
+        // - Display player
+        displayPlayer(p, x, y);
+        // - Display resource types
+        displayResource(0, x - 79, y - 10);
+        displayResource(1, x - 79, y + 17);
+        displayResource(2, x - 79, y + 50);
+        displayResource(3, x + 54, y - 10);
+        displayResource(4, x + 54, y + 20);
+        displayResource(5, x + 54, y + 50);
+        // - Display amounts of resources
+        displayText("x" + p.getResource("wood"), x - 29, y - 3, 30, 30, 20f);
+        displayText("x" + p.getResource("people"), x - 29, y + 27, 30, 30, 20f);
+        displayText("x" + p.getResource("food"), x - 29, y + 57, 30, 30, 20f);
+        displayText("x" + p.getResource("stone"), x + 104, y - 3, 30, 30, 20f);
+        displayText("x" + p.getResource("ore"), x + 104, y + 27, 30, 30, 20f);
+        displayText("x" + p.getResource("magic"), x + 104, y + 57, 30, 30, 20f);
+        // - Display health
+        if (p.getHealth() == 3) {
+            displayHeart(x + 60, y - 35);
+            displayHeart(x + 85, y - 35);
+            displayHeart(x + 110, y - 35);
+        } else if (p.getHealth() == 2) {
+            displayHeart(x + 85, y - 35);
+            displayHeart(x + 110, y - 35);
+        } else if (p.getHealth() == 1) {
+            displayHeart(x + 110, y - 35);
+        }
+    }
+
+    public void displayWin(int type, Player p) {
+
+        TheIsleOfLaeso.g.hideActivePanel();
+
+        displayText("Do you want to play again with the same players?", 0, 672, 1280, 60, 30f);
+        displayText("Yes", 985, 612, 90, 60, 30f);
+        displayText("Title", 214, 612, 70, 70, 30f);
+
+        ImageIcon winImage = new ImageIcon();
+
+        if (type == 0) { // Boat win
+            winImage = new ImageIcon(".//res//WinScreenBoat.png");
+        } else if (type == 1) { // Magic win
+            winImage = new ImageIcon(".//res//WinScreenMagic.png");
+        } else if (type == 2) { // Kill win
+            winImage = new ImageIcon(".//res//WinScreenKill.png");
+        }
+
+        JLabel winLabel = new JLabel(winImage);
+        JPanel winPanel = new JPanel();
+        winPanel.setBackground(new Color(0, 0, 0, 0));
+        winPanel.setBounds(203, 10, 873, 641);
+        winPanel.add(winLabel);
+        playerList.add(winPanel);
+        displayText(p.getName(), 0, 180, 1280, 100, 60f);
+
+        con.add(winPanel);
+
+        TheIsleOfLaeso.g.sceneDisplay(8);
+        TheIsleOfLaeso.g.refresh();
+
+    }
 }
 
 // ================================================================================================================================================
@@ -956,6 +1320,51 @@ class GoToHMP implements ActionListener { // AKA the Start button
 class GoToCharacterCreate implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
+
+        TheIsleOfLaeso.makeMakeingMeMakeMethods(TheIsleOfLaeso.numOfPlayer);
+
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(4);
+        TheIsleOfLaeso.g.refresh();
+
+    }
+}
+
+/**
+ * This class makes the button that switches the scene display to the next
+ * player's character creations screen
+ */
+class GoToNextPlayer implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+
+        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1] = new Player(79, 630,
+                TheIsleOfLaeso.g.activeTextField.getText(), TheIsleOfLaeso.hat, TheIsleOfLaeso.clothes,
+                TheIsleOfLaeso.color, TheIsleOfLaeso.inventory, 3);
+
+        if (TheIsleOfLaeso.color.equals("Red")) {
+            SetColorRed.taken = true;
+        } else if (TheIsleOfLaeso.color.equals("Yellow")) {
+            SetColorYellow.taken = true;
+        } else if (TheIsleOfLaeso.color.equals("Green")) {
+            SetColorGreen.taken = true;
+        } else if (TheIsleOfLaeso.color.equals("Blue")) {
+            SetColorBlue.taken = true;
+        }
+
+        if (!SetColorRed.taken) {
+            TheIsleOfLaeso.color = "Red";
+        } else if (!SetColorYellow.taken) {
+            TheIsleOfLaeso.color = "Yellow";
+        } else if (!SetColorGreen.taken) {
+            TheIsleOfLaeso.color = "Green";
+        } else if (!SetColorBlue.taken) {
+            TheIsleOfLaeso.color = "Blue";
+        }
+
+        TheIsleOfLaeso.g.playerName = "[type name here]";
+
+        TheIsleOfLaeso.playerTurn++;
         TheIsleOfLaeso.g.hideActivePanel();
         TheIsleOfLaeso.g.sceneDisplay(4);
         TheIsleOfLaeso.g.refresh();
@@ -970,10 +1379,62 @@ class GoToCharacterCreate implements ActionListener {
 class GoToBoard implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
+        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1] = new Player(79, 630,
+                TheIsleOfLaeso.g.activeTextField.getText(), TheIsleOfLaeso.hat, TheIsleOfLaeso.clothes,
+                TheIsleOfLaeso.color, TheIsleOfLaeso.inventory, 3);
+
+        TheIsleOfLaeso.playerTurn = 1;
+        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+                + "'s turn. Roll the dice!";
+
         TheIsleOfLaeso.g.hideActivePanel();
         TheIsleOfLaeso.g.sceneDisplay(5);
         TheIsleOfLaeso.g.refresh();
 
+    }
+}
+
+/**
+ * This class makes the button that switches the scene display to the board
+ * screen but without the character creation that goes with the GoToBoard
+ * button.
+ */
+class GoBackToBoard implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(5);
+        TheIsleOfLaeso.g.refresh();
+
+    }
+}
+
+/**
+ * This class makes the button that switches the scene display to the board
+ * screen and builds a new building at the player's location
+ */
+class GoToBoardToBuild implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+
+        // Check if resource counts are enough
+
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(5);
+        TheIsleOfLaeso.g.refresh();
+
+        // Make the building using the string toBeBuilt
+
+        if(TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer){
+            TheIsleOfLaeso.playerTurn++;
+        } else {
+            TheIsleOfLaeso.playerTurn = 1;
+        }
+        TheIsleOfLaeso.g.diceRolled = false;
+        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+        + "'s turn. Roll the dice!";
+        TheIsleOfLaeso.g.refreshBoard();
     }
 }
 
@@ -987,6 +1448,15 @@ class GoToTitle implements ActionListener { // This should also call a reset met
         if (TheIsleOfLaeso.g.activeTextField != null) {
             TheIsleOfLaeso.g.playerName = "[type name here]";
         }
+        SetColorRed.taken = false;
+        SetColorYellow.taken = false;
+        SetColorGreen.taken = false;
+        SetColorBlue.taken = false;
+
+        TheIsleOfLaeso.color = "Red";
+
+        TheIsleOfLaeso.playerTurn = 1;
+        TheIsleOfLaeso.g.diceRolled = false;
 
         TheIsleOfLaeso.g.hideActivePanel();
         TheIsleOfLaeso.g.sceneDisplay(0);
@@ -1003,7 +1473,12 @@ class GoToTitle implements ActionListener { // This should also call a reset met
 class SetDie1 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The die was changed to die1");
+        try {
+            IOSettings.addsSet("Die1", IOSettings.findSpawnRate(),
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1013,7 +1488,12 @@ class SetDie1 implements ActionListener {
 class SetDie2 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The die was changed to die2");
+        try {
+            IOSettings.addsSet("Die2", IOSettings.findSpawnRate(),
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1023,7 +1503,12 @@ class SetDie2 implements ActionListener {
 class SetDie3 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The die was changed to die3");
+        try {
+            IOSettings.addsSet("Die3", IOSettings.findSpawnRate(),
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1033,7 +1518,12 @@ class SetDie3 implements ActionListener {
 class SetDie4 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The die was changed to die4");
+        try {
+            IOSettings.addsSet("Die4", IOSettings.findSpawnRate(),
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1043,7 +1533,12 @@ class SetDie4 implements ActionListener {
 class SetSpawnLow implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The spawn rate was changed to low");
+        try {
+            IOSettings.addsSet(IOSettings.findDie(), "SpawnRateLow",
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1053,7 +1548,12 @@ class SetSpawnLow implements ActionListener {
 class SetSpawnMed implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The spawn rate was changed to med");
+        try {
+            IOSettings.addsSet(IOSettings.findDie(), "SpawnRateMed",
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1063,7 +1563,12 @@ class SetSpawnMed implements ActionListener {
 class SetSpawnHigh implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The spawn rate was changed to high");
+        try {
+            IOSettings.addsSet(IOSettings.findDie(), "SpawnRateHigh",
+                    IOSettings.findNaturalDis().equals("naturalDistrue"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1073,7 +1578,11 @@ class SetSpawnHigh implements ActionListener {
 class SetDisastersOn implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("Natural disasters were turned on");
+        try {
+            IOSettings.addsSet(IOSettings.findDie(), IOSettings.findSpawnRate(), true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1083,7 +1592,25 @@ class SetDisastersOn implements ActionListener {
 class SetDisastersOff implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("Natural disasters were turned off");
+        try {
+            IOSettings.addsSet(IOSettings.findDie(), IOSettings.findSpawnRate(), false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+/**
+ * This class makes the button that puts all settings to default.
+ */
+class SettingsDefault implements ActionListener {
+
+    public void actionPerformed(ActionEvent event) {
+        try {
+            IOSettings.restor();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -1126,12 +1653,21 @@ class SetHMP4 implements ActionListener {
  */
 class SetColorRed implements ActionListener {
 
+    static boolean taken = false;
+
     public void actionPerformed(ActionEvent event) {
-        TheIsleOfLaeso.color = "Red";
         // IslandDrawing.g.hidePlayers(); // I don't like needing to redo the entire
         // scene each time a button is clicked. I would prefer to just use
         // hidePlayers(), but that hasn't worked so far.
-        TheIsleOfLaeso.g.refreshPlayerCreation();
+
+        if (!taken) {
+            TheIsleOfLaeso.color = "Red";
+            TheIsleOfLaeso.g.colorTaken = "";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        } else {
+            TheIsleOfLaeso.g.colorTaken = "Red is already taken";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        }
 
     }
 }
@@ -1139,14 +1675,19 @@ class SetColorRed implements ActionListener {
 /**
  * This class makes the button that sets a player's color to yellow.
  */
-class SetColorYellow implements ActionListener { // NOTE MY ATTEMPT TO MAKE COLORS APPLY TO ONLY ONE PLAYER. I still
-                                                 // need the code for multiple character creations though
-    // boolean taken = false;
+class SetColorYellow implements ActionListener {
+
+    static boolean taken = false;
+
     public void actionPerformed(ActionEvent event) {
-        // if(!taken){
-        TheIsleOfLaeso.color = "Yellow";
-        TheIsleOfLaeso.g.refreshPlayerCreation();
-        // }
+        if (!taken) {
+            TheIsleOfLaeso.color = "Yellow";
+            TheIsleOfLaeso.g.colorTaken = "";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        } else {
+            TheIsleOfLaeso.g.colorTaken = "Yellow is already taken";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        }
     }
 }
 
@@ -1155,9 +1696,17 @@ class SetColorYellow implements ActionListener { // NOTE MY ATTEMPT TO MAKE COLO
  */
 class SetColorGreen implements ActionListener {
 
+    static boolean taken = false;
+
     public void actionPerformed(ActionEvent event) {
-        TheIsleOfLaeso.color = "Green";
-        TheIsleOfLaeso.g.refreshPlayerCreation();
+        if (!taken) {
+            TheIsleOfLaeso.color = "Green";
+            TheIsleOfLaeso.g.colorTaken = "";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        } else {
+            TheIsleOfLaeso.g.colorTaken = "Green is already taken";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        }
     }
 }
 
@@ -1166,9 +1715,17 @@ class SetColorGreen implements ActionListener {
  */
 class SetColorBlue implements ActionListener {
 
+    static boolean taken = false;
+
     public void actionPerformed(ActionEvent event) {
-        TheIsleOfLaeso.color = "Blue";
-        TheIsleOfLaeso.g.refreshPlayerCreation();
+        if (!taken) {
+            TheIsleOfLaeso.color = "Blue";
+            TheIsleOfLaeso.g.colorTaken = "";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        } else {
+            TheIsleOfLaeso.g.colorTaken = "Blue is already taken";
+            TheIsleOfLaeso.g.refreshPlayerCreation();
+        }
     }
 }
 
@@ -1181,6 +1738,7 @@ class SetHatCasual implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.hat = "Casual";
+        TheIsleOfLaeso.g.colorTaken = "";
         TheIsleOfLaeso.g.refreshPlayerCreation();
     }
 }
@@ -1192,6 +1750,7 @@ class SetHatArmor implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.hat = "Armor";
+        TheIsleOfLaeso.g.colorTaken = "";
         TheIsleOfLaeso.g.refreshPlayerCreation();
     }
 }
@@ -1203,6 +1762,7 @@ class SetHatTraditional implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.hat = "Traditional";
+        TheIsleOfLaeso.g.colorTaken = "";
         TheIsleOfLaeso.g.refreshPlayerCreation();
     }
 }
@@ -1216,6 +1776,7 @@ class SetBodyCasual implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.clothes = "Casual";
+        TheIsleOfLaeso.g.colorTaken = "";
         TheIsleOfLaeso.g.refreshPlayerCreation();
     }
 }
@@ -1227,6 +1788,7 @@ class SetBodyArmor implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.clothes = "Armor";
+        TheIsleOfLaeso.g.colorTaken = "";
         TheIsleOfLaeso.g.refreshPlayerCreation();
     }
 }
@@ -1238,6 +1800,7 @@ class SetBodyTraditional implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.clothes = "Traditional";
+        TheIsleOfLaeso.g.colorTaken = "";
         TheIsleOfLaeso.g.refreshPlayerCreation();
     }
 }
@@ -1254,13 +1817,17 @@ class DiceRoll implements ActionListener {
         roll1 = TheIsleOfLaeso.dice.roll();
         roll2 = TheIsleOfLaeso.dice.roll();
 
-        System.out.println("The rolls were " + roll1 + " and " + roll2);
-        TheIsleOfLaeso.g.boardText = "Player _'s turn. " + roll1 + " moves, " + roll2 + " collects left";
+        //System.out.println("The rolls were " + roll1 + " and " + roll2);
+        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+        + "'s turn. " + roll1 + " moves, " + roll2 + " collects left";
+
+    
+        // TheIsleOfLaeso.incPhase(TheIsleOfLaeso.getPhase());
+        // System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
+
+        TheIsleOfLaeso.g.diceRolled = true;
 
         TheIsleOfLaeso.g.refreshBoard();
-
-        TheIsleOfLaeso.incPhase();
-        System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
     }
 }
 
@@ -1271,19 +1838,34 @@ class DiceRoll implements ActionListener {
 class EndTurn implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        TheIsleOfLaeso.incPhase();
-        System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
+        //TheIsleOfLaeso.incPhase(TheIsleOfLaeso.getPhase());
+        //System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
+        
+        if(TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer){
+            TheIsleOfLaeso.playerTurn++;
+        } else {
+            TheIsleOfLaeso.playerTurn = 1;
+        }
+        TheIsleOfLaeso.g.diceRolled = false;
+        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+        + "'s turn. Roll the dice!";
+        TheIsleOfLaeso.g.refreshBoard();
+        
     }
 }
 
 /**
- * This class makes the button that builds structures.
+ * This class makes the button that opens the build menu.
  */
 class Build implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The build button was pressed");
-
+        if(TheIsleOfLaeso.g.diceRolled){
+            TheIsleOfLaeso.g.hideActivePanel();
+            TheIsleOfLaeso.g.sceneDisplay(7);
+            TheIsleOfLaeso.g.refresh();
+        }
+        
     }
 }
 
@@ -1293,7 +1875,19 @@ class Build implements ActionListener {
 class Attack implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("The attack button was pressed");
+        if(TheIsleOfLaeso.g.diceRolled){
+            System.out.println("The attack button was pressed");
 
+            if(TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer){
+                TheIsleOfLaeso.playerTurn++;
+            } else {
+                TheIsleOfLaeso.playerTurn = 1;
+            }
+            TheIsleOfLaeso.g.diceRolled = false;
+            TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+            + "'s turn. Roll the dice!";
+            TheIsleOfLaeso.g.refreshBoard();
+        }
     }
+    
 }

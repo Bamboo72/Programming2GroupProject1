@@ -12,6 +12,8 @@ public class TheIsleOfLaeso{
   */
 
   static Graphics g = new Graphics();
+  static Dice dice = new Dice(6);
+  static IOSettings s = new IOSettings();
 
   static private boolean run = true;
   static private boolean play = false;
@@ -24,11 +26,19 @@ public class TheIsleOfLaeso{
   static String name = "duhadway";
   static String hat = "Casual";
   static String clothes = "Casual";
-  static String color = "Blue";
+  static String color = "Red";
  
   static int numOfPlayer = 4;
 
-  static Dice dice = new Dice(6);
+  static int playerTurn = 1;
+
+  //static ArrayList<Player> players = new ArrayList<Player>();
+  static Player[] players = new Player[numOfPlayer];
+
+  static Player a;
+  static Player b;
+  static Player c;
+  static Player d;
 
   /** 
   *manages the turn and intitalises one players turn
@@ -46,6 +56,10 @@ public class TheIsleOfLaeso{
     }
   }
 
+  // Phase might not be needed. Due to further thinking,
+  // I've come to the conclusion that we only need to detect 
+  // whether the player has rolled the die or not. 
+  // So maybe a boolean would work better?
   public static void incPhase(int phase){
     if(phase >= 3){
       phase = 0;
@@ -70,13 +84,18 @@ public class TheIsleOfLaeso{
 
 
   public static void makeMakeingMeMakeMethods(int numOfP){
-    Player a = new Player(6, 6, name, hat, clothes, color, inventory, 3);
-    Player b = new Player(6, 6, name, hat, clothes, color, inventory, -3);
+    a = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+    b = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+    players[0] = a;
+    players[1] = b;
     if(numOfP == 4) {
-      Player c = new Player(6, 6, name, hat, clothes, color, inventory, -1);
-      Player d = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+      c = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+      d = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+      players[2] = c;
+    players[3] = d;
     } else if(numOfP == 3){
-      Player c = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+      c = new Player(6, 6, name, hat, clothes, color, inventory, 3);
+      players[2] = c;
     }
   }
 
@@ -92,7 +111,6 @@ public class TheIsleOfLaeso{
     *System.out.println(b.getResource(lu)); 
     */
 
-    IOSettings s = new IOSettings();
     g.sceneDisplay(0); 
     g.refresh();   
   }	
