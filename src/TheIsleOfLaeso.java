@@ -14,6 +14,7 @@ public class TheIsleOfLaeso{
   static Graphics g = new Graphics();
   static Dice dice = new Dice(6);
   static IOSettings s = new IOSettings();
+  static Island i = new Island();
 
   static private boolean run = true;
   static private boolean play = false;

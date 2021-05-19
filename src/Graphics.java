@@ -8,6 +8,7 @@
 
 /*
 TODO:
+    - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
 
 */
 
@@ -644,6 +645,8 @@ public class Graphics extends JFrame {
                     profileDisplay(TheIsleOfLaeso.players[1], 915, 630);
                 }
 
+                displayBoard();
+
                 if (!diceRolled) {
                     con.add(dieButton);
                 } else {
@@ -970,12 +973,13 @@ public class Graphics extends JFrame {
      * on the board)
      * 
      */
-    public void displaySmallPlayer(Player p) {
+    public void displaySmallPlayer(Player p, int x, int y) {
 
         ImageIcon characterHat = new ImageIcon();
         ImageIcon characterColor = new ImageIcon();
         ImageIcon characterBody = new ImageIcon();
 
+        characterHat = new ImageIcon(".//res//CharacterN.png");
         characterColor = new ImageIcon(".//res//CharacterN.png");
         characterBody = new ImageIcon(".//res//CharacterN.png");
 
@@ -1008,19 +1012,19 @@ public class Graphics extends JFrame {
         JLabel hatLabel = new JLabel(characterHat);
         JPanel hatPanel = new JPanel();
         hatPanel.setBackground(new Color(0, 0, 0, 0));
-        hatPanel.setBounds(p.getXPos(), p.getYPos() - 2, 64, 74);
+        hatPanel.setBounds(x, y - 2, 64, 74);
         hatPanel.add(hatLabel);
 
         JLabel colorLabel = new JLabel(characterColor);
         JPanel colorPanel = new JPanel();
         colorPanel.setBackground(new Color(0, 0, 0, 0));
-        colorPanel.setBounds(p.getXPos(), p.getYPos() + 6, 64, 74);
+        colorPanel.setBounds(x, y + 6, 64, 74);
         colorPanel.add(colorLabel);
 
         JLabel bodyLabel = new JLabel(characterBody);
         JPanel bodyPanel = new JPanel();
         bodyPanel.setBackground(new Color(0, 0, 0, 0));
-        bodyPanel.setBounds(p.getXPos(), p.getYPos() + 26, 64, 74);
+        bodyPanel.setBounds(x, y + 26, 64, 74);
         bodyPanel.add(bodyLabel);
 
         playerList.add(hatPanel);
@@ -1039,7 +1043,7 @@ public class Graphics extends JFrame {
      * @param x
      * @param y
      */
-    public void displayResource(int type, int x, int y) { // I'm not sure what the types are for the resources
+    public void displayResource(int type, int x, int y) {
         ImageIcon resImage = new ImageIcon();
 
         if (type == 0) {
@@ -1246,6 +1250,66 @@ public class Graphics extends JFrame {
         TheIsleOfLaeso.g.refresh();
 
     }
+
+    public void displayBoard() {
+        String[][] theBoard = TheIsleOfLaeso.i.getBoard();
+
+        int xOffset = 0;
+        int yOffset = 0;
+
+        for (int i = 0; i < theBoard.length; i++) {
+            for (int j = 0; j < theBoard[i].length; j++) {
+
+                if (j > 25) {
+                    xOffset = -20;
+                } else if (j > 20) {
+                    xOffset = -10;
+                } else if (j > 15) {
+                    xOffset = -5;
+                } else if (j > 10) {
+                    xOffset = +2;
+                } else if (j > 5) {
+                    xOffset = +10;
+                } else if (j > 0) {
+                    xOffset = +12;
+                }
+
+                if (i > 8) {
+                    yOffset = 0;
+                } else if (i > 4) {
+                    yOffset = -3;
+                } else if (i > 0) {
+                    yOffset = -6;
+                }
+
+                // Display resources
+                if (TheIsleOfLaeso.i.contains("wood", j, i)) {
+                    displayResource(0, (j * 43) - 35 + xOffset, (i * 40) + 73 + yOffset);
+                } else if (TheIsleOfLaeso.i.contains("people", j, i)) {
+                    displayResource(1, (j * 43) - 33 + xOffset, (i * 40) + 67 + yOffset);
+                } else if (TheIsleOfLaeso.i.contains("food", j, i)) {
+                    displayResource(2, (j * 43) - 31 + xOffset, (i * 40) + 73 + yOffset);
+                } else if (TheIsleOfLaeso.i.contains("stone", j, i)) {
+                    displayResource(3, (j * 43) - 30 + xOffset, (i * 40) + 73 + yOffset);
+                } else if (TheIsleOfLaeso.i.contains("ore", j, i)) {
+                    displayResource(4, (j * 43) - 33 + xOffset, (i * 40) + 73 + yOffset);
+                } else if (TheIsleOfLaeso.i.contains("magic", j, i)) {
+                    displayResource(5, (j * 43) - 31 + xOffset, (i * 40) + 73 + yOffset);
+                }
+            }
+        }
+
+        // Display players
+        for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
+
+            displaySmallPlayer(TheIsleOfLaeso.players[i], (TheIsleOfLaeso.players[i].getXPos() * 43) - 12 + xOffset,
+                    (TheIsleOfLaeso.players[i].getYPos() * 40) + 73 + yOffset);
+        }
+
+        // Display buildings
+
+    }
+
 }
 
 // ================================================================================================================================================
@@ -1338,7 +1402,22 @@ class GoToNextPlayer implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
 
-        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1] = new Player(79, 630,
+        int x = 0;
+        int y = 0;
+
+        if (TheIsleOfLaeso.playerTurn == 1) {
+            x = 7;
+            y = 8;
+        } else if (TheIsleOfLaeso.playerTurn == 2) {
+            x = 18;
+            y = 7;
+        } else if (TheIsleOfLaeso.playerTurn == 3) {
+            x = 12;
+            y = 11;
+        }
+
+        // (x * 43) - 35, (y * 40) + 73,
+        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1] = new Player(x, y,
                 TheIsleOfLaeso.g.activeTextField.getText(), TheIsleOfLaeso.hat, TheIsleOfLaeso.clothes,
                 TheIsleOfLaeso.color, TheIsleOfLaeso.inventory, 3);
 
@@ -1379,7 +1458,16 @@ class GoToNextPlayer implements ActionListener {
 class GoToBoard implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1] = new Player(79, 630,
+
+        int x = 0;
+        int y = 0;
+
+        if (TheIsleOfLaeso.playerTurn == TheIsleOfLaeso.numOfPlayer) {
+            x = 12;
+            y = 1;
+        }
+
+        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1] = new Player(x, y,
                 TheIsleOfLaeso.g.activeTextField.getText(), TheIsleOfLaeso.hat, TheIsleOfLaeso.clothes,
                 TheIsleOfLaeso.color, TheIsleOfLaeso.inventory, 3);
 
@@ -1426,14 +1514,15 @@ class GoToBoardToBuild implements ActionListener {
 
         // Make the building using the string toBeBuilt
 
-        if(TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer){
+        if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
             TheIsleOfLaeso.playerTurn++;
         } else {
             TheIsleOfLaeso.playerTurn = 1;
         }
         TheIsleOfLaeso.g.diceRolled = false;
         TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
-        + "'s turn. Roll the dice!";
+                + "'s turn. Roll the dice!";
+        TheIsleOfLaeso.i.resourceGeneration();
         TheIsleOfLaeso.g.refreshBoard();
     }
 }
@@ -1817,11 +1906,10 @@ class DiceRoll implements ActionListener {
         roll1 = TheIsleOfLaeso.dice.roll();
         roll2 = TheIsleOfLaeso.dice.roll();
 
-        //System.out.println("The rolls were " + roll1 + " and " + roll2);
-        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
-        + "'s turn. " + roll1 + " moves, " + roll2 + " collects left";
+        // System.out.println("The rolls were " + roll1 + " and " + roll2);
+        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
+                + roll1 + " moves, " + roll2 + " collects left";
 
-    
         // TheIsleOfLaeso.incPhase(TheIsleOfLaeso.getPhase());
         // System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
 
@@ -1838,19 +1926,20 @@ class DiceRoll implements ActionListener {
 class EndTurn implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        //TheIsleOfLaeso.incPhase(TheIsleOfLaeso.getPhase());
-        //System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
-        
-        if(TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer){
+        // TheIsleOfLaeso.incPhase(TheIsleOfLaeso.getPhase());
+        // System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
+
+        if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
             TheIsleOfLaeso.playerTurn++;
         } else {
             TheIsleOfLaeso.playerTurn = 1;
         }
         TheIsleOfLaeso.g.diceRolled = false;
         TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
-        + "'s turn. Roll the dice!";
+                + "'s turn. Roll the dice!";
+        TheIsleOfLaeso.i.resourceGeneration();
         TheIsleOfLaeso.g.refreshBoard();
-        
+
     }
 }
 
@@ -1860,12 +1949,12 @@ class EndTurn implements ActionListener {
 class Build implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        if(TheIsleOfLaeso.g.diceRolled){
+        if (TheIsleOfLaeso.g.diceRolled) {
             TheIsleOfLaeso.g.hideActivePanel();
             TheIsleOfLaeso.g.sceneDisplay(7);
             TheIsleOfLaeso.g.refresh();
         }
-        
+
     }
 }
 
@@ -1875,19 +1964,20 @@ class Build implements ActionListener {
 class Attack implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        if(TheIsleOfLaeso.g.diceRolled){
+        if (TheIsleOfLaeso.g.diceRolled) {
             System.out.println("The attack button was pressed");
 
-            if(TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer){
+            if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
                 TheIsleOfLaeso.playerTurn++;
             } else {
                 TheIsleOfLaeso.playerTurn = 1;
             }
             TheIsleOfLaeso.g.diceRolled = false;
             TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
-            + "'s turn. Roll the dice!";
+                    + "'s turn. Roll the dice!";
+            TheIsleOfLaeso.i.resourceGeneration();
             TheIsleOfLaeso.g.refreshBoard();
         }
     }
-    
+
 }
