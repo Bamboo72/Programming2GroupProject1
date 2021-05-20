@@ -43,6 +43,8 @@ public class Island {
     public void remove(String e, int x, int y) {
       if(board[y][x].contains(e)) {
         board[y][x] = board[y][x].substring(0, board[y][x].indexOf(e)) + board[y][x].substring(board[y][x].indexOf(e) + e.length(), board[y][x].length());
+      } else {
+        System.out.println("Uhhhhhh... This is awkward... I guess that element wasn't actually there so I couldn't remove it. You have drawn the ire of the gods; prepare to be smitten.");
       }
     }
 
@@ -65,6 +67,25 @@ public class Island {
       else return false;
     }
 
+    public void build(char type, int x, int y) {
+      switch(type) {
+        case 's':
+          add("storehouse ", x, y);
+        case 'v':
+          add("village ", x, y);
+        case 'f':
+          add("fort ", x, y);
+        case 'p':
+          add("port ", x, y);
+        case 'b':
+          add("boat ", x, y);
+        default: break;
+      }
+    }
+
+    /**
+     * This method randomly generates resources on resource spaces based on the terrains adjacent to them.
+     */
     public void resourceGeneration() {
       for (int y = 0; y < board.length; y++) {
         for (int x = 0; x < board[y].length; x++) {
