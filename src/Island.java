@@ -8,6 +8,7 @@
 import java.util.Random;
 
 public class Island {
+    public double resourceSpawnRate = 1;
     String[][] board = {
   /*         0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 */
   /*0*/    {"o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","r ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o "},
@@ -161,17 +162,17 @@ public class Island {
 
             Random r = new Random();
             double rand = r.nextDouble();
-            if (rand < woodChance) {
+            if (rand < woodChance * resourceSpawnRate) {
               board[y][x] += "wood ";
-            } else if (rand < woodChance + peopleChance) {
+            } else if (rand < (woodChance + peopleChance) * resourceSpawnRate) {
               board[y][x] += "people ";
-            } else if (rand < woodChance + peopleChance + foodChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance) * resourceSpawnRate) {
               board[y][x] += "food ";
-            } else if (rand < woodChance + peopleChance + foodChance + stoneChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance) * resourceSpawnRate) {
               board[y][x] += "stone ";
-            } else if (rand < woodChance + peopleChance + foodChance + stoneChance + oreChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance + oreChance) * resourceSpawnRate) {
               board[y][x] += "ore ";
-            } else if (rand < woodChance + peopleChance + foodChance + stoneChance + oreChance + magicChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance + oreChance + magicChance) * resourceSpawnRate) {
               board[y][x] += "magic ";
             }
           }
