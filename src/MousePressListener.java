@@ -158,50 +158,91 @@ class MousePressListener implements MouseListener {
             // System.out.println("To the LU");
             // }
 
-            if (rowNum == currentPlayerY) {
-                if (colNum == currentPlayerX + 1) {
-                    System.out.println("To the Right");
-                    String theResource = TheIsleOfLaeso.i.getBoard()[rowNum][colNum];
-                    if (!theResource.equals("r")) {
-                        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
-                    }
-                    // TheIsleOfLaeso.i.remove(theResource, rowNum, colNum);
-                }
-                if (colNum == currentPlayerX - 1) {
-                    System.out.println("To the Left");
-                }
+            if(TheIsleOfLaeso.collectsLeft > 0){
+              String theResource = TheIsleOfLaeso.i.getBoard()[rowNum][colNum];
+
+              if (rowNum == currentPlayerY) {
+                  if (colNum == currentPlayerX + 1) {
+                      System.out.println("To the Right");
+
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          //TheIsleOfLaeso.i.remove(theResource, rowNum, colNum);
+                          //TheIsleOfLaeso.i.add("r ", rowNum, colNum);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum, colNum);
+                      }
+
+                  }
+                  if (colNum == currentPlayerX - 1) {
+                      System.out.println("To the Left");
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum, colNum);
+                      }
+                  }
+              }
+
+              if (colNum == currentPlayerX) {
+                  if (rowNum == currentPlayerY + 1) {
+                      System.out.println("To the Bottom");
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum, colNum);
+                      }
+
+                  }
+                  if (rowNum == currentPlayerY - 1) {
+                      System.out.println("To the Top");
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum, colNum);
+                      }
+
+                  }
+              }
+              TheIsleOfLaeso.collectsLeft = TheIsleOfLaeso.collectsLeft - 1;
+              TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
+                      + TheIsleOfLaeso.moveLeft + " moves, " + TheIsleOfLaeso.collectsLeft + " collects left";
+                      TheIsleOfLaeso.g.refreshBoard();
             }
 
-            if (colNum == currentPlayerX) {
-                if (rowNum == currentPlayerY + 1) {
-                    System.out.println("To the Bottom");
-                }
-                if (rowNum == currentPlayerY - 1) {
-                    System.out.println("To the Top");
-                }
+
+            if(TheIsleOfLaeso.moveLeft > 0){
+              if (colNum == currentPlayerX + 1) {
+                  if (rowNum == currentPlayerY + 1) {
+                      System.out.println("To the RD");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ru");
+
+
+                  }
+                  if (rowNum == currentPlayerY - 1) {
+                      System.out.println("To the RU");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("rd");
+
+
+                  }
+              }
+
+              if (colNum == currentPlayerX - 1) {
+                  if (rowNum == currentPlayerY + 1) {
+                      System.out.println("To the LD");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("lu");
+
+
+                  }
+                  if (rowNum == currentPlayerY - 1) {
+                      System.out.println("To the LU");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ld");
+
+
+                  }
+              }
+              TheIsleOfLaeso.moveLeft = TheIsleOfLaeso.moveLeft - 1;
+              TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
+                      + TheIsleOfLaeso.moveLeft + " moves, " + TheIsleOfLaeso.collectsLeft + " collects left";
+                      TheIsleOfLaeso.g.refreshBoard();
             }
 
-            if (colNum == currentPlayerX + 1) {
-                if (rowNum == currentPlayerY + 1) {
-                    System.out.println("To the RD");
-                    TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ru"); // Doesn't work because it's
-                                                                                      // changing the Player class
-                                                                                      // variable for x and y, not the
-                                                                                      // player object's
-                }
-                if (rowNum == currentPlayerY - 1) {
-                    System.out.println("To the RU");
-                }
-            }
-
-            if (colNum == currentPlayerX - 1) {
-                if (rowNum == currentPlayerY + 1) {
-                    System.out.println("To the LD");
-                }
-                if (rowNum == currentPlayerY - 1) {
-                    System.out.println("To the LU");
-                }
-            }
 
         }
         System.out.println(TheIsleOfLaeso.i.getBoard()[rowNum][colNum]);
@@ -212,7 +253,7 @@ class MousePressListener implements MouseListener {
     /**
      * This method returns whether a tile is a viable move or collect (detects if a
      * spot has a player, building, or is blank)
-     * 
+     *
      * @return boolean allowed or not depending on the tile occupants
      */
     public boolean allowedMoveCheck() {
@@ -223,7 +264,7 @@ class MousePressListener implements MouseListener {
     /**
      * This method returns whether a tile has a resource or not (detects if a spot
      * has a resource or is blank)
-     * 
+     *
      * @return boolean allowed or not depending on the tile occupants
      */
     public boolean tileHasRes() {

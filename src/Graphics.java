@@ -1,4 +1,3 @@
-
 /**
 * @author Jacob Schwartz
 * @version 1.0
@@ -9,7 +8,6 @@
 /*
 TODO:
     - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
-
 */
 
 import javax.swing.JFrame;
@@ -72,7 +70,7 @@ public class Graphics extends JFrame {
 
     /**
      * This method will display different scenes depending on the displayState
-     * 
+     *
      * @param displayNum
      */
     public void sceneDisplay(int displayNum) {
@@ -609,19 +607,19 @@ public class Graphics extends JFrame {
                  * new int[6]; Player profilePlayer = new Player(79, 630, "Billy Bob", "Armor",
                  * "Armor", "Green", inventory, 3); profilePlayer.addResource("wood", 3);
                  * profilePlayer.addResource("ore", 99);
-                 * 
+                 *
                  * Player profilePlayer2 = new Player(297, 630, "Billy Bob", "Armor", "Armor",
                  * "Green", inventory, 3);
-                 * 
+                 *
                  * Player profilePlayer3 = new Player(1135, 630, "Billy Bob", "Armor", "Armor",
                  * "Green", inventory, 3);
-                 * 
+                 *
                  * Player profilePlayer4 = new Player(915, 630, "Billy Bob", "Armor", "Armor",
                  * "Green", inventory, 3);
-                 * 
+                 *
                  * profileDisplay(profilePlayer); profileDisplay(profilePlayer2);
                  * profileDisplay(profilePlayer3); profileDisplay(profilePlayer4);
-                 * 
+                 *
                  * // displayWin(0, profilePlayer);
                  */
 
@@ -832,7 +830,7 @@ public class Graphics extends JFrame {
     /**
      * This method displays text at the top of the screen. Specifically for the game
      * board.
-     * 
+     *
      * @param text
      */
     public void displayBoardText(String text) {
@@ -864,7 +862,7 @@ public class Graphics extends JFrame {
 
     /**
      * This method displays text at the passed in location.
-     * 
+     *
      * @param text
      * @param x
      * @param y
@@ -902,7 +900,7 @@ public class Graphics extends JFrame {
      * This method displays the character depending on the Player object's x and y
      * and traits (Note that this is the big version used for the preview Player and
      * profiles)
-     * 
+     *
      * @param p
      */
     public void displayPlayer(Player p, int x, int y) {
@@ -971,7 +969,7 @@ public class Graphics extends JFrame {
      * This method displays the character depending on the Player object's x and y
      * and traits (Note that this is the small version used for displaying a player
      * on the board)
-     * 
+     *
      */
     public void displaySmallPlayer(Player p, int x, int y) {
 
@@ -1038,7 +1036,7 @@ public class Graphics extends JFrame {
 
     /**
      * This method displays the resource depending on the type and coords.
-     * 
+     *
      * @param type
      * @param x
      * @param y
@@ -1071,7 +1069,7 @@ public class Graphics extends JFrame {
 
     /**
      * This method displays the resource depending on the type and coords.
-     * 
+     *
      * @param type
      * @param x
      * @param y
@@ -1178,7 +1176,7 @@ public class Graphics extends JFrame {
 
     /**
      * This method displays a player's profile.
-     * 
+     *
      * @param p
      */
     public void profileDisplay(Player p, int x, int y) {
@@ -1377,7 +1375,7 @@ class GoToHMP implements ActionListener { // AKA the Start button
 /**
  * This class makes the button that switches the scene display to the character
  * creations screen
- * 
+ *
  * This button also creates the correct number of Player objects, depending on
  * the hmp variable.
  */
@@ -1914,7 +1912,10 @@ class DiceRoll implements ActionListener {
         // System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
 
         TheIsleOfLaeso.g.diceRolled = true;
-
+        TheIsleOfLaeso.moveLeft = roll1;
+        System.out.println(TheIsleOfLaeso.moveLeft);
+        TheIsleOfLaeso.collectsLeft = roll2;
+        System.out.println(TheIsleOfLaeso.collectsLeft);
         TheIsleOfLaeso.g.refreshBoard();
     }
 }
