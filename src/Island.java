@@ -162,17 +162,23 @@ public class Island {
 
             Random r = new Random();
             double rand = r.nextDouble();
-            if (rand < woodChance * resourceSpawnRate) {
+            if (rand < woodChance) {
+              remove(board[y][x].substring(2), x, y);
               board[y][x] += "wood ";
-            } else if (rand < (woodChance + peopleChance) * resourceSpawnRate) {
+            } else if (rand < woodChance + peopleChance) {
+              remove(board[y][x].substring(2), x, y);
               board[y][x] += "people ";
-            } else if (rand < (woodChance + peopleChance + foodChance) * resourceSpawnRate) {
+            } else if (rand < woodChance + peopleChance + foodChance) {
+              remove(board[y][x].substring(2), x, y);
               board[y][x] += "food ";
-            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance) * resourceSpawnRate) {
+            } else if (rand < woodChance + peopleChance + foodChance + stoneChance) {
+              remove(board[y][x].substring(2), x, y);
               board[y][x] += "stone ";
-            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance + oreChance) * resourceSpawnRate) {
+            } else if (rand < woodChance + peopleChance + foodChance + stoneChance + oreChance) {
+              remove(board[y][x].substring(2), x, y);
               board[y][x] += "ore ";
-            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance + oreChance + magicChance) * resourceSpawnRate) {
+            } else if (rand < woodChance + peopleChance + foodChance + stoneChance + oreChance + magicChance) {
+              remove(board[y][x].substring(2), x, y);
               board[y][x] += "magic ";
             }
           }
