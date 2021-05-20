@@ -111,4 +111,20 @@ Updated Island class 2021-5-13 - andrewblodgett
 
 Added NaturalEventGenerator.java 2021-5-14 - bran214
 
-Updated Graphics class and button classes to use code made by other group members 2021-5-16 - Bamboo72
+Updated NaturalEventGenerator class 2021-5-14 - bran214
+
+Updated Graphics and button classes 2021-5-16 - Bamboo72
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-18 - Bamboo72
+
+Updated Island class 2021-5-18 - andrewblodgett
+
+Updated Mouse classes 2021-5-20 - Bamboo72
+
+Updated Island class 2021-5-20 - andrewblodgett
+
+Updated Graphics and Mouse classes 2021-5-20 - Bamboo72
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-20 - HoldMyTyr
+
+Updated Structure class 2021-5-20 - andrewblodgett
