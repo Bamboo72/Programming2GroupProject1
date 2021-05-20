@@ -8,7 +8,7 @@
 import java.util.Random;
 
 public class Island {
-    public double resourceSpawnRate = 1;
+    public double resourceSpawnRate = .1;
     String[][] board = {
   /*         0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 */
   /*0*/    {"o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","r ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o "},
@@ -78,106 +78,106 @@ public class Island {
             if (y > 0) {
               switch(board[y-1][x].charAt(0)) {
                 case 'f':
-                  woodChance += 0.17;
+                  woodChance += 0.15;
                   break;
                 case 'm':
-                  oreChance += 0.17;
+                  oreChance += 0.15;
                   break;
                 case 'c':
-                  stoneChance += 0.2;
+                  stoneChance += 0.15;
                   break;
                 case 'v':
-                  peopleChance += 0.2;
+                  peopleChance += 0.27;
                   break;
                 case 'p':
                   foodChance += 0.2;
                   break;
                 case 'l':
-                  magicChance += 0.15;
-              }
+                  magicChance += 0.1;
+                }
             }
             if (y < 12) {
               switch(board[y+1][x].charAt(0)) {
                 case 'f':
-                  woodChance += 0.17;
+                  woodChance += 0.15;
                   break;
                 case 'm':
-                  oreChance += 0.17;
+                  oreChance += 0.15;
                   break;
                 case 'c':
-                  stoneChance += 0.2;
+                  stoneChance += 0.15;
                   break;
                 case 'v':
-                  peopleChance += 0.2;
+                  peopleChance += 0.27;
                   break;
                 case 'p':
                   foodChance += 0.2;
                   break;
                 case 'l':
-                  magicChance += 0.15;
+                  magicChance += 0.1;
               }
             }
             if (x > 0) {
               switch(board[y][x-1].charAt(0)) {
                 case 'f':
-                  woodChance += 0.17;
+                  woodChance += 0.15;
                   break;
                 case 'm':
-                  oreChance += 0.17;
+                  oreChance += 0.15;
                   break;
                 case 'c':
-                  stoneChance += 0.2;
+                  stoneChance += 0.15;
                   break;
                 case 'v':
-                  peopleChance += 0.2;
+                  peopleChance += 0.27;
                   break;
                 case 'p':
                   foodChance += 0.2;
                   break;
                 case 'l':
-                  magicChance += 0.15;
+                  magicChance += 0.1;
               }
             }
             if (x < 30) {
               switch(board[y][x+1].charAt(0)) {
                 case 'f':
-                  woodChance += 0.17;
+                  woodChance += 0.15;
                   break;
                 case 'm':
-                  oreChance += 0.17;
+                  oreChance += 0.15;
                   break;
                 case 'c':
-                  stoneChance += 0.2;
+                  stoneChance += 0.15;
                   break;
                 case 'v':
-                  peopleChance += 0.25;
+                  peopleChance += 0.27;
                   break;
                 case 'p':
                   foodChance += 0.2;
                   break;
                 case 'l':
-                  magicChance += 0.15;
+                  magicChance += 0.1;
               }
             }
 
             Random r = new Random();
             double rand = r.nextDouble();
-            if (rand < woodChance) {
+            if (rand < woodChance * resourceSpawnRate) {
               remove(board[y][x].substring(2), x, y);
               board[y][x] += "wood ";
-            } else if (rand < woodChance + peopleChance) {
+            } else if (rand < (woodChance + peopleChance) * resourceSpawnRate) {
               remove(board[y][x].substring(2), x, y);
               board[y][x] += "people ";
-            } else if (rand < woodChance + peopleChance + foodChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance) * resourceSpawnRate) {
               remove(board[y][x].substring(2), x, y);
               board[y][x] += "food ";
-            } else if (rand < woodChance + peopleChance + foodChance + stoneChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance) * resourceSpawnRate) {
               remove(board[y][x].substring(2), x, y);
               board[y][x] += "stone ";
-            } else if (rand < woodChance + peopleChance + foodChance + stoneChance + oreChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance + oreChance) * resourceSpawnRate) {
               remove(board[y][x].substring(2), x, y);
               board[y][x] += "ore ";
-            } else if (rand < woodChance + peopleChance + foodChance + stoneChance + oreChance + magicChance) {
+            } else if (rand < (woodChance + peopleChance + foodChance + stoneChance + oreChance + magicChance) * resourceSpawnRate) {
               remove(board[y][x].substring(2), x, y);
               board[y][x] += "magic ";
             }
