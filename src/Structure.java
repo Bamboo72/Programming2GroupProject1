@@ -1,27 +1,28 @@
 /**
- * The class that represents a structure for isle of laeso. 
+ * The class that represents a structure for isle of laeso.
  * @author Andrew Blodgett
  * @version 1.0
  * @since 2021-05-13
  */
 
 public class Structure {
-    
-    private char type; // Building types: 'r' for resource gatherer, 'v' for village, 'f' for fortress, 'p' for port, and 'b' for boat.
-    private int[] cost;
-    private int x, y, health;
+
+    char type; // Building types: 'r' for resource gatherer, 'v' for village, 'f' for fortress, 'p' for port, and 'b' for boat.
+    int[] cost;
+    int x, y, health, owner;
 
     /**
      * The constructor for the Structure class.
-     * @param buildingType
+     * @param buildingType, x, y, buildingHealth, buildingOwner
      */
-    public Structure(char buildingType, int x, int y, int buildingHealth) {
+    public Structure(char buildingType, int x, int y, int buildingHealth, int buildingOwner) {
         type = buildingType;
         cost = new int[5];
         findBuildCost();
         this.x = x;
         this.y = y;
         health = buildingHealth;
+        owner = buildingOwner;
     }
 
     /**
@@ -36,7 +37,7 @@ public class Structure {
          * cost[4] is ore
          */
         switch(type) {
-            case 'r': 
+            case 'r':
                 cost[0] = 4;
                 cost[1] = 0;
                 cost[2] = 3;
@@ -110,5 +111,5 @@ public class Structure {
     public int getHealth() {
         return health;
     }
-    
+
 }
