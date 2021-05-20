@@ -124,14 +124,14 @@ class MousePressListener implements MouseListener {
             colNum = -1;
         }
 
-        System.out.println("Row: " + rowNum + ", Col: " + colNum);
+        System.out.println("Col: " + colNum + ", Row: " + rowNum);
        
         int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
         int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
 
         System.out.println("Player at x: " + currentPlayerX + ", y: " + currentPlayerY);
 
-        if(TheIsleOfLaeso.g.diceRolled){ // Row = Y, Col = X
+        if(TheIsleOfLaeso.g.diceRolled){ // Row = Y, Col = X, Note that I'm calling the top of the screen top/up
             if(colNum == currentPlayerX++ && rowNum == currentPlayerY){
                 System.out.println("To the Right");
             } 
@@ -144,8 +144,25 @@ class MousePressListener implements MouseListener {
             if(rowNum == currentPlayerY-- && colNum == currentPlayerX){
                 System.out.println("To the Top");
             }
+
+            if(colNum == currentPlayerX++ && rowNum == currentPlayerY++){
+                System.out.println("To the RD");
+            } 
+            if(colNum == currentPlayerX++ && rowNum == currentPlayerY--){
+                System.out.println("To the RU");
+            } 
+            if(rowNum == currentPlayerY++ && colNum == currentPlayerX--){
+                System.out.println("To the LD");
+            } 
+            if(rowNum == currentPlayerY-- && colNum == currentPlayerX--){
+                System.out.println("To the LU");
+            }
+
         }
+        System.out.println(TheIsleOfLaeso.i.getBoard()[rowNum][colNum]);
         System.out.println();
+
+        
 
     }
 
