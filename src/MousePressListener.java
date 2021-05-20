@@ -125,6 +125,27 @@ class MousePressListener implements MouseListener {
         }
 
         System.out.println("Row: " + rowNum + ", Col: " + colNum);
+       
+        int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
+        int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
+
+        System.out.println("Player at x: " + currentPlayerX + ", y: " + currentPlayerY);
+
+        if(TheIsleOfLaeso.g.diceRolled){ // Row = Y, Col = X
+            if(colNum == currentPlayerX++ && rowNum == currentPlayerY){
+                System.out.println("To the Right");
+            } 
+            if(colNum == currentPlayerX-- && rowNum == currentPlayerY){
+                System.out.println("To the Left");
+            } 
+            if(rowNum == currentPlayerY++ && colNum == currentPlayerX){
+                System.out.println("To the Bottom");
+            } 
+            if(rowNum == currentPlayerY-- && colNum == currentPlayerX){
+                System.out.println("To the Top");
+            }
+        }
+        System.out.println();
 
     }
 
