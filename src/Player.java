@@ -15,6 +15,7 @@ public class Player {
     private String color;
     private int[] inventory; 
     private int health;
+    private int roll1, roll2;
   
   
     /**
@@ -84,9 +85,52 @@ public class Player {
   
   
   
-  
-  
-  
+
+    public void attacking(Player playerOne, Player playerTwo) {
+      roll1 = TheIsleOfLaeso.dice.roll();
+      roll2 = TheIsleOfLaeso.dice.roll();
+      if(checkForPlayerAtStructure(playerTwo, "f")){
+        roll2 ++;
+      } 
+      if(checkForPlayerAtStructure(playerOne, "v")){
+        roll1 ++;
+      } 
+      if(roll1 > roll2 + 2){
+        playerTwo.damage();
+        playerTwo.addResource("wood", -10);
+	playerOne.addResource("wood", 10);
+      } else if(roll1 > roll2){
+        playerTwo.addResource("wood", -10);
+	playerOne.addResource("wood", 10);
+      } else if(roll1 + 2 < roll2) {
+        playerOne.damage();
+        playerOne.addResource("wood", -10);
+	playerTwo.addResource("wood", 10);
+      } else if(roll1 < roll2) {
+        playerOne.addResource("wood", -10);
+	playerTwo.addResource("wood", 10);
+      }
+    }
+
+
+
+    /**
+    * Checks if there is a specific building type at the player location
+    * @param player, type
+    */
+    public static boolean checkForPlayerAtStructure(Player p, char type){
+      for(Structure s: structures){
+        if(p.getXPos() == s.getX()){
+          if(p.getYPos() == s.getY()){
+              if(s.getType() == type ){
+                return true;
+              }
+          }
+        }
+      }
+      return false;
+    }
+
     /**
     * a function to control movment 
     * @param dirFace
