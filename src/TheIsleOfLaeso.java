@@ -7,7 +7,7 @@ public class TheIsleOfLaeso{
   *@Author Maximilian C. Sutton (most of main, Character Creation class, Player class, Settings class, Settings files)
   *@Author Jacob Schwartz (put 100000 hr in, Graphics class, Cool Art, Island layout, Buttons/Mouse class, some of main)
   *@Author Andrew Blodgett (Resource Generation Class, Dice class, Island class, Structure/Build class)
-  *@Author Brandon Winters (Catastrophe Mode class)
+  *@Author Brandon Winters (Catastrophe Mode classes: NaturalEventGenerator class, EnhancedNaturalEventGenerator class)
   *@Version 0.91
   *@Since 2021-5-20
   */
