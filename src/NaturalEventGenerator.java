@@ -69,10 +69,10 @@ public class NaturalEventGenerator {
 //            System.out.println(generateEvent(player));
 //            System.out.println("x: " + player.getXPos());
 //            System.out.println("y: " + player.getYPos());
-//            System.out.println("wood: " + player.getResource("wood"));
-//            System.out.println("people: " + player.getResource("people"));
-//            System.out.println("food: " + player.getResource("food"));
-//            System.out.println("stone: " + player.getResource("stone"));
+//            System.out.println("wood: " + player.getResource("wood "));
+//            System.out.println("people: " + player.getResource("people "));
+//            System.out.println("food: " + player.getResource("food "));
+//            System.out.println("stone: " + player.getResource("stone "));
 //            System.out.println("health: " + player.getHealth());
 //        }
 //        Player[] players = new Player[] {player, player1};
@@ -80,17 +80,17 @@ public class NaturalEventGenerator {
 //            System.out.println(generateGlobalEvent(players));
 //            System.out.println("x: " + player.getXPos());
 //            System.out.println("y: " + player.getYPos());
-//            System.out.println("wood: " + player.getResource("wood"));
-//            System.out.println("people: " + player.getResource("people"));
-//            System.out.println("food: " + player.getResource("food"));
-//            System.out.println("stone: " + player.getResource("stone"));
+//            System.out.println("wood: " + player.getResource("wood "));
+//            System.out.println("people: " + player.getResource("people "));
+//            System.out.println("food: " + player.getResource("food "));
+//            System.out.println("stone: " + player.getResource("stone "));
 //            System.out.println("health: " + player.getHealth());
 //            System.out.println("x1: " + player1.getXPos());
 //            System.out.println("y1: " + player1.getYPos());
-//            System.out.println("wood1: " + player1.getResource("wood"));
-//            System.out.println("people1: " + player1.getResource("people"));
-//            System.out.println("food1: " + player1.getResource("food"));
-//            System.out.println("stone1: " + player1.getResource("stone"));
+//            System.out.println("wood1: " + player1.getResource("wood "));
+//            System.out.println("people1: " + player1.getResource("people "));
+//            System.out.println("food1: " + player1.getResource("food "));
+//            System.out.println("stone1: " + player1.getResource("stone "));
 //            System.out.println("health1: " + player1.getHealth());
 //        }
 //    }
@@ -132,78 +132,78 @@ public class NaturalEventGenerator {
                 break;
             case FIRE:
                 lostWood = -(int)(Math.random() * 3) - 1;
-                impactedPlayer.addResource("wood", lostWood);
+                impactedPlayer.addResource("wood ", lostWood);
                 break;
             case LIGHTNING:
                 random = Math.random();
                 if (random < 0.1) {
-                    impactedPlayer.addResource("stone", -1);
+                    impactedPlayer.addResource("stone ", -1);
                 }
                 if (random < 0.2) {
-                    impactedPlayer.addResource("wood", -1);
+                    impactedPlayer.addResource("wood ", -1);
                 }
                 random = Math.random();
                 if (random < 0.02) {
                     impactedPlayer.damage();
                 }
-                impactedPlayer.addResource("people", -1);
+                impactedPlayer.addResource("people ", -1);
                 break;
             case BUGS:
                 int lostFood = -(int)(Math.random() * 2) - 1;
-                impactedPlayer.addResource("food", lostFood);
+                impactedPlayer.addResource("food ", lostFood);
                 break;
             case PLAGUE:
                 random = Math.random();
                 if (random < 0.5) {
-                    impactedPlayer.addResource("food", -1);
+                    impactedPlayer.addResource("food ", -1);
                 }
                 if (random < 0.25) {
-                    impactedPlayer.addResource("people", -1);
+                    impactedPlayer.addResource("people ", -1);
                 }
-                impactedPlayer.addResource("people", -1);
+                impactedPlayer.addResource("people ", -1);
                 break;
             case EXPLOSION:
                 int lostStone = -(int)(Math.random() * 3) - 1;
-                impactedPlayer.addResource("stone", lostStone);
+                impactedPlayer.addResource("stone ", lostStone);
                 break;
             case ABDUCTION:
                 int trade = (int)(Math.random() * 2) + 1;
-                impactedPlayer.addResource("people", -trade);
-                impactedPlayer.addResource("stone", trade);
+                impactedPlayer.addResource("people ", -trade);
+                impactedPlayer.addResource("stone ", trade);
                 break;
             case ADOPTION:
                 int newPeople = (int)(Math.random() * 2) + 1;
-                impactedPlayer.addResource("people", newPeople);
+                impactedPlayer.addResource("people ", newPeople);
                 break;
             case TSUNAMI:
                 random = Math.random();
                 if (random < 0.5) {
-                    impactedPlayer.addResource("food", 2);
+                    impactedPlayer.addResource("food ", 2);
                 }
                 random = Math.random();
                 if (random < 0.1) {
-                    impactedPlayer.addResource("people", -1);
+                    impactedPlayer.addResource("people ", -1);
                 }
                 random = Math.random();
                 if (random < 0.5) {
-                    impactedPlayer.addResource("wood", -2);
+                    impactedPlayer.addResource("wood ", -2);
                 }
                 break;
             case FAMINE:
                 int lostFoodAndPeople = -(int)(Math.random() * 2) - 1;
-                impactedPlayer.addResource("food", lostFoodAndPeople);
-                impactedPlayer.addResource("people", lostFoodAndPeople);
+                impactedPlayer.addResource("food ", lostFoodAndPeople);
+                impactedPlayer.addResource("people ", lostFoodAndPeople);
                 break;
             case RAIN:
                 food = (int)(Math.random() * 2) + 2;
-                impactedPlayer.addResource("food", food);
+                impactedPlayer.addResource("food ", food);
                 break;
             case EARTHQUAKE:
                 int wood = (int) (Math.random() * 2) + 1;
-                impactedPlayer.addResource("wood", wood);
+                impactedPlayer.addResource("wood ", wood);
                 for (int i = 0; i < wood; i++) {
                     if (Math.random() < 0.5)
-                        impactedPlayer.addResource("people", -1);
+                        impactedPlayer.addResource("people ", -1);
                 }
                 break;
             case FLOOD:
@@ -211,9 +211,9 @@ public class NaturalEventGenerator {
                 if (Math.random() < 0.5) {
                     food = -food;
                 }
-                impactedPlayer.addResource("food", food);
+                impactedPlayer.addResource("food ", food);
                 if (Math.random() < 0.1) {
-                    impactedPlayer.addResource("wood", 1);
+                    impactedPlayer.addResource("wood ", 1);
                 }
                 break;
             default:
