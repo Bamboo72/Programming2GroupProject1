@@ -96,66 +96,99 @@ public class Player {
 
 
 
-  public void attacking(Player playerOne, Player playerTwo) {
-    roll1 = TheIsleOfLaeso.dice.roll();
-    roll2 = TheIsleOfLaeso.dice.roll();
-    if(checkForPlayerAtStructure(playerTwo, 'f') != null){
-      roll2 ++;
-    } 
-    if(checkForPlayerAtStructure(playerOne, 'v') != null){
-      roll1 ++;
-    } 
-    if(roll1 > roll2 + 2){
-      if(checkForPlayerAtStructure(playerTwo) != null){
-        checkForPlayerAtStructure(playerTwo).addHealth(-1);
-      } else {
-        playerTwo.damage();
+     public void attacking(Player playerOne, Player playerTwo) {
+      roll1 = TheIsleOfLaeso.dice.roll();
+      roll2 = TheIsleOfLaeso.dice.roll();
+      rad1 = TheIsleOfLaeso.dice.roll() - 1;
+      rad2 = TheIsleOfLaeso.dice.roll();
+      switch(rad1){
+        case 0:
+          res = "wood";
+          break;
+        case 1:
+          res = "people";
+          break;
+        case 2:
+          res = "food";
+          break;
+        case 3:
+          res = "stone";
+          break;
+        case 4:
+          res = "ore";
+          break;
+        case 5:
+          res = "magic";
+          break;
+        default:
+          res = "wood";
+          System.out.println("YOU BIG DUMB");
       }
-      playerTwo.addResource("wood", -10);
-      playerOne.addResource("wood", 10);
-    } else if(roll1 > roll2){
-      playerTwo.addResource("wood", -10);
-      playerOne.addResource("wood", 10);
-    } else if(roll1 + 2 < roll2) {
-      playerOne.damage();
-      playerOne.addResource("wood", -10);
-      playerTwo.addResource("wood", 10);
-    } else if(roll1 < roll2) {
-      if(checkForPlayerAtStructure(playerOne) != null){
-        checkForPlayerAtStructure(playerOne).addHealth(-1);
-      } else {
-        playerTwo.damage();
+      return amount;
+      if(checkForPlayerAtStructure(playerTwo, 'f') != null){
+        roll2 ++;
+      } 
+      if(checkForPlayerAtStructure(playerOne, 'v') != null){
+        roll1 ++;
+      } 
+      if(roll1 > roll2 + 2){
+        if(checkForPlayerAtStructure(playerTwo) != null){
+          checkForPlayerAtStructure(playerTwo).addHealth(-5);
+        } else {
+          playerTwo.damage();
+        }
+        playerTwo.addResource(res, -rad2);
+        playerOne.addResource(res, rad2);
+      } else if(roll1 > roll2){
+        if(checkForPlayerAtStructure(playerTwo) != null){
+          diff = roll2 - roll1;
+          checkForPlayerAtStructure(playerTwo).addHealth(diff);
+        }
+        playerTwo.addResource(res, -rad2);
+        playerOne.addResource(res, rad2);
+      } else if(roll1 + 2 < roll2) {
+        if(checkForPlayerAtStructure(playerOne) != null){
+          checkForPlayerAtStructure(playerOne).addHealth(-5);
+        } else {
+          playerOne.damage();
+        }
+        playerOne.addResource(res, -rad2);
+        playerTwo.addResource(res, rad2);
+      } else if(roll1 < roll2) {
+        if(checkForPlayerAtStructure(playerTwo) != null){
+          diff = roll1 - roll2;
+          checkForPlayerAtStructure(playerTwo).addHealth(diff);
+        }
+        playerOne.addResource(res, -rad2);
+        playerTwo.addResource(res, rad2);
       }
-      playerOne.addResource("wood", -10);
-      playerTwo.addResource("wood", 10);
     }
-  }
 
 
 
-  public static Structure checkForPlayerAtStructure(Player p, char type){ // Checks if there is a specific building type at the player location
-    for(Structure s: TheIsleOfLaeso.structures){
-      if(p.getXPos() == s.getX()){
-        if(p.getYPos() == s.getY()){
-            if(s.getType() == type ){
+    public static Structure checkForPlayerAtStructure(Player p, char type){ // Checks if there is a specific building type at the player location
+      for(Structure s: TheIsleOfLaeso.structures){
+        if(p.getXPos() == s.getX()){
+          if(p.getYPos() == s.getY()){
+              if(s.getType() == type ){
+                return s;
+              }
+          }
+        }
+      }
+      return null;
+    }
+
+    public static Structure checkForPlayerAtStructure(Player p){ // Checks if there is a specific building type at the player location
+      for(Structure s: TheIsleOfLaeso.structures){
+        if(p.getXPos() == s.getX()){
+          if(p.getYPos() == s.getY()){
               return s;
-            }
+          }
         }
       }
+      return null;
     }
-    return null;
-  }
-
-  public static Structure checkForPlayerAtStructure(Player p){ // Checks if there is a specific building type at the player location
-    for(Structure s: TheIsleOfLaeso.structures){
-      if(p.getXPos() == s.getX()){
-        if(p.getYPos() == s.getY()){
-            return s;
-        }
-      }
-    }
-    return null;
-  }
 
   public static boolean checkForStructure(int x, int y){ // Checks if there is a structure at the x and y
     for(Structure s: TheIsleOfLaeso.structures){
