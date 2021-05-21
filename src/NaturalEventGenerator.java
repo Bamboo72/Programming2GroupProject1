@@ -255,8 +255,8 @@ public class NaturalEventGenerator {
         if (!isValidEventID(eventID)) {
             eventID = generateRandomEventID();
         }
-        for (Player player : players) {
-            generateEvent(eventID, player);
+        for (int i = 0; i < players.length; i++) {
+            generateEvent(eventID, players[i]);
         }
         return getEventIDName(eventID);
     }
