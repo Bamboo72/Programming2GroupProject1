@@ -9,11 +9,21 @@
 TODO:
    - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
 
-    - Enable player movement
-    - Enable player collects
-    - Enable and display buildings on the board
+    - Players
+        - Fix allignment    
+        - Fix player collects
 
-    - We still need win conditions and building functionality
+    - Buildings
+        - Fix allignment
+        - Add functionality
+        - Make sure you can't overlap (loop through the structures arraylist to check if the newStructure matches the coords for any building)
+
+    - Incorporate win conditions
+    - Incorporate Disaster mode
+
+    - Bugs
+        - Water detection doesn't work for constructing ports and boats. Also, I think I did the logic wrong. We need to detect if the player is making a boat when they're at a port
+        - 
     
 */
 
@@ -1361,37 +1371,37 @@ public class Graphics extends JFrame {
 
 
             if (st.x > 25) {
-                playerXOffset = -20;
+                buildingXOffset = -20;
             } else if (st.x > 20) {
-                playerXOffset = -35;
+                buildingXOffset = -35;
             } else if (st.x > 15) {
-                playerXOffset = -20;
+                buildingXOffset = -20;
             } else if (st.x > 10) {
-                playerXOffset = -10;
+                buildingXOffset = -10;
             } else if (st.x > 5) {
-                playerXOffset = -15;
+                buildingXOffset = -15;
             } else if (st.x > 0) {
-                playerXOffset = -20;
+                buildingXOffset = -20;
             }
     
             if (st.y > 8) {
-                playerYOffset = 15;
+                buildingYOffset = 15;
             } else if (st.y > 4) {
-                playerYOffset = 0;
+                buildingYOffset = 0;
             } else if (st.y > 0) {
-                playerYOffset = -12;
+                buildingYOffset = -12;
             }
 
             if (st.type == 'r') {
-                displayBuilding(3, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+                displayBuilding(3, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'v') {
-                displayBuilding(0, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+                displayBuilding(0, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'f') {
-                displayBuilding(1, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+                displayBuilding(1, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'p') {
-                displayBuilding(2, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+                displayBuilding(2, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'b') {
-                displayBuilding(4, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+                displayBuilding(4, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
             }
         }
 
@@ -1600,7 +1610,7 @@ class GoToBoardToBuild implements ActionListener {
         // Check if resource counts are enough
         if (TheIsleOfLaeso.g.toBeBuilt.equals("Storehouse")) {
             buildingType = 'r';
-        } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Village")) {
+        } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Town")) {
             buildingType = 'v';
         } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Fort")) {
             buildingType = 'f';
