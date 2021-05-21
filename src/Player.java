@@ -9,14 +9,14 @@ public class Player {
     //varables that are inportant 
     private int x;
     private int y;
-    private String res;
+    static private String res;
     private String name; 
     private String hat;
     private String clothes; 
     private String color;
     private int[] inventory; 
     private int health;
-    private int roll1, roll2, diff, rad1, rad2;
+    static private int roll1, roll2, diff, rad1, rad2;
 
 
   /**
@@ -97,7 +97,7 @@ public class Player {
 
 
 
-     public void attacking(Player playerOne, Player playerTwo) {
+     public static void attacking(Player playerOne, Player playerTwo) {
       roll1 = TheIsleOfLaeso.dice.roll();
       roll2 = TheIsleOfLaeso.dice.roll();
       rad1 = TheIsleOfLaeso.dice.roll() - 1;
@@ -191,15 +191,15 @@ public class Player {
       return null;
     }
 
-  public static boolean checkForStructure(int x, int y){ // Checks if there is a structure at the x and y
+  public static Structure checkForStructure(int x, int y){ // Checks if there is a structure at the x and y
     for(Structure s: TheIsleOfLaeso.structures){
       if(s.getX() == x){
         if(s.getY() == y){
-            return true;
+            return s;
         }
       }
     }
-    return false;
+    return null;
   }
 
   public static boolean checkForPlayer(int x, int y){ // Checks if there is a player at the x and y
@@ -212,6 +212,18 @@ public class Player {
     }
 
   return false;
+}
+
+public static Player getPlayerAt(int x, int y){ // returns the player at the x and y
+  for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
+    if(TheIsleOfLaeso.players[i].getXPos() == x){
+      if(TheIsleOfLaeso.players[i].getYPos() == y){
+          return TheIsleOfLaeso.players[i];
+      }
+    }
+  }
+
+return null;
 }
 
   /**

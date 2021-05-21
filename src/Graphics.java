@@ -1,3 +1,4 @@
+
 /**
 * @author Jacob Schwartz
 * @version 1.0
@@ -11,7 +12,7 @@ TODO:
 
     - Players
         - Fix allignment    
-        - Fix player collects
+        - Add movement logic to stop players from moving onto water or buildings
 
     - Buildings
         - Make sure the images are all the same size?
@@ -20,10 +21,13 @@ TODO:
         - Make sure you can't overlap (loop through the structures arraylist to check if the newStructure matches the coords for any building)
 
     - Incorporate Disaster mode
+    - Hook up the attack method
 
     - Bugs
-        - Reset player positions, clear the board of buildings and resources after a win
         - Boat win condition isn't working?
+
+    - Do Later
+        -  We could potentially randomize starting positions (keep the same starting places, but randomize assignment to players)
     
 */
 
@@ -772,8 +776,7 @@ public class Graphics extends JFrame {
                 // different so I added a 5 to the end of everything
                 ImageIcon checkButtonImage5 = new ImageIcon(".//res//ButtonCheck.png");
                 JButton checkButton5 = new JButton(checkButtonImage5);
-                ActionListener checkListener5 = new GoToBoard(); // THIS NEEDS TO CALL THE RESET GAME METHOD OR
-                                                                 // SOMETHING
+                ActionListener checkListener5 = new ResetBoard();
                 checkButton5.addActionListener(checkListener5);
                 checkButton5.setBounds(1000, 652, 64, 64);
                 buttonList.add(checkButton5);
@@ -1273,11 +1276,11 @@ public class Graphics extends JFrame {
 
     }
 
-    public void checkForWin(){ // The win check comes after the turn is increased.
+    public void checkForWin() { // The win check comes after the turn is increased.
         int check = TheIsleOfLaeso.checkWin(); // Starting with 0: boat, magic, kill
 
         Player winner = null;
-        if(TheIsleOfLaeso.playerTurn == 1){ // So the last player won and the turn returned to player 1
+        if (TheIsleOfLaeso.playerTurn == 1) { // So the last player won and the turn returned to player 1
             winner = TheIsleOfLaeso.players[TheIsleOfLaeso.numOfPlayer - 1];
         } else { // So the previous player won, and it wasn't the last player
             winner = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 2];
@@ -1420,6 +1423,34 @@ public class Graphics extends JFrame {
             }
         }
 
+    }
+
+    public int getStartingX(int playerNumber){
+        int x = 0;
+        if (playerNumber == 1) {
+            x = 7;
+        } else if (playerNumber == 2) {
+            x = 18;
+        } else if (playerNumber == 3) {
+            x = 12;
+        } else {
+            x = 12;
+        }
+        return x;
+    }
+
+    public int getStartingY(int playerNumber){
+        int y = 0;
+        if (playerNumber == 1) {
+            y = 8;
+        } else if (playerNumber == 2) {
+            y = 7;
+        } else if (playerNumber == 3) {
+            y = 11;
+        } else {
+            y = 1;
+        }
+        return y;
     }
 
 }
@@ -1717,6 +1748,9 @@ class GoToBoardToBuild implements ActionListener {
         }
 
         if (playerHasEnough && byOpenWater && playerAtPort) {
+            for (int i = 0; i < 5; i++) {
+                TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getInven()[i] -= newStructure.cost[i];
+            }
             TheIsleOfLaeso.structures.add(newStructure);
 
             TheIsleOfLaeso.g.hideActivePanel();
@@ -1760,9 +1794,27 @@ class GoToTitle implements ActionListener { // This should also call a reset met
         TheIsleOfLaeso.playerTurn = 1;
         TheIsleOfLaeso.g.diceRolled = false;
 
+        TheIsleOfLaeso.structures.clear();
+        for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
+            TheIsleOfLaeso.players[i] = null;
+        }
+
         TheIsleOfLaeso.g.hideActivePanel();
         TheIsleOfLaeso.g.sceneDisplay(0);
         TheIsleOfLaeso.g.refresh();
+
+    }
+}
+
+class ResetBoard implements ActionListener {
+    public void actionPerformed(ActionEvent event) {
+
+        TheIsleOfLaeso.structures.clear();
+        for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
+            TheIsleOfLaeso.players[i].clearInventory();
+            TheIsleOfLaeso.players[i].setXPos(TheIsleOfLaeso.g.getStartingX(i));
+            TheIsleOfLaeso.players[i].setYPos(TheIsleOfLaeso.g.getStartingY(i));
+        }
 
     }
 }
@@ -2197,10 +2249,23 @@ class Attack implements ActionListener {
         if (TheIsleOfLaeso.g.diceRolled) {
             System.out.println("The attack button was pressed");
 
-            // Attack method here
+            int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
+            int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
 
-          
-
+            if(Player.checkForPlayer(currentPlayerX + 1, currentPlayerY + 1)){
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX + 1, currentPlayerY + 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX + 1, currentPlayerY + 1));
+            } else if(Player.checkForPlayer(currentPlayerX + 1, currentPlayerY - 1)){
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX + 1, currentPlayerY - 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX + 1, currentPlayerY - 1));
+            } else if(Player.checkForPlayer(currentPlayerX - 1, currentPlayerY + 1)){
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX - 1, currentPlayerY + 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX - 1, currentPlayerY + 1));
+            } else if(Player.checkForPlayer(currentPlayerX - 1, currentPlayerY - 1)){
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX - 1, currentPlayerY - 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX - 1, currentPlayerY - 1));
+            }
+           
             if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
                 TheIsleOfLaeso.playerTurn++;
             } else {
