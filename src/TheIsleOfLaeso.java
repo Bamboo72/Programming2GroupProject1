@@ -96,13 +96,13 @@ public class TheIsleOfLaeso{
           if(s.getType() == 'p' && s.owner == whichPlayerToCheck && s.getX() == players[whichPlayerToCheck].getXPos() && s.getY() == players[whichPlayerToCheck].getYPos()){
             int currentPlayerX = TheIsleOfLaeso.players[whichPlayerToCheck].getXPos();
             int currentPlayerY = TheIsleOfLaeso.players[whichPlayerToCheck].getYPos();
-            if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX + 1) {
+            if (s.getY() == currentPlayerY + 1 &&  s.getX() == currentPlayerX + 1) {
                 boatNearby = true;
-            } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX - 1].equals("o")) {
+            } else if (s.getY() == currentPlayerY + 1 &&  s.getX() == currentPlayerX - 1) {
               boatNearby = true;
-            } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX + 1].equals("o")) {
+            } else if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX + 1) {
               boatNearby = true;
-            } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX - 1].equals("o")) {
+            } else if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX - 1) {
               boatNearby = true;
             }
           }
