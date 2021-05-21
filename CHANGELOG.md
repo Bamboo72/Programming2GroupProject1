@@ -128,3 +128,6 @@ Updated Graphics and Mouse classes 2021-5-20 - Bamboo72
 Updated entry point (TheIsleOfLaeso) class 2021-5-20 - HoldMyTyr
 
 Updated Structure class 2021-5-20 - andrewblodgett
+
+Updated NaturalEventGenerator class 2021-5-21 - bran214
+ - Added EnhancedNaturalEventGenerator.java - bran214
