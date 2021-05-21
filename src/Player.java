@@ -96,7 +96,7 @@ public class Player {
         roll1 ++;
       } 
       if(roll1 > roll2 + 2){
-        if(checkForPlayerAtStructure(playerTwo, 'f') || checkForPlayerAtStructure(playerOne, 'v') || checkForPlayerAtStructure(playerOne, 'p') || checkForPlayerAtStructure(playerOne, 'b') ||checkForPlayerAtStructure(playerOne, 'r')){
+        if(checkForPlayerAtStructure(playerTwo)){
           impactedStrucure.addHealth(-1);
         }
         playerTwo.damage();
