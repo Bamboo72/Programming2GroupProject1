@@ -198,7 +198,7 @@ class MousePressListener implements MouseListener {
             }
 
             if (TheIsleOfLaeso.moveLeft > 0) { // If there are still moves left
-                if (!TheIsleOfLaeso.i.getBoard()[rowNum][colNum].equals("o ") && Player.checkForPlayerAtStructure(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1])) {
+                if (!TheIsleOfLaeso.i.getBoard()[rowNum][colNum].equals("o ") && !Player.checkForStructure(colNum, rowNum) && !Player.checkForPlayer(colNum, rowNum)) {
                     if (colNum == currentPlayerX + 1) {
                         if (rowNum == currentPlayerY + 1) {
                             System.out.println("To the RD");
