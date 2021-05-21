@@ -20,7 +20,7 @@ class MousePressListener implements MouseListener {
 
         int rowNum = 0, colNum = 0;
 
-        //System.out.println("(" + x + ", " + y + ")");
+        System.out.println("(" + x + ", " + y + ")");
 
         // y /= 45.385;
         y = (y - 70) / 40;
@@ -51,7 +51,9 @@ class MousePressListener implements MouseListener {
             rowNum = 11;
         } else if (12 < y && y <= 13) {
             rowNum = 12;
-        } 
+        } else {
+            rowNum = -1;
+        }
 
         // x /= 42.667;
         x = (x + 21.333) / 42.666;
@@ -118,117 +120,156 @@ class MousePressListener implements MouseListener {
             colNum = 29;
         } else if (30 < x && x <= 31) {
             colNum = 30;
+        } else {
+            colNum = -1;
         }
 
-        //System.out.println("Col: " + colNum + ", Row: " + rowNum);
+        System.out.println("Col: " + colNum + ", Row: " + rowNum);
 
         int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
         int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
 
-        //System.out.println("Player at x: " + currentPlayerX + ", y: " + currentPlayerY);
+        System.out.println("Player at x: " + currentPlayerX + ", y: " + currentPlayerY);
 
         if (TheIsleOfLaeso.g.diceRolled) { // Row = Y, Col = X, Note that I'm calling the top of the screen top/up
+            // if(colNum == currentPlayerX++ && rowNum == currentPlayerY){
+            // System.out.println("To the Right");
+            // }
+            // if(colNum == currentPlayerX-- && rowNum == currentPlayerY){
+            // System.out.println("To the Left");
+            // }
+            // if(rowNum == currentPlayerY++ && colNum == currentPlayerX){
+            // System.out.println("To the Bottom");
+            // }
+            // if(rowNum == currentPlayerY-- && colNum == currentPlayerX){
+            // System.out.println("To the Top");
+            // }
 
+            // if(colNum == currentPlayerX++ && rowNum == currentPlayerY++){
+            // System.out.println("To the RD");
+            // }
+            // if(colNum == currentPlayerX++ && rowNum == currentPlayerY--){
+            // System.out.println("To the RU");
+            // }
+            // if(rowNum == currentPlayerY++ && colNum == currentPlayerX--){
+            // System.out.println("To the LD");
+            // }
+            // if(rowNum == currentPlayerY-- && colNum == currentPlayerX--){
+            // System.out.println("To the LU");
+            // }
 
+            if(TheIsleOfLaeso.collectsLeft > 0){
+              String theResource = TheIsleOfLaeso.i.getBoard()[rowNum][colNum];
 
-            if (TheIsleOfLaeso.collectsLeft > 0) { // If there are still collects left
-                String theResource = TheIsleOfLaeso.i.getBoard()[rowNum][colNum];
-                System.out.println("theResource: " + theResource + " so !theResource.equals(\"r \") is " + !theResource.equals("r "));
-                
-                if (rowNum == currentPlayerY) { // Check the column
-                    if (colNum == currentPlayerX + 1) {
-                        System.out.println("To the Right");
+              if (rowNum == currentPlayerY) {
+                  if (colNum == currentPlayerX + 1) {
+                      System.out.println("To the Right");
 
-                        if (!theResource.equals("r ")) {
-                            theResource = theResource.substring(2);
-                            TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
-                            // TheIsleOfLaeso.i.remove(theResource, rowNum, colNum);
-                            // TheIsleOfLaeso.i.add("r ", rowNum, colNum);
-                            System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
-                            TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum,
-                            colNum);
-                            TheIsleOfLaeso.collectsLeft = TheIsleOfLaeso.collectsLeft - 1;
-                        }
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          //TheIsleOfLaeso.i.remove(theResource, rowNum, colNum);
+                          //TheIsleOfLaeso.i.add("r ", rowNum, colNum);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), colNum, rowNum);
+                      }
 
-                    }
-                    if (colNum == currentPlayerX - 1) {
-                        System.out.println("To the Left");
-                        if (!theResource.equals("r ")) {
-                            theResource = theResource.substring(2);
-                            TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
-                            System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
-                            TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum,
-                            colNum);
-                            TheIsleOfLaeso.collectsLeft = TheIsleOfLaeso.collectsLeft - 1;
-                        }
-                    }
-                }
+                  }
+                  if (colNum == currentPlayerX - 1) {
+                      System.out.println("To the Left");
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), colNum, rowNum);
+                      }
+                  }
+              }
 
-                if (colNum == currentPlayerX) { // Check the row
-                    if (rowNum == currentPlayerY + 1) {
-                        System.out.println("To the Bottom");
-                        if (!theResource.equals("r ")) {
-                            theResource = theResource.substring(2);
-                            TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
-                            System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
-                            TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum,
-                            colNum);
-                            TheIsleOfLaeso.collectsLeft = TheIsleOfLaeso.collectsLeft - 1;
-                        }
+              if (colNum == currentPlayerX) {
+                  if (rowNum == currentPlayerY + 1) {
+                      System.out.println("To the Bottom");
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), colNum, rowNum);
+                      }
 
-                    }
-                    if (rowNum == currentPlayerY - 1) {
-                        System.out.println("To the Top");
-                        if (!theResource.equals("r ")) {
-                            theResource = theResource.substring(2);
-                            TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
-                            System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
-                            TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), rowNum,
-                            colNum);
-                            TheIsleOfLaeso.collectsLeft = TheIsleOfLaeso.collectsLeft - 1;
-                        }
+                  }
+                  if (rowNum == currentPlayerY - 1) {
+                      System.out.println("To the Top");
+                      if (!theResource.equals("r")) {
+                          TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getResource(theResource);
+                          TheIsleOfLaeso.i.remove(TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2), colNum, rowNum);
+                      }
 
-                    }
-                }
-
+                  }
+              }
+              TheIsleOfLaeso.collectsLeft = TheIsleOfLaeso.collectsLeft - 1;
+              TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
+                      + TheIsleOfLaeso.moveLeft + " moves, " + TheIsleOfLaeso.collectsLeft + " collects left";
+                      TheIsleOfLaeso.g.refreshBoard();
             }
 
-            if (TheIsleOfLaeso.moveLeft > 0) { // If there are still moves left
-                if (colNum == currentPlayerX + 1) {
-                    if (rowNum == currentPlayerY + 1) {
-                        System.out.println("To the RD");
-                        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ru");
-                        TheIsleOfLaeso.moveLeft = TheIsleOfLaeso.moveLeft - 1;
-                    }
-                    if (rowNum == currentPlayerY - 1) {
-                        System.out.println("To the RU");
-                        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("rd");
-                        TheIsleOfLaeso.moveLeft = TheIsleOfLaeso.moveLeft - 1;
-                    }
-                }
 
-                if (colNum == currentPlayerX - 1) {
-                    if (rowNum == currentPlayerY + 1) {
-                        System.out.println("To the LD");
-                        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("lu");
-                        TheIsleOfLaeso.moveLeft = TheIsleOfLaeso.moveLeft - 1;
-                    }
-                    if (rowNum == currentPlayerY - 1) {
-                        System.out.println("To the LU");
-                        TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ld");
-                        TheIsleOfLaeso.moveLeft = TheIsleOfLaeso.moveLeft - 1;
-                    }
-                }
+            if(TheIsleOfLaeso.moveLeft > 0){
+              if (colNum == currentPlayerX + 1) {
+                  if (rowNum == currentPlayerY + 1) {
+                      System.out.println("To the RD");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ru");
 
+
+                  }
+                  if (rowNum == currentPlayerY - 1) {
+                      System.out.println("To the RU");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("rd");
+
+
+                  }
+              }
+
+              if (colNum == currentPlayerX - 1) {
+                  if (rowNum == currentPlayerY + 1) {
+                      System.out.println("To the LD");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("lu");
+
+
+                  }
+                  if (rowNum == currentPlayerY - 1) {
+                      System.out.println("To the LU");
+                      TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].move("ld");
+
+
+                  }
+              }
+              TheIsleOfLaeso.moveLeft = TheIsleOfLaeso.moveLeft - 1;
+              TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
+                      + TheIsleOfLaeso.moveLeft + " moves, " + TheIsleOfLaeso.collectsLeft + " collects left";
+                      TheIsleOfLaeso.g.refreshBoard();
             }
 
-            TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
-                    + TheIsleOfLaeso.moveLeft + " moves, " + TheIsleOfLaeso.collectsLeft + " collects left";
-            TheIsleOfLaeso.g.refreshBoard();
+
         }
         System.out.println(TheIsleOfLaeso.i.getBoard()[rowNum][colNum]);
         System.out.println();
 
+    }
+
+    /**
+     * This method returns whether a tile is a viable move or collect (detects if a
+     * spot has a player, building, or is blank)
+     *
+     * @return boolean allowed or not depending on the tile occupants
+     */
+    public boolean allowedMoveCheck() {
+        boolean allowed = false;
+        return allowed;
+    }
+
+    /**
+     * This method returns whether a tile has a resource or not (detects if a spot
+     * has a resource or is blank)
+     *
+     * @return boolean allowed or not depending on the tile occupants
+     */
+    public boolean tileHasRes() {
+
+        return true;
     }
 
     /**
