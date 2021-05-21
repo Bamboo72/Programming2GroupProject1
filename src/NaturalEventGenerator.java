@@ -219,10 +219,10 @@ public class NaturalEventGenerator {
                 }
                 break;
         }
-        int woodAmount = impactedPlayer.getResource("wood ");
-        int foodAmount = impactedPlayer.getResource("food ");
-        int peopleAmount = impactedPlayer.getResource("people ");
-        int stoneAmount = impactedPlayer.getResource("stone ");
+        int woodAmount = impactedPlayer.getResource("wood");
+        int foodAmount = impactedPlayer.getResource("food");
+        int peopleAmount = impactedPlayer.getResource("people");
+        int stoneAmount = impactedPlayer.getResource("stone");
         if (woodAmount < 0)
             impactedPlayer.addResource("wood ", -woodAmount);
         if (foodAmount < 0)
