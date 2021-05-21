@@ -89,13 +89,16 @@ public class Player {
     public void attacking(Player playerOne, Player playerTwo) {
       roll1 = TheIsleOfLaeso.dice.roll();
       roll2 = TheIsleOfLaeso.dice.roll();
-      if(checkForPlayerAtStructure(playerTwo, "f")){
+      if(checkForPlayerAtStructure(playerTwo, 'f')){
         roll2 ++;
       } 
-      if(checkForPlayerAtStructure(playerOne, "v")){
+      if(checkForPlayerAtStructure(playerOne, 'v')){
         roll1 ++;
       } 
       if(roll1 > roll2 + 2){
+        if(checkForPlayerAtStructure(playerTwo, 'f') || checkForPlayerAtStructure(playerOne, 'v') || checkForPlayerAtStructure(playerOne, 'p') || checkForPlayerAtStructure(playerOne, 'b') ||checkForPlayerAtStructure(playerOne, 'r')){
+          impactedStrucure.addHealth(-1);
+        }
         playerTwo.damage();
         playerTwo.addResource("wood", -10);
 	playerOne.addResource("wood", 10);
@@ -119,7 +122,7 @@ public class Player {
     * @param player, type
     */
     public static boolean checkForPlayerAtStructure(Player p, char type){
-      for(Structure s: structures){
+      for(TheIsleOfLaeso.Structure s: structures){
         if(p.getXPos() == s.getX()){
           if(p.getYPos() == s.getY()){
               if(s.getType() == type ){
