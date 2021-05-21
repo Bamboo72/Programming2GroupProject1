@@ -51,7 +51,13 @@ public class Player {
   }
 
 
-
+  public void setXPos(int pos) {
+    x = pos;
+  }
+  
+  public void setYPos(int pos) {
+    y = pos;
+  }
 
 
   public String getName() {
