@@ -125,7 +125,7 @@ public class Player {
           res = "wood";
           System.out.println("YOU BIG DUMB");
       }
-      return amount;
+      
       if(checkForPlayerAtStructure(playerTwo, 'f') != null){
         roll2 ++;
       } 
@@ -203,15 +203,16 @@ public class Player {
   }
 
   public static boolean checkForPlayer(int x, int y){ // Checks if there is a player at the x and y
-    for(Player p: TheIsleOfLaeso.players){
-      if(p.getXPos() == x){
-        if(p.getYPos() == y){
+    for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
+      if(TheIsleOfLaeso.players[i].getXPos() == x){
+        if(TheIsleOfLaeso.players[i].getYPos() == y){
             return true;
         }
       }
     }
-    return false;
-  }
+
+  return false;
+}
 
   /**
   * a function to control movment 
