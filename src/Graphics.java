@@ -1351,25 +1351,34 @@ public class Graphics extends JFrame {
 
         // Display players
         for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
-
-            if (TheIsleOfLaeso.players[i].getXPos() > 25) {
-                playerXOffset = -20;
+            if (TheIsleOfLaeso.players[i].getXPos() > 26) {
+                playerXOffset = -43;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 25) {
+                playerXOffset = -41;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 23) {
+                playerXOffset = -37;
             } else if (TheIsleOfLaeso.players[i].getXPos() > 20) {
                 playerXOffset = -35;
-            } else if (TheIsleOfLaeso.players[i].getXPos() > 15) {
-                playerXOffset = -20;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 18) {
+                playerXOffset = -30;
+            }  else if (TheIsleOfLaeso.players[i].getXPos() > 15) {
+                playerXOffset = -25;
             } else if (TheIsleOfLaeso.players[i].getXPos() > 10) {
-                playerXOffset = -10;
+                playerXOffset = -22;
             } else if (TheIsleOfLaeso.players[i].getXPos() > 5) {
                 playerXOffset = -15;
             } else if (TheIsleOfLaeso.players[i].getXPos() > 0) {
-                playerXOffset = -20;
+                playerXOffset = -10;
             }
 
             if (TheIsleOfLaeso.players[i].getYPos() > 8) {
-                playerYOffset = 15;
+                playerYOffset = 12;
+            } else if (TheIsleOfLaeso.players[i].getYPos() > 7) {
+                playerYOffset = 2;
             } else if (TheIsleOfLaeso.players[i].getYPos() > 4) {
                 playerYOffset = 0;
+            } else if (TheIsleOfLaeso.players[i].getYPos() > 3) {
+                playerYOffset = -2;
             } else if (TheIsleOfLaeso.players[i].getYPos() > 0) {
                 playerYOffset = -12;
             }
@@ -1378,7 +1387,6 @@ public class Graphics extends JFrame {
                     (TheIsleOfLaeso.players[i].getXPos() * 43) - 12 + playerXOffset,
                     (TheIsleOfLaeso.players[i].getYPos() * 40) + 56 + playerYOffset);
         }
-
         // Display buildings
 
         for (Structure st : TheIsleOfLaeso.structures) {
