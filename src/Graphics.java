@@ -7,7 +7,14 @@
 
 /*
 TODO:
-    - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
+   - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
+
+    - Enable player movement
+    - Enable player collects
+    - Enable and display buildings on the board
+
+    - We still need win conditions and building functionality
+    
 */
 
 import javax.swing.JFrame;
@@ -298,6 +305,9 @@ public class Graphics extends JFrame {
 
                 break;
             case 3: // How Many Players?
+           
+                displayText(TheIsleOfLaeso.numOfPlayer + " Players?", 1050, 570, 200, 200, 36f);
+
                 ImageIcon hmpImage = new ImageIcon(".//res//BackgroundHMP.png");
                 JLabel hmpLabel = new JLabel(hmpImage);
                 JPanel hmpPanel = new JPanel();
@@ -1475,7 +1485,9 @@ class GoToBoard implements ActionListener {
 
         TheIsleOfLaeso.g.hideActivePanel();
         TheIsleOfLaeso.g.sceneDisplay(5);
+        TheIsleOfLaeso.i.resourceGeneration();
         TheIsleOfLaeso.g.refresh();
+        TheIsleOfLaeso.g.refreshBoard();
 
     }
 }
@@ -1623,6 +1635,7 @@ class SetSpawnLow implements ActionListener {
         try {
             IOSettings.addsSet(IOSettings.findDie(), "SpawnRateLow",
                     IOSettings.findNaturalDis().equals("naturalDistrue"));
+                    TheIsleOfLaeso.i.resourceSpawnRate = 0.05;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1638,6 +1651,7 @@ class SetSpawnMed implements ActionListener {
         try {
             IOSettings.addsSet(IOSettings.findDie(), "SpawnRateMed",
                     IOSettings.findNaturalDis().equals("naturalDistrue"));
+                    TheIsleOfLaeso.i.resourceSpawnRate = 0.1;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1653,6 +1667,7 @@ class SetSpawnHigh implements ActionListener {
         try {
             IOSettings.addsSet(IOSettings.findDie(), "SpawnRateHigh",
                     IOSettings.findNaturalDis().equals("naturalDistrue"));
+                    TheIsleOfLaeso.i.resourceSpawnRate = 0.2;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1710,6 +1725,9 @@ class SetHMP2 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.numOfPlayer = 2;
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(3);
+        TheIsleOfLaeso.g.refresh();
     }
 }
 
@@ -1720,6 +1738,9 @@ class SetHMP3 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.numOfPlayer = 3;
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(3);
+        TheIsleOfLaeso.g.refresh();
     }
 }
 
@@ -1730,6 +1751,9 @@ class SetHMP4 implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.numOfPlayer = 4;
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(3);
+        TheIsleOfLaeso.g.refresh();
     }
 }
 
@@ -1913,9 +1937,9 @@ class DiceRoll implements ActionListener {
 
         TheIsleOfLaeso.g.diceRolled = true;
         TheIsleOfLaeso.moveLeft = roll1;
-        System.out.println(TheIsleOfLaeso.moveLeft);
+        
         TheIsleOfLaeso.collectsLeft = roll2;
-        System.out.println(TheIsleOfLaeso.collectsLeft);
+        
         TheIsleOfLaeso.g.refreshBoard();
     }
 }

@@ -122,14 +122,6 @@ public class Player {
     }
   
   
-  
-  
-  
-  
-  
-  
-  
-  
     /**
     * a functionn to clear a players inventory
     */
@@ -182,22 +174,22 @@ public class Player {
     public void addResource(String resource) {
       resource = resource.toLowerCase();
       switch(resource){
-        case "wood":
+        case "wood ":
           inventory[0] += 1;
           break;
-        case "people":
+        case "people ":
           inventory[1] += 1;
           break;
-        case "food":
+        case "food ":
           inventory[2] += 1;  
           break;
-        case "stone":
+        case "stone ":
           inventory[3] += 1;  
           break;
-        case "ore":
+        case "ore ":
           inventory[4] += 1; 
           break;
-        case "magic":
+        case "magic ":
           inventory[5] += 1; 
           break;
         default:
@@ -213,22 +205,22 @@ public class Player {
     public void addResource(String resource, int amount) {
       resource = resource.toLowerCase();
       switch(resource){
-        case "wood":
+        case "wood ":
           inventory[0] += amount;
           break;
-        case "people":
+        case "people ":
           inventory[1] += amount;
           break;
-        case "food":
+        case "food ":
           inventory[2] += amount;  
           break;
-        case "stone":
+        case "stone ":
           inventory[3] += amount;  
           break;
-        case "ore":
+        case "ore ":
           inventory[4] += amount; 
           break;
-        case "magic":
+        case "magic ":
           inventory[5] += amount; 
           break;
         default:
