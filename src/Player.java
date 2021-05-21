@@ -1,8 +1,8 @@
 public class Player {
     /**
     *@Author Maximilian C. Sutton
-    *@Version 0.75
-    *@Since 2021-04-26
+    *@Version 1.00
+    *@Since 2021-05-21
     */
   
   
@@ -15,7 +15,6 @@ public class Player {
     private String color;
     private int[] inventory; 
     private int health;
-    //private int ID;
   
   
     /**
@@ -24,7 +23,7 @@ public class Player {
     * @param name, hat, clothes, color, dirFace
     * @param inventory
     */
-    public Player(int x, int y, String name, String hat, String clothes, String color, int[] inventory, int health){//, int ID){
+    public Player(int x, int y, String name, String hat, String clothes, String color, int[] inventory, int health){
       this.x = x;
       this.y = y;
       this.name = name;
@@ -34,18 +33,13 @@ public class Player {
       this.inventory = inventory;
       this.inventory = new int[6];
       this.health = health; 
-      //this.ID = ID;
     }
   
   
   
   
   
-    /**
-    *public int getID() {
-    *  return ID;
-    *}
-    */
+
   
     public int getXPos() {
       return x;
