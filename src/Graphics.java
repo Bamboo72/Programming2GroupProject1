@@ -60,7 +60,8 @@ public class Graphics extends JFrame {
 
     String playerName = "[type name here]";
     String colorTaken = "";
-    String toBeBuilt = null;
+    String toBeBuilt = "Storehouse";
+    String buildingErrorMessage = null;
 
     /**
      * This is the constructor for the graphics class which sets up some of the
@@ -305,7 +306,7 @@ public class Graphics extends JFrame {
 
                 break;
             case 3: // How Many Players?
-           
+
                 displayText(TheIsleOfLaeso.numOfPlayer + " Players?", 1050, 570, 200, 200, 36f);
 
                 ImageIcon hmpImage = new ImageIcon(".//res//BackgroundHMP.png");
@@ -686,10 +687,20 @@ public class Graphics extends JFrame {
                 break;
             case 7: // Build Menu
 
+            TheIsleOfLaeso.players[0].addResource("wood ", 20);
+            TheIsleOfLaeso.players[0].addResource("people ", 20);
+            TheIsleOfLaeso.players[0].addResource("food ", 20);
+            TheIsleOfLaeso.players[0].addResource("stone ", 20);
+            TheIsleOfLaeso.players[0].addResource("ore ", 20);
+            TheIsleOfLaeso.players[0].addResource("magic ", 20);
+
                 displayText("Click on the building you want to construct.", 0, 15, 1280, 60, 30f);
                 if (toBeBuilt != null) {
                     displayText("Build a ", 950, 557, 90, 60, 30f);
                     displayText(toBeBuilt + "?", 930, 587, 130, 60, 30f);
+                }
+                if(buildingErrorMessage != null){
+                    displayText(buildingErrorMessage, 750, 671, 240, 60, 30f);
                 }
                 displayText("Cancel", 990, 85, 70, 70, 30f);
 
@@ -1265,6 +1276,12 @@ public class Graphics extends JFrame {
         int xOffset = 0;
         int yOffset = 0;
 
+        int playerXOffset = 0;
+        int playerYOffset = 0;
+
+        int buildingXOffset = 0;
+        int buildingYOffset = 0;
+
         for (int i = 0; i < theBoard.length; i++) {
             for (int j = 0; j < theBoard[i].length; j++) {
 
@@ -1310,11 +1327,73 @@ public class Graphics extends JFrame {
         // Display players
         for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
 
-            displaySmallPlayer(TheIsleOfLaeso.players[i], (TheIsleOfLaeso.players[i].getXPos() * 43) - 12 + xOffset,
-                    (TheIsleOfLaeso.players[i].getYPos() * 40) + 73 + yOffset);
+            if (TheIsleOfLaeso.players[i].getXPos() > 25) {
+                playerXOffset = -20;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 20) {
+                playerXOffset = -35;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 15) {
+                playerXOffset = -20;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 10) {
+                playerXOffset = -10;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 5) {
+                playerXOffset = -15;
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 0) {
+                playerXOffset = -20;
+            }
+
+            if (TheIsleOfLaeso.players[i].getYPos() > 8) {
+                playerYOffset = 15;
+            } else if (TheIsleOfLaeso.players[i].getYPos() > 4) {
+                playerYOffset = 0;
+            } else if (TheIsleOfLaeso.players[i].getYPos() > 0) {
+                playerYOffset = -12;
+            }
+
+            displaySmallPlayer(TheIsleOfLaeso.players[i],
+                    (TheIsleOfLaeso.players[i].getXPos() * 43) - 12 + playerXOffset,
+                    (TheIsleOfLaeso.players[i].getYPos() * 40) + 56 + playerYOffset);
         }
 
         // Display buildings
+
+
+        for (Structure st : TheIsleOfLaeso.structures) {
+
+
+            if (st.x > 25) {
+                playerXOffset = -20;
+            } else if (st.x > 20) {
+                playerXOffset = -35;
+            } else if (st.x > 15) {
+                playerXOffset = -20;
+            } else if (st.x > 10) {
+                playerXOffset = -10;
+            } else if (st.x > 5) {
+                playerXOffset = -15;
+            } else if (st.x > 0) {
+                playerXOffset = -20;
+            }
+    
+            if (st.y > 8) {
+                playerYOffset = 15;
+            } else if (st.y > 4) {
+                playerYOffset = 0;
+            } else if (st.y > 0) {
+                playerYOffset = -12;
+            }
+
+            if (st.type == 'r') {
+                displayBuilding(3, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+            } else if (st.type == 'v') {
+                displayBuilding(0, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+            } else if (st.type == 'f') {
+                displayBuilding(1, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+            } else if (st.type == 'p') {
+                displayBuilding(2, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+            } else if (st.type == 'b') {
+                displayBuilding(4, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33, (st.y * 40) + 75);
+            }
+        }
 
     }
 
@@ -1516,24 +1595,85 @@ class GoToBoardToBuild implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
 
+        // Determine the building type using the string toBeBuilt
+        char buildingType = 'r';
         // Check if resource counts are enough
-
-        TheIsleOfLaeso.g.hideActivePanel();
-        TheIsleOfLaeso.g.sceneDisplay(5);
-        TheIsleOfLaeso.g.refresh();
-
-        // Make the building using the string toBeBuilt
-
-        if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
-            TheIsleOfLaeso.playerTurn++;
-        } else {
-            TheIsleOfLaeso.playerTurn = 1;
+        if (TheIsleOfLaeso.g.toBeBuilt.equals("Storehouse")) {
+            buildingType = 'r';
+        } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Village")) {
+            buildingType = 'v';
+        } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Fort")) {
+            buildingType = 'f';
+        } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Port")) {
+            buildingType = 'p';
+        } else if (TheIsleOfLaeso.g.toBeBuilt.equals("Boat")) {
+            buildingType = 'b';
         }
-        TheIsleOfLaeso.g.diceRolled = false;
-        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
-                + "'s turn. Roll the dice!";
-        TheIsleOfLaeso.i.resourceGeneration();
-        TheIsleOfLaeso.g.refreshBoard();
+
+        Structure newStructure = new Structure(buildingType,
+                TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos(),
+                TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos(), 5, TheIsleOfLaeso.playerTurn);
+
+        boolean byOpenWater = true;
+        if(newStructure.type == 'p' || newStructure.type == 'b'){
+            byOpenWater = false;
+        }
+
+        int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
+        int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
+        if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX + 1].equals("o")) {
+            byOpenWater = true;
+        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX - 1].equals("o")) {
+            byOpenWater = true;
+        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX + 1].equals("o")) {
+            byOpenWater = true;
+        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX - 1].equals("o")) {
+            byOpenWater = true;
+        }
+
+        if (!byOpenWater) {
+            TheIsleOfLaeso.g.buildingErrorMessage = "Not By Open Water!";
+            TheIsleOfLaeso.g.hideActivePanel();
+            TheIsleOfLaeso.g.sceneDisplay(7);
+            TheIsleOfLaeso.g.refresh();
+        }
+
+        boolean playerAtPort = true;
+        if(newStructure.type == 'p' || newStructure.type == 'b'){
+            playerAtPort = false;
+        }
+
+        boolean playerHasEnough = true;
+        for (int i = 0; i < 5; i++) {
+            if (newStructure.cost[i] > TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getInven()[i]) {
+                playerHasEnough = false;
+                TheIsleOfLaeso.g.buildingErrorMessage = "Not Enough Resources!";
+                TheIsleOfLaeso.g.hideActivePanel();
+                TheIsleOfLaeso.g.sceneDisplay(7);
+                TheIsleOfLaeso.g.refresh();
+            }
+        }
+
+        if (playerHasEnough && byOpenWater && playerAtPort) {
+            TheIsleOfLaeso.structures.add(newStructure);
+
+            TheIsleOfLaeso.g.hideActivePanel();
+            TheIsleOfLaeso.g.sceneDisplay(5);
+            TheIsleOfLaeso.g.refresh();
+            
+            if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
+                TheIsleOfLaeso.playerTurn++;
+            } else {
+                TheIsleOfLaeso.playerTurn = 1;
+            }
+            TheIsleOfLaeso.g.diceRolled = false;
+            TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+                    + "'s turn. Roll the dice!";
+            TheIsleOfLaeso.i.resourceGeneration();
+            TheIsleOfLaeso.g.refreshBoard();
+        }
+           
+        
     }
 }
 
@@ -1635,7 +1775,7 @@ class SetSpawnLow implements ActionListener {
         try {
             IOSettings.addsSet(IOSettings.findDie(), "SpawnRateLow",
                     IOSettings.findNaturalDis().equals("naturalDistrue"));
-                    TheIsleOfLaeso.i.resourceSpawnRate = 0.05;
+            TheIsleOfLaeso.i.resourceSpawnRate = 0.05;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1651,7 +1791,7 @@ class SetSpawnMed implements ActionListener {
         try {
             IOSettings.addsSet(IOSettings.findDie(), "SpawnRateMed",
                     IOSettings.findNaturalDis().equals("naturalDistrue"));
-                    TheIsleOfLaeso.i.resourceSpawnRate = 0.1;
+            TheIsleOfLaeso.i.resourceSpawnRate = 0.1;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1667,7 +1807,7 @@ class SetSpawnHigh implements ActionListener {
         try {
             IOSettings.addsSet(IOSettings.findDie(), "SpawnRateHigh",
                     IOSettings.findNaturalDis().equals("naturalDistrue"));
-                    TheIsleOfLaeso.i.resourceSpawnRate = 0.2;
+            TheIsleOfLaeso.i.resourceSpawnRate = 0.2;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1937,9 +2077,9 @@ class DiceRoll implements ActionListener {
 
         TheIsleOfLaeso.g.diceRolled = true;
         TheIsleOfLaeso.moveLeft = roll1;
-        
+
         TheIsleOfLaeso.collectsLeft = roll2;
-        
+
         TheIsleOfLaeso.g.refreshBoard();
     }
 }
@@ -1974,6 +2114,9 @@ class EndTurn implements ActionListener {
 class Build implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
+        TheIsleOfLaeso.g.toBeBuilt = "Storehouse";
+        TheIsleOfLaeso.g.toBeBuilt = null;
+
         if (TheIsleOfLaeso.g.diceRolled) {
             TheIsleOfLaeso.g.hideActivePanel();
             TheIsleOfLaeso.g.sceneDisplay(7);

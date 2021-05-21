@@ -15,9 +15,9 @@ public class Island {
   /*1*/    {"o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","r ","v ","r ","o ","r ","o ","r ","o ","r ","o ","o ","o ","o ","o ","r ","o ","r ","o ","o ","o "},
   /*2*/    {"o ","o ","r ","o ","r ","o ","o ","o ","o ","o ","r ","m ","r ","m ","r ","c ","r ","f ","r ","f ","r ","o ","r ","o ","r ","p ","r ","f ","r ","o ","o "},
   /*3*/    {"o ","r ","w ","r ","w ","r ","o ","r ","o ","r ","c ","r ","m ","r ","m ","r ","c ","r ","f ","r ","w ","r ","w ","r ","p ","r ","v ","r ","v ","r ","o "},
-  /*4*/    {"o ","o ","r ","w ","r ","w ","r ","p ","r ","f ","r ","c ","r ","o ","r ","c ","r ","c ","r ","w ","r ","w ","r ","w ","r ","w ","r ","p ","r ","o ","o "},
+  /*4*/    {"o ","o ","r ","w ","r ","w ","r ","p ","r ","f ","r ","c ","r ","n ","r ","c ","r ","c ","r ","w ","r ","w ","r ","w ","r ","w ","r ","p ","r ","o ","o "},
   /*5*/    {"o ","r ","l ","r ","w ","r ","w ","r ","f ","r ","f ","r ","l ","r ","m ","r ","w ","r ","w ","r ","w ","r ","w ","r ","w ","r ","o ","r ","o ","o ","o "},
-  /*6*/    {"o ","o ","r ","m ","r ","w ","r ","w ","r ","f ","r ","o ","r ","o ","r ","m ","r ","w ","r ","w ","r ","o ","r ","o ","r ","o ","o ","o ","o ","o ","o "},
+  /*6*/    {"o ","o ","r ","m ","r ","w ","r ","w ","r ","f ","r ","n ","r ","n ","r ","m ","r ","w ","r ","w ","r ","o ","r ","o ","r ","o ","o ","o ","o ","o ","o "},
   /*7*/    {"o ","o ","o ","r ","o ","r ","f ","r ","w ","r ","f ","r ","p ","r ","m ","r ","m ","r ","c ","r ","o ","o ","o ","o ","o ","r ","o ","r ","o ","o ","o "},
   /*8*/    {"o ","o ","o ","o ","o ","o ","r ","f ","r ","f ","r ","f ","r ","p ","r ","c ","r ","m ","r ","m ","r ","o ","r ","o ","r ","f ","r ","c ","r ","o ","o "},
   /*9*/    {"o ","o ","o ","o ","o ","r ","f ","r ","f ","r ","f ","r ","p ","r ","p ","r ","c ","r ","m ","r ","c ","r ","f ","r ","f ","r ","l ","r ","o ","o ","o "},
@@ -25,6 +25,8 @@ public class Island {
   /*11*/   {"o ","o ","o ","r ","f ","r ","l ","r ","f ","r ","o ","r ","p ","r ","o ","r ","o ","r ","o ","r ","f ","r ","f ","r ","o ","r ","o ","r ","o ","o ","o "},
   /*12*/   {"o ","o ","o ","o ","r ","o ","r ","o ","r ","o ","o ","o ","r ","o ","o ","o ","o ","o ","o ","o ","r ","o ","r ","o ","o ","o ","o ","o ","o ","o ","o "}
 }; /* o = ocean, r = resource, l = land, v = village, m = mountain, c = crags, f = forest, p = plains, w = waste  */
+
+// n = not open water... the letters O for ocean, P for pond, L for lake, and W for water were all taken 
 
     /**
      * Returns the board representing the island
@@ -208,17 +210,17 @@ public class Island {
     }
 
     // main method for testing
-    public static void main(String[] args) {
-      Island i = new Island();
-      // i.resourceGeneration();
-      // i.resourceGeneration();
-      // i.resourceGeneration();
-      for(String[] s : i.getBoard()){
-        for(String ss: s){
-          System.out.print(ss + " ");
-        }
-        System.out.println("");
-      }
-    }
+    // public static void main(String[] args) {
+    //   Island i = new Island();
+    //   // i.resourceGeneration();
+    //   // i.resourceGeneration();
+    //   // i.resourceGeneration();
+    //   for(String[] s : i.getBoard()){
+    //     for(String ss: s){
+    //       System.out.print(ss + " ");
+    //     }
+    //     System.out.println("");
+    //   }
+    // }
 
   }

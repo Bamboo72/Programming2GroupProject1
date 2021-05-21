@@ -133,13 +133,13 @@ class MousePressListener implements MouseListener {
 
             if (TheIsleOfLaeso.collectsLeft > 0) { // If there are still collects left
                 String theResource = TheIsleOfLaeso.i.getBoard()[rowNum][colNum];
-                System.out.println("theResource: " + theResource);
-
+                System.out.println("theResource: " + theResource + " so !theResource.equals(\"r \") is " + !theResource.equals("r "));
+                
                 if (rowNum == currentPlayerY) { // Check the column
                     if (colNum == currentPlayerX + 1) {
                         System.out.println("To the Right");
 
-                        if (!theResource.equals("r")) {
+                        if (!theResource.equals("r ")) {
                             theResource = theResource.substring(2);
                             TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
                             // TheIsleOfLaeso.i.remove(theResource, rowNum, colNum);
@@ -153,7 +153,7 @@ class MousePressListener implements MouseListener {
                     }
                     if (colNum == currentPlayerX - 1) {
                         System.out.println("To the Left");
-                        if (!theResource.equals("r")) {
+                        if (!theResource.equals("r ")) {
                             theResource = theResource.substring(2);
                             TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
                             System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
@@ -167,7 +167,7 @@ class MousePressListener implements MouseListener {
                 if (colNum == currentPlayerX) { // Check the row
                     if (rowNum == currentPlayerY + 1) {
                         System.out.println("To the Bottom");
-                        if (!theResource.equals("r")) {
+                        if (!theResource.equals("r ")) {
                             theResource = theResource.substring(2);
                             TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
                             System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
@@ -179,7 +179,7 @@ class MousePressListener implements MouseListener {
                     }
                     if (rowNum == currentPlayerY - 1) {
                         System.out.println("To the Top");
-                        if (!theResource.equals("r")) {
+                        if (!theResource.equals("r ")) {
                             theResource = theResource.substring(2);
                             TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(theResource);
                             System.out.println("On the board this is: " + TheIsleOfLaeso.i.getBoard()[rowNum][colNum].substring(2));
