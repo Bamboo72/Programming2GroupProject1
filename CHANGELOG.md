@@ -147,3 +147,5 @@ Updated NaturalEventGenerator class 2021-5-21 - bran214
 Updated entry point (TheIsleOfLaeso) class 2021-5-21 - bran214
 
 Updated Player class 2021-5-21 - HoldMyTyr
+
+Updated Mouse classes 2021-5-20 - andrewblodgett
