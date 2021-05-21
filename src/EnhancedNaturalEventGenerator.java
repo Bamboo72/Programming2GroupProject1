@@ -76,6 +76,7 @@ public class EnhancedNaturalEventGenerator extends NaturalEventGenerator {
                     impactedStrucure.addHealth(-1);
                 break;
         }
+        previousEvent = eventID;
         return getEventIDName(eventID);
     }
 
