@@ -129,5 +129,21 @@ Updated entry point (TheIsleOfLaeso) class 2021-5-20 - HoldMyTyr
 
 Updated Structure class 2021-5-20 - andrewblodgett
 
+Updated Island class 2021-5-20 - andrewblodgett
+
+Updated Graphics 2021-5-20 - Bamboo72
+
+Updated NaturalEventGenerator class 2021-5-20 - bran214
+
+Updated Graphics 2021-5-20 - Bamboo72
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - Bamboo72
+
+Updated Structure class 2021-5-20 - bran214
+
 Updated NaturalEventGenerator class 2021-5-21 - bran214
  - Added EnhancedNaturalEventGenerator.java - bran214
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - bran214
+
+Updated Player class 2021-5-21 - HoldMyTyr
