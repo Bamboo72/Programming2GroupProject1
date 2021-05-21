@@ -7,7 +7,7 @@ public class TheIsleOfLaeso{
   *@Author Maximilian C. Sutton (most of main, Character Creation class, Player class, Settings class, Settings files)
   *@Author Jacob Schwartz (put 100000 hr in, Graphics class, Cool Art, Island layout, Buttons/Mouse class, some of main)
   *@Author Andrew Blodgett (Resource Generation Class, Dice class, Island class, Structure/Build class)
-  *@Author Brandon Winters (Catastrophe Mode classes: NaturalEventGenerator class, EnhancedNaturalEventGenerator class)
+  *@Author Brandon Winters (Catastrophe Mode class)
   *@Version 0.91
   *@Since 2021-5-20
   */
@@ -45,6 +45,19 @@ public class TheIsleOfLaeso{
   static Player b;
   static Player c;
   static Player d;
+
+  public static boolean checkForPlayerAtStructure(Player p, int type){ // Checks if there is a specific building type at the player location
+    for(Structure s: structures){
+      if(p.getXPos() == s.getX()){
+        if(p.getYPos() == s.getY()){
+            if(s.getType() == type ){
+              return true;
+            }
+        }
+      }
+    }
+    return false;
+  }
 
   public static int checkWin(){
 
