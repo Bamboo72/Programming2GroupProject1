@@ -6,16 +6,17 @@ public class Player {
   */
 
 
-  //varables that are inportant 
-  private int x;
-  private int y;
-  private String name; 
-  private String hat;
-  private String clothes; 
-  private String color;
-  private int[] inventory; 
-  private int health;
-  private int roll1, roll2;
+    //varables that are inportant 
+    private int x;
+    private int y;
+    private String res;
+    private String name; 
+    private String hat;
+    private String clothes; 
+    private String color;
+    private int[] inventory; 
+    private int health;
+    private int roll1, roll2, diff, rad1, rad2;
 
 
   /**
