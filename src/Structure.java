@@ -112,4 +112,7 @@ public class Structure {
         return health;
     }
 
+    public void addHealth(int amount) {
+        health += amount;
+    }
 }
