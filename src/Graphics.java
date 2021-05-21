@@ -14,16 +14,16 @@ TODO:
         - Fix player collects
 
     - Buildings
+        - Make sure the images are all the same size?
         - Fix allignment
         - Add functionality
         - Make sure you can't overlap (loop through the structures arraylist to check if the newStructure matches the coords for any building)
 
-    - Incorporate win conditions
     - Incorporate Disaster mode
 
     - Bugs
-        - Water detection doesn't work for constructing ports and boats. Also, I think I did the logic wrong. We need to detect if the player is making a boat when they're at a port
-        - 
+        - Reset player positions, clear the board of buildings and resources after a win
+        - Boat win condition isn't working?
     
 */
 
@@ -697,19 +697,12 @@ public class Graphics extends JFrame {
                 break;
             case 7: // Build Menu
 
-            TheIsleOfLaeso.players[0].addResource("wood ", 20);
-            TheIsleOfLaeso.players[0].addResource("people ", 20);
-            TheIsleOfLaeso.players[0].addResource("food ", 20);
-            TheIsleOfLaeso.players[0].addResource("stone ", 20);
-            TheIsleOfLaeso.players[0].addResource("ore ", 20);
-            TheIsleOfLaeso.players[0].addResource("magic ", 20);
-
                 displayText("Click on the building you want to construct.", 0, 15, 1280, 60, 30f);
                 if (toBeBuilt != null) {
                     displayText("Build a ", 950, 557, 90, 60, 30f);
                     displayText(toBeBuilt + "?", 930, 587, 130, 60, 30f);
                 }
-                if(buildingErrorMessage != null){
+                if (buildingErrorMessage != null) {
                     displayText(buildingErrorMessage, 750, 671, 240, 60, 30f);
                 }
                 displayText("Cancel", 990, 85, 70, 70, 30f);
@@ -1280,6 +1273,25 @@ public class Graphics extends JFrame {
 
     }
 
+    public void checkForWin(){ // The win check comes after the turn is increased.
+        int check = TheIsleOfLaeso.checkWin(); // Starting with 0: boat, magic, kill
+
+        Player winner = null;
+        if(TheIsleOfLaeso.playerTurn == 1){ // So the last player won and the turn returned to player 1
+            winner = TheIsleOfLaeso.players[TheIsleOfLaeso.numOfPlayer - 1];
+        } else { // So the previous player won, and it wasn't the last player
+            winner = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 2];
+        }
+
+        if (check == 1) { // kill
+            TheIsleOfLaeso.g.displayWin(2, winner);
+        } else if (check == 2) { // magic
+            TheIsleOfLaeso.g.displayWin(1, winner);
+        } else if (check == 3) { // boat
+            TheIsleOfLaeso.g.displayWin(0, winner);
+        }
+    }
+
     public void displayBoard() {
         String[][] theBoard = TheIsleOfLaeso.i.getBoard();
 
@@ -1366,9 +1378,7 @@ public class Graphics extends JFrame {
 
         // Display buildings
 
-
         for (Structure st : TheIsleOfLaeso.structures) {
-
 
             if (st.x > 25) {
                 buildingXOffset = -20;
@@ -1383,7 +1393,7 @@ public class Graphics extends JFrame {
             } else if (st.x > 0) {
                 buildingXOffset = -20;
             }
-    
+
             if (st.y > 8) {
                 buildingYOffset = 15;
             } else if (st.y > 4) {
@@ -1393,15 +1403,20 @@ public class Graphics extends JFrame {
             }
 
             if (st.type == 'r') {
-                displayBuilding(3, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
+                displayBuilding(3, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset,
+                        (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'v') {
-                displayBuilding(0, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
+                displayBuilding(0, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset,
+                        (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'f') {
-                displayBuilding(1, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
+                displayBuilding(1, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset,
+                        (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'p') {
-                displayBuilding(2, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
+                displayBuilding(2, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset,
+                        (st.y * 40) + 75 + buildingYOffset);
             } else if (st.type == 'b') {
-                displayBuilding(4, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset, (st.y * 40) + 75 + buildingYOffset);
+                displayBuilding(4, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x * 43) - 33 + buildingXOffset,
+                        (st.y * 40) + 75 + buildingYOffset);
             }
         }
 
@@ -1556,6 +1571,13 @@ class GoToBoard implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
 
+        TheIsleOfLaeso.players[0].addResource("wood ", 40);
+        TheIsleOfLaeso.players[0].addResource("people ", 40);
+        TheIsleOfLaeso.players[0].addResource("food ", 40);
+        TheIsleOfLaeso.players[0].addResource("stone ", 40);
+        TheIsleOfLaeso.players[0].addResource("ore ", 40);
+        TheIsleOfLaeso.players[0].addResource("magic ", 0);
+
         int x = 0;
         int y = 0;
 
@@ -1620,27 +1642,43 @@ class GoToBoardToBuild implements ActionListener {
             buildingType = 'b';
         }
 
+        // Make a potential new structure
         Structure newStructure = new Structure(buildingType,
                 TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos(),
                 TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos(), 5, TheIsleOfLaeso.playerTurn);
 
+        // For ports and boats, make sure there is a ocean tile nearby
         boolean byOpenWater = true;
-        if(newStructure.type == 'p' || newStructure.type == 'b'){
+        if (newStructure.type == 'p' || newStructure.type == 'b') {
             byOpenWater = false;
         }
-
         int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
         int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
-        if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX + 1].equals("o")) {
+        if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX + 1].equals("o ")) {
             byOpenWater = true;
-        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX - 1].equals("o")) {
+            if (newStructure.type == 'b') {
+                newStructure.y--;
+                newStructure.x++;
+            }
+        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX - 1].equals("o ")) {
             byOpenWater = true;
-        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX + 1].equals("o")) {
+            if (newStructure.type == 'b') {
+                newStructure.y--;
+                newStructure.x--;
+            }
+        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX + 1].equals("o ")) {
             byOpenWater = true;
-        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX - 1].equals("o")) {
+            if (newStructure.type == 'b') {
+                newStructure.y++;
+                newStructure.x++;
+            }
+        } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX - 1].equals("o ")) {
             byOpenWater = true;
+            if (newStructure.type == 'b') {
+                newStructure.y++;
+                newStructure.x--;
+            }
         }
-
         if (!byOpenWater) {
             TheIsleOfLaeso.g.buildingErrorMessage = "Not By Open Water!";
             TheIsleOfLaeso.g.hideActivePanel();
@@ -1648,9 +1686,23 @@ class GoToBoardToBuild implements ActionListener {
             TheIsleOfLaeso.g.refresh();
         }
 
+        // For boats only, make sure the player is at a port
         boolean playerAtPort = true;
-        if(newStructure.type == 'p' || newStructure.type == 'b'){
+        if (newStructure.type == 'b') {
             playerAtPort = false;
+        }
+        for (Structure s : TheIsleOfLaeso.structures) {
+            if (s.getType() == 'p' && s.owner == TheIsleOfLaeso.playerTurn
+                    && s.getX() == TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos()
+                    && s.getY() == TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos()) {
+                playerAtPort = true;
+            }
+        }
+        if (!playerAtPort) {
+            TheIsleOfLaeso.g.buildingErrorMessage = "You need to be at a port!";
+            TheIsleOfLaeso.g.hideActivePanel();
+            TheIsleOfLaeso.g.sceneDisplay(7);
+            TheIsleOfLaeso.g.refresh();
         }
 
         boolean playerHasEnough = true;
@@ -1670,7 +1722,7 @@ class GoToBoardToBuild implements ActionListener {
             TheIsleOfLaeso.g.hideActivePanel();
             TheIsleOfLaeso.g.sceneDisplay(5);
             TheIsleOfLaeso.g.refresh();
-            
+
             if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
                 TheIsleOfLaeso.playerTurn++;
             } else {
@@ -1681,9 +1733,10 @@ class GoToBoardToBuild implements ActionListener {
                     + "'s turn. Roll the dice!";
             TheIsleOfLaeso.i.resourceGeneration();
             TheIsleOfLaeso.g.refreshBoard();
+
+            TheIsleOfLaeso.g.checkForWin();
         }
-           
-        
+
     }
 }
 
@@ -2101,8 +2154,6 @@ class DiceRoll implements ActionListener {
 class EndTurn implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
-        // TheIsleOfLaeso.incPhase(TheIsleOfLaeso.getPhase());
-        // System.out.println("The phase is now " + TheIsleOfLaeso.getPhase());
 
         if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
             TheIsleOfLaeso.playerTurn++;
@@ -2115,6 +2166,7 @@ class EndTurn implements ActionListener {
         TheIsleOfLaeso.i.resourceGeneration();
         TheIsleOfLaeso.g.refreshBoard();
 
+        TheIsleOfLaeso.g.checkForWin();
     }
 }
 
@@ -2125,7 +2177,7 @@ class Build implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         TheIsleOfLaeso.g.toBeBuilt = "Storehouse";
-        TheIsleOfLaeso.g.toBeBuilt = null;
+        TheIsleOfLaeso.g.buildingErrorMessage = null;
 
         if (TheIsleOfLaeso.g.diceRolled) {
             TheIsleOfLaeso.g.hideActivePanel();
@@ -2145,6 +2197,10 @@ class Attack implements ActionListener {
         if (TheIsleOfLaeso.g.diceRolled) {
             System.out.println("The attack button was pressed");
 
+            // Attack method here
+
+          
+
             if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
                 TheIsleOfLaeso.playerTurn++;
             } else {
@@ -2155,6 +2211,8 @@ class Attack implements ActionListener {
                     + "'s turn. Roll the dice!";
             TheIsleOfLaeso.i.resourceGeneration();
             TheIsleOfLaeso.g.refreshBoard();
+
+            TheIsleOfLaeso.g.checkForWin();
         }
     }
 

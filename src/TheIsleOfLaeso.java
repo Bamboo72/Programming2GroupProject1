@@ -35,17 +35,28 @@ public class TheIsleOfLaeso{
  
   static int numAlive = 2;
 
-  static boolean isWon = false;
+  static int winType = 0; // Replacement for boolean isWon so that we can display the different win screens
 
   //static ArrayList<Player> players = new ArrayList<Player>();
   static Player[] players = new Player[numOfPlayer];
+  static ArrayList<Structure> structures = new ArrayList<Structure>();
 
   static Player a;
   static Player b;
   static Player c;
   static Player d;
 
-  public static boolean checkWin(){
+  public static int checkWin(){
+
+    int whichPlayerToCheck; // Because the win check happens after the turn is incremented, we have to account for the turn going from the last player to the first player
+    if(playerTurn == 1){ // So the last player went and the turn returned to player 1
+      whichPlayerToCheck = numOfPlayer - 1;
+    } else { // So the previous player went, and turn moved to the next player
+      whichPlayerToCheck = playerTurn - 2;
+    }
+
+    System.out.println("The player turn is now " + playerTurn + " so it's " + players[playerTurn - 1].getName() + "'s turn, but we are doing a win check for " + players[whichPlayerToCheck].getName() );
+    System.out.print("Win Check: ");
     //the kill win
     numAlive = numOfPlayer;
     if(isDead(a) == true){
@@ -67,22 +78,46 @@ public class TheIsleOfLaeso{
       }
     }
     if(numAlive <= 0){
-      isWon = true;
+      winType = 1;
+      System.out.println("KILL WIN!!");
     }
 
     //the magic win
-    if(players[playerTurn-1].getResource(magic) > 8){
-      isWon = true;
+    if(players[whichPlayerToCheck].getInven()[5] > 8){
+      winType = 2;
+      System.out.println("MAGIC WIN!!");
     }
 
     //the boat win
-    if(players[playerTurn-1].getResource(people) > 5 && players[playerTurn-1].getResource(food) > 11){ //checks if they have enought recorces
-      if(  /*were you put if they are AT a boat and if they HAVE a boat*/  ){
-        isWon = true;
-      }
+    if(players[whichPlayerToCheck].getResource(people) > 5 && players[whichPlayerToCheck].getResource(food) > 11){ //checks if they have enought recorces
+      
+        boolean boatNearby = false;
+        for(Structure s: structures){
+          if(s.getType() == 'p' && s.owner == whichPlayerToCheck && s.getX() == players[whichPlayerToCheck].getXPos() && s.getY() == players[whichPlayerToCheck].getYPos()){
+            int currentPlayerX = TheIsleOfLaeso.players[whichPlayerToCheck].getXPos();
+            int currentPlayerY = TheIsleOfLaeso.players[whichPlayerToCheck].getYPos();
+            if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX + 1) {
+                boatNearby = true;
+            } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY - 1][currentPlayerX - 1].equals("o")) {
+              boatNearby = true;
+            } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX + 1].equals("o")) {
+              boatNearby = true;
+            } else if (TheIsleOfLaeso.i.getBoard()[currentPlayerY + 1][currentPlayerX - 1].equals("o")) {
+              boatNearby = true;
+            }
+          }
+        }
+        if(boatNearby){
+          winType = 3;
+          System.out.println("BOAT WIN!!");
+        }
+        
     }
 
-    return isWon;
+    if(winType == 0){
+      System.out.println("no win detected");
+    }
+    return winType;
   }
 
   public static boolean isDead(Player player){
