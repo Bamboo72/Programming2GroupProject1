@@ -107,10 +107,10 @@ public class Player {
       } 
       if(roll1 > roll2 + 2){
         if(checkForPlayerAtStructure(playerTwo) != null){
-          
-          impactedStructure.addHealth(-1);
+          checkForPlayerAtStructure(playerTwo).addHealth(-1);
+        } else {
+          playerTwo.damage();
         }
-        playerTwo.damage();
         playerTwo.addResource("wood", -10);
         playerOne.addResource("wood", 10);
       } else if(roll1 > roll2){
@@ -121,6 +121,11 @@ public class Player {
         playerOne.addResource("wood", -10);
         playerTwo.addResource("wood", 10);
       } else if(roll1 < roll2) {
+        if(checkForPlayerAtStructure(playerOne) != null){
+          checkForPlayerAtStructure(playerOne).addHealth(-1);
+        } else {
+          playerTwo.damage();
+        }
         playerOne.addResource("wood", -10);
         playerTwo.addResource("wood", 10);
       }
@@ -129,7 +134,7 @@ public class Player {
 
 
     public static Structure checkForPlayerAtStructure(Player p, char type){ // Checks if there is a specific building type at the player location
-      for(Structure s: structures){
+      for(Structure s: TheIsleOfLaeso.structures){
         if(p.getXPos() == s.getX()){
           if(p.getYPos() == s.getY()){
               if(s.getType() == type ){
@@ -142,7 +147,7 @@ public class Player {
     }
 
     public static Structure checkForPlayerAtStructure(Player p){ // Checks if there is a specific building type at the player location
-      for(Structure s: structures){
+      for(Structure s: TheIsleOfLaeso.structures){
         if(p.getXPos() == s.getX()){
           if(p.getYPos() == s.getY()){
               return s;
