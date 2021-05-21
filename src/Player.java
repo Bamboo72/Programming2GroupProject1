@@ -97,35 +97,27 @@ public class Player {
 
 
 
-     public static void attacking(Player playerOne, Player playerTwo) {
-      roll1 = TheIsleOfLaeso.dice.roll();
+
+     public void attacking(Player playerOne, Player playerTwo) {
+      roll1 = TheIsleOfLaeso.dice.roll() + 100;
       roll2 = TheIsleOfLaeso.dice.roll();
       rad1 = TheIsleOfLaeso.dice.roll() - 1;
       rad2 = TheIsleOfLaeso.dice.roll();
-      switch(rad1){
-        case 0:
-          res = "wood";
-          break;
-        case 1:
-          res = "people";
-          break;
-        case 2:
-          res = "food";
-          break;
-        case 3:
-          res = "stone";
-          break;
-        case 4:
-          res = "ore";
-          break;
-        case 5:
-          res = "magic";
-          break;
-        default:
-          res = "wood";
-          System.out.println("YOU BIG DUMB");
+      if(rad1 == 0){
+        res = "wood";
+      } else if(rad1 == 1){
+        res = "people";
+      } else if(rad1 == 2){
+        res = "food";
+      } else if(rad1 == 3){
+        res = "stone";
+      } else if(rad1 == 4){
+        res = "ore";
+      } else if(rad1 == 5){
+        res = "magic";
+      } else {
+        res = "wood";
       }
-      
       if(checkForPlayerAtStructure(playerTwo, 'f') != null){
         roll2 ++;
       } 
@@ -134,7 +126,7 @@ public class Player {
       } 
       if(roll1 > roll2 + 2){
         if(checkForPlayerAtStructure(playerTwo) != null){
-          checkForPlayerAtStructure(playerTwo).addHealth(-5);
+          checkForPlayerAtStructure(playerTwo).addHealth(-5); // how do I change
         } else {
           playerTwo.damage();
         }
@@ -149,7 +141,7 @@ public class Player {
         playerOne.addResource(res, rad2);
       } else if(roll1 + 2 < roll2) {
         if(checkForPlayerAtStructure(playerOne) != null){
-          checkForPlayerAtStructure(playerOne).addHealth(-5);
+          checkForPlayerAtStructure(playerOne).addHealth(-5); // how do I change 
         } else {
           playerOne.damage();
         }
@@ -164,9 +156,8 @@ public class Player {
         playerTwo.addResource(res, rad2);
       }
     }
-
-
-
+  
+  
     public static Structure checkForPlayerAtStructure(Player p, char type){ // Checks if there is a specific building type at the player location
       for(Structure s: TheIsleOfLaeso.structures){
         if(p.getXPos() == s.getX()){
