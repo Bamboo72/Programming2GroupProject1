@@ -98,62 +98,82 @@ public class Player {
 
 
 
-     public void attacking(Player playerOne, Player playerTwo) {
+      public void attacking(Player playerOne, Player playerTwo) {
       roll1 = TheIsleOfLaeso.dice.roll() + 100;
       roll2 = TheIsleOfLaeso.dice.roll();
       rad1 = TheIsleOfLaeso.dice.roll() - 1;
       rad2 = TheIsleOfLaeso.dice.roll();
       if(rad1 == 0){
         res = "wood";
+	System.out.println("wood was rolled");
       } else if(rad1 == 1){
         res = "people";
+	System.out.println("people was rolled");
       } else if(rad1 == 2){
         res = "food";
+	System.out.println("food was rolled");
       } else if(rad1 == 3){
         res = "stone";
+	System.out.println("stone was rolled");
       } else if(rad1 == 4){
         res = "ore";
+	System.out.println("ore was rolled");
       } else if(rad1 == 5){
         res = "magic";
+	System.out.println("magic was rolled");
       } else {
         res = "wood";
+	System.out.println("YOU BIG DUMB");
       }
       if(checkForPlayerAtStructure(playerTwo, 'f') != null){
         roll2 ++;
+	System.out.println("defender is at a fort");
       } 
       if(checkForPlayerAtStructure(playerOne, 'v') != null){
         roll1 ++;
+	System.out.println("attacker is at a village");
       } 
       if(roll1 > roll2 + 2){
         if(checkForPlayerAtStructure(playerTwo) != null){
           checkForPlayerAtStructure(playerTwo).addHealth(-5); // how do I change
+	  System.out.println("Attaker rolled higher than defender by 3+, at a fort");
         } else {
           playerTwo.damage();
+	  System.out.println("Attaker rolled higher than defender by 3+, defender dammaged");
         }
         playerTwo.addResource(res, -rad2);
         playerOne.addResource(res, rad2);
+	System.out.println("Recsorces given to attacker");
       } else if(roll1 > roll2){
+	System.out.println("Attaker rolled higher than defender");
         if(checkForPlayerAtStructure(playerTwo) != null){
           diff = roll2 - roll1;
           checkForPlayerAtStructure(playerTwo).addHealth(diff);
+	  System.out.println("defender building dammaged");
         }
         playerTwo.addResource(res, -rad2);
         playerOne.addResource(res, rad2);
+	System.out.println("Recsorces given to attacker");
       } else if(roll1 + 2 < roll2) {
         if(checkForPlayerAtStructure(playerOne) != null){
           checkForPlayerAtStructure(playerOne).addHealth(-5); // how do I change 
+	  System.out.println("Defender rolled higher than defender by 3+, at a village");
         } else {
           playerOne.damage();
+	  System.out.println("Defender rolled higher than defender by 3+, attaker dammaged");
         }
         playerOne.addResource(res, -rad2);
         playerTwo.addResource(res, rad2);
+	System.out.println("Recsorces given to defender");
       } else if(roll1 < roll2) {
         if(checkForPlayerAtStructure(playerTwo) != null){
           diff = roll1 - roll2;
           checkForPlayerAtStructure(playerTwo).addHealth(diff);
+	  System.out.println("attaker building dammaged");
         }
         playerOne.addResource(res, -rad2);
         playerTwo.addResource(res, rad2);
+	System.out.println("Recsorces given to defender");
       }
     }
   
