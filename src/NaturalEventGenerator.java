@@ -4,7 +4,7 @@
  * Class for an event generator. Does not need to be instantiated as an object; all methods are static.
  * The generator can pick a random event, or can take a specified event, and make it take effect.
  * @author Brandon Winters
- * @since 2021-5-14
+ * @since 2021-5-21
  */
 public class NaturalEventGenerator {
 
@@ -114,6 +114,8 @@ public class NaturalEventGenerator {
         double random;
         int lostWood;
         int food;
+        if (!isValidEventID(eventID))
+            return generateEvent(generateRandomEventID(), impactedPlayer);
         switch (eventID) {
             case TORNADO:
                 random = Math.random();
@@ -216,9 +218,19 @@ public class NaturalEventGenerator {
                     impactedPlayer.addResource("wood ", 1);
                 }
                 break;
-            default:
-                return generateEvent(generateRandomEventID(), impactedPlayer);
         }
+        int woodAmount = impactedPlayer.getResource("wood ");
+        int foodAmount = impactedPlayer.getResource("food ");
+        int peopleAmount = impactedPlayer.getResource("people ");
+        int stoneAmount = impactedPlayer.getResource("stone ");
+        if (woodAmount < 0)
+            impactedPlayer.addResource("wood ", -woodAmount);
+        if (foodAmount < 0)
+            impactedPlayer.addResource("food ", -foodAmount);
+        if (peopleAmount < 0)
+            impactedPlayer.addResource("people ", -peopleAmount);
+        if (stoneAmount < 0)
+            impactedPlayer.addResource("stone ", -stoneAmount);
         return getEventIDName(eventID);
     }
 
