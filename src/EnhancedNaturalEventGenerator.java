@@ -103,11 +103,13 @@ public class EnhancedNaturalEventGenerator extends NaturalEventGenerator {
         if (!isValidEventID(eventID)) {
             eventID = generateRandomEventID();
         }
-        for (Player player : players) {
-            generateEvent(eventID, player);
+        for (int i = 0; i < players.length; i++) {
+            if (Math.random() < probability)
+                generateEvent(eventID, players[i]);
         }
-        for (Structure structure : structures) {
-            generateEvent(eventID, structure);
+        for (int i = 0; i < structures.length; i++) {
+            if (Math.random() < probability);
+                generateEvent(eventID, structures[i]);
         }
         return getEventIDName(eventID);
     }
