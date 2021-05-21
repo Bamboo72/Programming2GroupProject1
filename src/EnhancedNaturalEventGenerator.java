@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * Class for an improved event generator, which also affects structures. Does not need to be instantiated as an object; all methods are static.
+ * The generator can pick a random event, or can take a specified event, and make it take effect.
+ * @author Brandon Winters
+ * @since 2021-5-21
+ */
 public class EnhancedNaturalEventGenerator extends NaturalEventGenerator {
 
     /*
