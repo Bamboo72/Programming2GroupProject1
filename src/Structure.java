@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * The class that represents a structure for isle of laeso.
  * @author Andrew Blodgett
@@ -11,7 +13,7 @@ public class Structure {
     int[] cost;
     int x, y;
     int health, owner;
-    static String resources;
+    String resources = "";
 
     /**
      * The constructor for the Structure class.
@@ -149,7 +151,8 @@ public class Structure {
                 Scanner in = new Scanner(resources);
                 in.useDelimiter(" ");
                 while(in.hasNext()) {
-                    Player.getPlayerAt(x, y).getResource(in.next());
+                   TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].addResource(in.next() + " ");
+                   System.out.println(in.next() + " ");
                 }
                 in.close();
             }
