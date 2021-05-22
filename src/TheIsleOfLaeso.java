@@ -39,8 +39,7 @@ public class TheIsleOfLaeso{
  
   static int numAlive = 2;
 
-  static int winType = 0;
-  static char boat = 'b';
+  static int winType = 0; 
 
   //an arry of player objects to access ez
   //static ArrayList<Player> players = new ArrayList<Player>();
@@ -71,29 +70,12 @@ public class TheIsleOfLaeso{
     System.out.print("Win Check: ");
     //the kill win
     numAlive = numOfP;
-    if(isDead(Player[0]) == true){
-      numAlive--;
-      System.out.println("1 is dead");
-    }
-    if(isDead(Player[1]) == true){
-      numAlive--;
-      System.out.println("2 is dead");
-    }
-    if(numOfP == 4) {
-      if(isDead(Player[2]) == true){
+    for(int i = 0; i < numOfP; i++){
+      if(isDead(players[i]) == true){
         numAlive--;
-        System.out.println("3 is dead");
-      }
-      if(isDead(Player[3]) == true){
-        numAlive--;
-	System.out.println("4 is dead");
-      }
-    } else if(numOfP == 3){
-      if(isDead(Player[2]) == true){
-        numAlive--;
-	System.out.println("3 is dead");
       }
     }
+    
     if(numAlive <= 1){
       winType = 1;
       System.out.println("KILL WIN!!");
@@ -107,30 +89,10 @@ public class TheIsleOfLaeso{
 
     //the boat win
     if(players[whichPlayerToCheck].getResource(people) > 5 && players[whichPlayerToCheck].getResource(food) > 11){ //checks if they have enought recorces
-        //if(checkForPlayerAtStructure(players[playerTurn - 1], boat) != null){
-         // winType = 3;
-          //System.out.println("BOAT WIN!!");
-        //}
-	boolean boatNearby = false;
-        for(Structure s: structures){
-          if(s.getType() == 'p' && s.owner == whichPlayerToCheck && s.getX() == players[whichPlayerToCheck].getXPos() && s.getY() == players[whichPlayerToCheck].getYPos()){
-            int currentPlayerX = TheIsleOfLaeso.players[whichPlayerToCheck].getXPos();
-            int currentPlayerY = TheIsleOfLaeso.players[whichPlayerToCheck].getYPos();
-            if (s.getY() == currentPlayerY + 1 &&  s.getX() == currentPlayerX + 1) {
-                boatNearby = true;
-            } else if (s.getY() == currentPlayerY + 1 &&  s.getX() == currentPlayerX - 1) {
-              boatNearby = true;
-            } else if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX + 1) {
-              boatNearby = true;
-            } else if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX - 1) {
-              boatNearby = true;
-            }
-          }
-        }
-        if(boatNearby){
-          winType = 3;
-          System.out.println("BOAT WIN!!");
-        }     
+      if(Player.checkForPlayerAtStructure(players[playerTurn - 1], 'p') != null){
+        winType = 3;
+        System.out.println("BOAT WIN!!");
+      }
     }
 
     if(winType == 0){
