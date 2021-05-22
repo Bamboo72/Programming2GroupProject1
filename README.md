@@ -25,7 +25,9 @@ In order, each player will take their turn:
 2. Move and collect resources by clicking on desired locations and resources. (Careful! There's no takebacks!)  
 3. Choose to either build, attack, or end your turn by clicking the buttons at the bottom of the screen. Note that building or attacking will end your turn.  
 
-There are multiple ways to win. You could escape the island, collect enough magic to ascend, or be the last player alive on the island. Keep each win condition in mind as you play!    
+There are multiple ways to win. You could escape the island, collect enough magic to ascend, or be the last player alive on the island. Keep each win condition in mind as you play!  
+
+
 
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
 ![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
