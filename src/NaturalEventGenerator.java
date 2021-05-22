@@ -130,10 +130,19 @@ public class NaturalEventGenerator {
                     direction = "rd";
                 }
                 impactedPlayer.move(direction);
-                System.out.println("Warning: The player may have moved off the board.");
+                if (TheIsleOfLaeso.i.getBoard()[impactedPlayer.getYPos()][impactedPlayer.getXPos()].equals("o ") || TheIsleOfLaeso.i.getBoard()[impactedPlayer.getYPos()][impactedPlayer.getXPos()].equals("n ")) {
+                    if (direction.equals("lu"))
+                        impactedPlayer.move("rd");
+                    else if (direction.equals("ld"))
+                        impactedPlayer.move("ru");
+                    else if (direction.equals("ru"))
+                        impactedPlayer.move("ld");
+                    else
+                        impactedPlayer.move("lu");
+                }
                 break;
             case FIRE:
-                lostWood = (int)(Math.random() * 3) - 1;
+                lostWood = (int)(Math.random() * 3) + 1;
                 impactedPlayer.addResource("wood ", -lostWood);
                 break;
             case LIGHTNING:
@@ -151,7 +160,7 @@ public class NaturalEventGenerator {
                 impactedPlayer.addResource("people ", -1);
                 break;
             case BUGS:
-                int lostFood = (int)(Math.random() * 2) - 1;
+                int lostFood = (int)(Math.random() * 2) + 1;
                 impactedPlayer.addResource("food ", -lostFood);
                 break;
             case PLAGUE:
@@ -165,7 +174,7 @@ public class NaturalEventGenerator {
                 impactedPlayer.addResource("people ", -1);
                 break;
             case EXPLOSION:
-                int lostStone = (int)(Math.random() * 3) - 1;
+                int lostStone = (int)(Math.random() * 3) + 1;
                 impactedPlayer.addResource("stone ", -lostStone);
                 break;
             case ABDUCTION:
@@ -192,7 +201,7 @@ public class NaturalEventGenerator {
                 }
                 break;
             case FAMINE:
-                int lostFoodAndPeople = (int)(Math.random() * 2) - 1;
+                int lostFoodAndPeople = (int)(Math.random() * 2) + 1;
                 impactedPlayer.addResource("food ", -lostFoodAndPeople);
                 impactedPlayer.addResource("people ", -lostFoodAndPeople);
                 break;
@@ -255,7 +264,7 @@ public class NaturalEventGenerator {
         if (!isValidEventID(eventID)) {
             eventID = generateRandomEventID();
         }
-        for (int i = 0; i < players.length; i++) {
+        for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
             generateEvent(eventID, players[i]);
         }
         return getEventIDName(eventID);

@@ -1,256 +1,94 @@
-//import java.util.TreeMap;
+import java.util.ArrayList;
 
 /**
- * Class for an event generator. Does not need to be instantiated as an object; all methods are static.
+ * Class for an improved event generator, which also affects structures. Does not need to be instantiated as an object; all methods are static.
  * The generator can pick a random event, or can take a specified event, and make it take effect.
  * @author Brandon Winters
  * @since 2021-5-21
  */
-public class NaturalEventGenerator {
+public class EnhancedNaturalEventGenerator extends NaturalEventGenerator {
 
-    /** a random event, with weighted probability */
-    public static final int RANDOM = -1;
+    /*
+        Event: player effect | structure effect
 
-    /** moves the player in a random direction */
-    public static final int TORNADO = 0;
+        Random: a random event, with weighted probability
+        Tornado: moves the player in a random direction | 20% chance of damaging building
+        Fire: burns 1-3 wood | 50% chance of damaging building
+        Lightning: 20% chance of burning 1 wood; if this occurs, 50% chance of breaking one stone. 2% chance of damaging the player. 100% change of killing one person. | 20% chance to damage building
+        Bugs: eats 1-2 food | no effect
+        Plague: 50% chance of removing 1 food; if this occurs, 50% chance of killing one person. 100% chance of killing one other person, regardless of the previous outcomes | no effect
+        Explosion: breaks 1-3 stone | 50% chance of damaging building
+        Abduction: trades 1-2 people for 1-2 stone (equal -people for equal +stone) | heals building
+        Adoption: gives 1-2 people | no effect
+        Tsunami: 50% chance of giving 2 food. 10% chance of killing one person. 50% chance of washing away 2 wood. | 75% chance of damaging building
+        Famine: removes 1-2 food and people | no effect
+        Rain: grows 2-3 food | if the previous event was fire, heals building
+        Earthquake: gives 1-2 wood from falling trees. For every wood, 50% chance of killing one person | 60% chance of damaging building
+        Flood: washes away 1-2 food or grows 1-2 food; equally weighted. 10% chance of giving one wood from falling trees | 30% chance of damaging building
+     */
 
-    /** burns 1-3 wood */
-    public static final int FIRE = 1;
-
-    /** 20% chance of burning 1 wood; if this occurs, 50% chance of breaking one stone. 2% chance of damaging the player. 100% change of killing one person. */
-    public static final int LIGHTNING = 2;
-
-    /** eats 1-2 food */
-    public static final int BUGS = 3;
-
-    /** 50% chance of removing 1 food; if this occurs, 50% chance of killing one person. 100% chance of killing one other person, regardless of the previous outcomes */
-    public static final int PLAGUE = 4;
-
-    /** breaks 1-3 stone */
-    public static final int EXPLOSION = 5;
-
-    /** trades 1-2 people for 1-2 stone (equal -people for equal +stone) */
-    public static final int ABDUCTION = 6;
-
-    /** gives 1-2 people */
-    public static final int ADOPTION = 7;
-
-    /** 50% chance of giving 2 food. 10% chance of killing one person. 50% chance of washing away 2 wood. */
-    public static final int TSUNAMI = 8;
-
-    /** removes 1-2 food and people */
-    public static final int FAMINE = 9;
-
-    /** grows 2-3 food */
-    public static final int RAIN = 10;
-
-    /** gives 1-2 wood from falling trees. For every wood, 50% chance of killing one person */
-    public static final int EARTHQUAKE = 11;
-
-    /** washes away 1-2 food or grows 1-2 food; equally weighted. 10% chance of giving one wood from falling trees */
-    public static final int FLOOD = 12;
-
-//    public static void main(String[] args) {
-//        Player player = new Player(0, 0, "Bob", "Hat", "Clothes", "Red", new int[] {0, 0, 0, 0, 0, 0}, 100);
-//        Player player1 = new Player(0, 0, "Rob", "Hat", "Clothes", "Red", new int[] {0, 0, 0, 0, 0, 0}, 100);
-//        TreeMap<Integer, Integer> occurrenceRates = new TreeMap<>();
-//        int tests = 100000;
-//        for (int i = 0; i < tests; i++) {
-//            int eventID = generateRandomEventID();
-//            if (occurrenceRates.get(eventID) != null)
-//                occurrenceRates.replace(eventID, occurrenceRates.get(eventID) + 1);
-//            else
-//                occurrenceRates.put(eventID, 1);
-//        }
-//        for (Integer key : occurrenceRates.keySet()) {
-//            System.out.println(key + ": " + occurrenceRates.get(key) + " ~" + (occurrenceRates.get(key) / (double)tests * 100 + "%"));
-//        }
-//        for (int i = 0; i < tests; i++) {
-//            System.out.println(generateEvent(player));
-//            System.out.println("x: " + player.getXPos());
-//            System.out.println("y: " + player.getYPos());
-//            System.out.println("wood: " + player.getResource("wood "));
-//            System.out.println("people: " + player.getResource("people "));
-//            System.out.println("food: " + player.getResource("food "));
-//            System.out.println("stone: " + player.getResource("stone "));
-//            System.out.println("health: " + player.getHealth());
-//        }
-//        Player[] players = new Player[] {player, player1};
-//        for (int i = 0; i < tests; i++) {
-//            System.out.println(generateGlobalEvent(players));
-//            System.out.println("x: " + player.getXPos());
-//            System.out.println("y: " + player.getYPos());
-//            System.out.println("wood: " + player.getResource("wood "));
-//            System.out.println("people: " + player.getResource("people "));
-//            System.out.println("food: " + player.getResource("food "));
-//            System.out.println("stone: " + player.getResource("stone "));
-//            System.out.println("health: " + player.getHealth());
-//            System.out.println("x1: " + player1.getXPos());
-//            System.out.println("y1: " + player1.getYPos());
-//            System.out.println("wood1: " + player1.getResource("wood "));
-//            System.out.println("people1: " + player1.getResource("people "));
-//            System.out.println("food1: " + player1.getResource("food "));
-//            System.out.println("stone1: " + player1.getResource("stone "));
-//            System.out.println("health1: " + player1.getHealth());
-//        }
-//    }
+    public static int previousEvent = -1;
 
     /**
      * Puts into effect a randomly selected event. Selection generated from {@link #generateRandomEventID()}
-     * @param impactedPlayer the player for the event to occur to and affect.
+     * @param impactedStructure the structure for the event to occur to and affect.
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
-    public static String generateEvent(Player impactedPlayer) {
-        return generateEvent(RANDOM, impactedPlayer);
+    public static String generateEvent(Structure impactedStructure) {
+        return generateEvent(RANDOM, impactedStructure);
     }
 
     /**
      * Puts into effect an event with a specified eventID.
      * @param eventID the type of event to do. If given an invalid value, {@link #generateRandomEventID()} will provide an eventID.
-     * @param impactedPlayer the player for the event to occur to and affect.
+     * @param impactedStrucure the structure for the event to occur to and affect.
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
-    public static String generateEvent(int eventID, Player impactedPlayer) {
-        double random = 0.0;
-        int lostWood = 0;
-        int food = 0;
+    public static String generateEvent(int eventID, Structure impactedStrucure) {
+        double random = Math.random();
         if (!isValidEventID(eventID))
-            return generateEvent(generateRandomEventID(), impactedPlayer);
+            return generateEvent(generateRandomEventID(), impactedStrucure);
         switch (eventID) {
             case TORNADO:
-                random = Math.random();
-                String direction;
-                if (random < 0.25) {
-                    direction = "lu";
-                } else if (random < 0.5) {
-                    direction = "ld";
-                } else if (random < 0.75) {
-                    direction = "ru";
-                } else {
-                    direction = "rd";
-                }
-                impactedPlayer.move(direction);
-                if (TheIsleOfLaeso.i.getBoard()[impactedPlayer.getYPos()][impactedPlayer.getXPos()].equals("o ") || TheIsleOfLaeso.i.getBoard()[impactedPlayer.getYPos()][impactedPlayer.getXPos()].equals("n ")) {
-                    if (direction.equals("lu"))
-                        impactedPlayer.move("rd");
-                    else if (direction.equals("ld"))
-                        impactedPlayer.move("ru");
-                    else if (direction.equals("ru"))
-                        impactedPlayer.move("ld");
-                    else
-                        impactedPlayer.move("lu");
-                }
+            case LIGHTNING:
+            case FLOOD:
+                if (random < 0.2)
+                    impactedStrucure.addHealth(-1);
                 break;
             case FIRE:
-                lostWood = (int)(Math.random() * 3) + 1;
-                impactedPlayer.addResource("wood ", -lostWood);
-                break;
-            case LIGHTNING:
-                random = Math.random();
-                if (random < 0.1) {
-                    impactedPlayer.addResource("stone ", -1);
-                }
-                if (random < 0.2) {
-                    impactedPlayer.addResource("wood ", -1);
-                }
-                random = Math.random();
-                if (random < 0.02) {
-                    impactedPlayer.damage();
-                }
-                impactedPlayer.addResource("people ", -1);
-                break;
-            case BUGS:
-                int lostFood = (int)(Math.random() * 2) + 1;
-                impactedPlayer.addResource("food ", -lostFood);
-                break;
-            case PLAGUE:
-                random = Math.random();
-                if (random < 0.5) {
-                    impactedPlayer.addResource("food ", -1);
-                }
-                if (random < 0.25) {
-                    impactedPlayer.addResource("people ", -1);
-                }
-                impactedPlayer.addResource("people ", -1);
-                break;
             case EXPLOSION:
-                int lostStone = (int)(Math.random() * 3) + 1;
-                impactedPlayer.addResource("stone ", -lostStone);
+                if (random < 0.5)
+                    impactedStrucure.addHealth(-1);
                 break;
             case ABDUCTION:
-                int trade = (int)(Math.random() * 2) + 1;
-                impactedPlayer.addResource("people ", -trade);
-                impactedPlayer.addResource("stone ", trade);
-                break;
-            case ADOPTION:
-                int newPeople = (int)(Math.random() * 2) + 1;
-                impactedPlayer.addResource("people ", newPeople);
+                impactedStrucure.addHealth(1);
                 break;
             case TSUNAMI:
-                random = Math.random();
-                if (random < 0.5) {
-                    impactedPlayer.addResource("food ", 2);
-                }
-                random = Math.random();
-                if (random < 0.1) {
-                    impactedPlayer.addResource("people ", -1);
-                }
-                random = Math.random();
-                if (random < 0.5) {
-                    impactedPlayer.addResource("wood ", -2);
-                }
-                break;
-            case FAMINE:
-                int lostFoodAndPeople = (int)(Math.random() * 2) + 1;
-                impactedPlayer.addResource("food ", -lostFoodAndPeople);
-                impactedPlayer.addResource("people ", -lostFoodAndPeople);
+                if (random < 0.75)
+                    impactedStrucure.addHealth(-1);
                 break;
             case RAIN:
-                food = (int)(Math.random() * 2) + 2;
-                impactedPlayer.addResource("food ", food);
+                if (previousEvent == FIRE)
+                    impactedStrucure.addHealth(1);
                 break;
             case EARTHQUAKE:
-                int wood = (int) (Math.random() * 2) + 1;
-                impactedPlayer.addResource("wood ", wood);
-                for (int i = 0; i < wood; i++) {
-                    if (Math.random() < 0.5)
-                        impactedPlayer.addResource("people ", -1);
-                }
-                break;
-            case FLOOD:
-                food = (int)(Math.random() * 2) + 1;
-                if (Math.random() < 0.5) {
-                    food = -food;
-                }
-                impactedPlayer.addResource("food ", food);
-                if (Math.random() < 0.1) {
-                    impactedPlayer.addResource("wood ", 1);
-                }
+                if (random < 0.6)
+                    impactedStrucure.addHealth(-1);
                 break;
         }
-        int woodAmount = impactedPlayer.getResource("wood");
-        int foodAmount = impactedPlayer.getResource("food");
-        int peopleAmount = impactedPlayer.getResource("people");
-        int stoneAmount = impactedPlayer.getResource("stone");
-        if (woodAmount < 0)
-            impactedPlayer.addResource("wood ", -woodAmount);
-        if (foodAmount < 0)
-            impactedPlayer.addResource("food ", -foodAmount);
-        if (peopleAmount < 0)
-            impactedPlayer.addResource("people ", -peopleAmount);
-        if (stoneAmount < 0)
-            impactedPlayer.addResource("stone ", -stoneAmount);
+        previousEvent = eventID;
         return getEventIDName(eventID);
     }
 
     /**
-     * Generates an random event which impacts a list of players. The specific outcomes (chances within the event) are not necessarily the same for each player.
-     * However, the same event will occur to all of the players.
+     * Generates an random event which impacts a list of players and structures. The specific outcomes (chances within the event) are not necessarily the same for each.
+     * However, the same event will occur to everything.
      * @param players the players in the game to impact. For a truly "global" event, list all players in the game.
+     * @param structures the structures in the game to impact.
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
-    public static String generateGlobalEvent(Player[] players) {
-        return generateGlobalEvent(RANDOM, players);
+    public static String generateGlobalEvent(Player[] players, Structure[] structures) {
+        return generateGlobalEvent(RANDOM, players, structures);
     }
 
     /**
@@ -258,110 +96,57 @@ public class NaturalEventGenerator {
      * However, the same event will occur to all of the players.
      * @param eventID the type of event to do. If given an invalid value, {@link #generateRandomEventID()} will provide an eventID. The same event will occur to all players.
      * @param players the players in the game to impact. For a truly "global" event, list all players in the game.
+     * @param structures the structures in the game to impact.
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
-    public static String generateGlobalEvent(int eventID, Player[] players) {
+    public static String generateGlobalEvent(int eventID, Player[] players, Structure[] structures) {
         if (!isValidEventID(eventID)) {
             eventID = generateRandomEventID();
         }
-        for (int i = 0; i < players.length; i++) {
+        for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
             generateEvent(eventID, players[i]);
+        }
+        for (int i = 0; i < structures.length; i++) {
+            generateEvent(eventID, structures[i]);
         }
         return getEventIDName(eventID);
     }
 
     /**
-     * Provides a random eventID, with weighted probability.
-     * Weighting:
-     *  8%  Tornado     0
-     *  7%  Fire        1
-     *  8%  Lighting    2
-     * 10%  Bugs        3
-     *  6%  Plague      4
-     *  8%  Explosion   5
-     *  9%  Abduction   6
-     *  6%  Adoption    7
-     *  6%  Tsunami     8
-     *  6%  Famine      9
-     * 10%  Rain        10
-     *  8%  Earthquake  11
-     *  8%  Flood       12
-     * @return a random eventID
-     */
-    public static int generateRandomEventID() {
-        double p0 = 0.08;
-        double p1 = 0.07 + p0;
-        double p2 = 0.08 + p1;
-        double p3 = 0.1 + p2;
-        double p4 = 0.06 + p3;
-        double p5 = 0.08 + p4;
-        double p6 = 0.09 + p5;
-        double p7 = 0.06 + p6;
-        double p8 = 0.06 + p7;
-        double p9 = 0.06 + p8;
-        double p10 = 0.1 + p9;
-        double p11 = 0.08 + p10;
-        double p12 = 0.08 + p11;
-        double selector = Math.random();
-        if (selector < p0)
-            return 0;
-        else if (selector < p1)
-            return 1;
-        else if (selector < p2)
-            return 2;
-        else if (selector < p3)
-            return 3;
-        else if (selector < p4)
-            return 4;
-        else if (selector < p5)
-            return 5;
-        else if (selector < p6)
-            return 6;
-        else if (selector < p7)
-            return 7;
-        else if (selector < p8)
-            return 8;
-        else if (selector < p9)
-            return 9;
-        else if (selector < p10)
-            return 10;
-        else if (selector < p11)
-            return 11;
-        else if (selector < p12)
-            return 12;
-        else
-            return -1; // this should be impossible to reach
-    }
-
-    /**
-     * Gets the corresponding name of the event from the eventID
-     * @param eventID the ID of the event
+     * Generates an event which impacts a list of players. The specific outcomes (chances within the event) are not necessarily the same for each player.
+     * However, the same event will occur to all of the players.
+     * @param eventID the type of event to do. If given an invalid value, {@link #generateRandomEventID()} will provide an eventID. The same event will occur to all players.
+     * @param players the players in the game to impact. For a truly "global" event, list all players in the game.
+     * @param structures the structures in the game to impact.
+     * @param probability the individual probabilities for the event to occur to each object (0.5, for example, should lead to approximately 50% of the objects being affected)
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
-    public static String getEventIDName(int eventID) {
-        switch (eventID) {
-            case TORNADO: return "Tornado!";
-            case FIRE: return "Fire!";
-            case LIGHTNING: return "Lightning!";
-            case BUGS: return "Bugs!";
-            case PLAGUE: return "Plague!";
-            case EXPLOSION: return "Explosion!";
-            case ABDUCTION: return "Abduction!";
-            case ADOPTION: return "Adoption!";
-            case TSUNAMI: return "Tsunami!";
-            case FAMINE: return "Famine!";
-            case RAIN: return "Rain!";
-            case EARTHQUAKE: return "Earthquake!";
-            case FLOOD: return "Flood!";
-            default: return "???";
+    public static String generateGlobalEvent(int eventID, Player[] players, Structure[] structures, double probability) {
+        if (!isValidEventID(eventID)) {
+            eventID = generateRandomEventID();
         }
+        for (Player player : players) {
+            if (Math.random() < probability)
+                generateEvent(eventID, player);
+        }
+        for (Structure structure : structures) {
+            if (Math.random() < probability)
+                generateEvent(eventID, structure);
+        }
+        return getEventIDName(eventID);
     }
 
-    /**
-     * @param eventID the ID of the event
-     * @return if the ID of the event is valid
-     */
-    public static boolean isValidEventID(int eventID) {
-        return !getEventIDName(eventID).equals("???");
+    public static Structure[] selectRandomStructures(Structure[] structures) {
+        return selectRandomStructures(structures, 0.5);
+    }
+
+    public static Structure[] selectRandomStructures(Structure[] structures, double probability) {
+        ArrayList<Structure> returnList = new ArrayList<>();
+        for (Structure structure : structures) {
+            if (Math.random() < probability)
+                returnList.add(structure);
+        }
+        Structure[] newStructures = new Structure[returnList.size()];
+        return returnList.toArray(newStructures);
     }
 }
