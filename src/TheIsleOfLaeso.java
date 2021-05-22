@@ -70,22 +70,27 @@ public class TheIsleOfLaeso{
     System.out.print("Win Check: ");
     //the kill win
     numAlive = numOfP;
-    if(isDead(a) == true){
+    if(g.isDead(a) == true){
       numAlive--;
+      System.out.println("1 is dead");
     }
-    if(isDead(b) == true){
+    if(g.isDead(b) == true){
       numAlive--;
+      System.out.println("2 is dead");
     }
     if(numOfP == 4) {
-      if(isDead(c) == true){
+      if(g.isDead(c) == true){
         numAlive--;
+        System.out.println("3 is dead");
       }
-      if(isDead(d) == true){
+      if(g.isDead(d) == true){
         numAlive--;
+	System.out.println("4 is dead");
       }
     } else if(numOfP == 3){
-      if(isDead(c) == true){
+      if(g.isDead(c) == true){
         numAlive--;
+	System.out.println("3 is dead");
       }
     }
     if(numAlive <= 1){
