@@ -154,7 +154,10 @@ public class TheIsleOfLaeso{
       players[2] = c;
     }
   }
-
+	
+  /**
+   * The entry point for The Isle of Laeso
+   */
   public static void main(String[] args) throws FileNotFoundException  {
     g.sceneDisplay(0); 
     g.refresh();   
