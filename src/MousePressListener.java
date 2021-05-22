@@ -230,7 +230,11 @@ class MousePressListener implements MouseListener {
                 }
 
             }
-
+            Structure theStorehouse = Player
+                    .checkForPlayerAtStructure(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], 'r');
+            if (theStorehouse != null) {
+                theStorehouse.emptyStorehouse();
+            }
             TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + "'s turn. "
                     + TheIsleOfLaeso.moveLeft + " moves, " + TheIsleOfLaeso.collectsLeft + " collects left";
             TheIsleOfLaeso.g.refreshBoard();
