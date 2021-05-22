@@ -130,7 +130,16 @@ public class NaturalEventGenerator {
                     direction = "rd";
                 }
                 impactedPlayer.move(direction);
-                System.out.println("Warning: The player may have moved off the board.");
+                if (TheIsleOfLaeso.i.getBoard()[impactedPlayer.getYPos()][impactedPlayer.getXPos()].equals("o ") || TheIsleOfLaeso.i.getBoard()[impactedPlayer.getYPos()][impactedPlayer.getXPos()].equals("n ")) {
+                    if (direction.equals("lu"))
+                        impactedPlayer.move("rd");
+                    else if (direction.equals("ld"))
+                        impactedPlayer.move("ru");
+                    else if (direction.equals("ru"))
+                        impactedPlayer.move("ld");
+                    else
+                        impactedPlayer.move("lu");
+                }
                 break;
             case FIRE:
                 lostWood = (int)(Math.random() * 3) + 1;
