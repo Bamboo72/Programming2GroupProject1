@@ -88,7 +88,7 @@ public class TheIsleOfLaeso{
         numAlive--;
       }
     }
-    if(numAlive <= 0){
+    if(numAlive <= 1){
       winType = 1;
       System.out.println("KILL WIN!!");
     }
