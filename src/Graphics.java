@@ -7,27 +7,11 @@
 */
 
 /*
-TODO:
-   - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
-
-    - Players
-        - Fix allignment    
-        - Add movement logic to stop players from moving onto water or buildings
-
-    - Buildings
-        - Make sure the images are all the same size?
-        - Fix allignment
-        - Add functionality
-        - Make sure you can't overlap (loop through the structures arraylist to check if the newStructure matches the coords for any building)
-
-    - Incorporate Disaster mode
-    - Hook up the attack method
-
-    - Bugs
-        - Boat win condition isn't working?
-
+TO DO:
+        
     - Do Later
         -  We could potentially randomize starting positions (keep the same starting places, but randomize assignment to players)
+        - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
     
 */
 
@@ -54,6 +38,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.GraphicsEnvironment;
 
+/**
+ * This is the Graphics class for the Isle of Laeso group project.
+ */
 public class Graphics extends JFrame {
 
     int displayState;
@@ -833,12 +820,10 @@ public class Graphics extends JFrame {
         }
     }
 
-    public void hidePlayers() { // Not used...
-        for (JPanel panel : playerList) {
-            panel.setVisible(false);
-        }
-    }
-
+    /**
+     * This player refreshes the Player Creation screen by displaying its scene
+     * again
+     */
     public void refreshPlayerCreation() {
         if (activeTextField != null) {
             playerName = activeTextField.getText();
@@ -848,6 +833,9 @@ public class Graphics extends JFrame {
         refresh();
     }
 
+    /**
+     * This player refreshes the Board screen by displaying its scene again
+     */
     public void refreshBoard() {
         hideActivePanel();
         sceneDisplay(5);
@@ -929,6 +917,8 @@ public class Graphics extends JFrame {
      * profiles)
      *
      * @param p
+     * @param x
+     * @param y
      */
     public void displayPlayer(Player p, int x, int y) {
 
@@ -997,6 +987,9 @@ public class Graphics extends JFrame {
      * and traits (Note that this is the small version used for displaying a player
      * on the board)
      *
+     * @param p
+     * @param x
+     * @param y
      */
     public void displaySmallPlayer(Player p, int x, int y) {
 
@@ -1098,6 +1091,7 @@ public class Graphics extends JFrame {
      * This method displays the resource depending on the type and coords.
      *
      * @param type
+     * @param color
      * @param x
      * @param y
      */
@@ -1179,6 +1173,12 @@ public class Graphics extends JFrame {
         con.add(buildingPanel);
     }
 
+    /**
+     * This method displays the health hearts at the specified x and y.
+     * 
+     * @param x
+     * @param y
+     */
     public void displayHeart(int x, int y) {
         ImageIcon heartImage = new ImageIcon();
         heartImage = new ImageIcon(".//res//Heart.png");
@@ -1193,7 +1193,8 @@ public class Graphics extends JFrame {
     }
 
     /**
-     * This method displays what the player's character will look like.
+     * This method displays what the player's character will look like on the
+     * Character Creation screen.
      */
     public void previewPlayer() {
         Player tempPlayer = new Player(1100, 620, TheIsleOfLaeso.name, TheIsleOfLaeso.hat, TheIsleOfLaeso.clothes,
@@ -1205,6 +1206,8 @@ public class Graphics extends JFrame {
      * This method displays a player's profile.
      *
      * @param p
+     * @param x
+     * @param y
      */
     public void profileDisplay(Player p, int x, int y) {
 
@@ -1243,6 +1246,13 @@ public class Graphics extends JFrame {
         }
     }
 
+    /**
+     * This method displays the win screen for when one of the conditions has been
+     * met.
+     * 
+     * @param type
+     * @param p
+     */
     public void displayWin(int type, Player p) {
 
         TheIsleOfLaeso.g.hideActivePanel();
@@ -1276,14 +1286,27 @@ public class Graphics extends JFrame {
 
     }
 
+    /**
+     * This method checks if one of the win conditions has been met.
+     */
     public void checkForWin() { // The win check comes after the turn is increased.
-        int check = TheIsleOfLaeso.checkWin(); // Starting with 0: boat, magic, kill
+        int check = TheIsleOfLaeso.checkWin(TheIsleOfLaeso.numOfPlayer); // Starting with 0: boat, magic, kill
+
+        // Player winner = null;
+        // if (TheIsleOfLaeso.playerTurn == 1 && !TheIsleOfLaeso.isDead(TheIsleOfLaeso.players[TheIsleOfLaeso.numOfPlayer - 1])) { // So the last player won and the turn returned to player 1
+        //     winner = TheIsleOfLaeso.players[TheIsleOfLaeso.numOfPlayer - 1];
+        // } else { // So the previous player won, and it wasn't the last player
+        //     if(!TheIsleOfLaeso.isDead(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 2])){
+        //         winner = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 2];
+        //     }
+        // }
 
         Player winner = null;
         if (TheIsleOfLaeso.playerTurn == 1) { // So the last player won and the turn returned to player 1
             winner = TheIsleOfLaeso.players[TheIsleOfLaeso.numOfPlayer - 1];
         } else { // So the previous player won, and it wasn't the last player
-            winner = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 2];
+             winner = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 2];
+            
         }
 
         if (check == 1) { // kill
@@ -1361,7 +1384,7 @@ public class Graphics extends JFrame {
                 playerXOffset = -35;
             } else if (TheIsleOfLaeso.players[i].getXPos() > 18) {
                 playerXOffset = -30;
-            }  else if (TheIsleOfLaeso.players[i].getXPos() > 15) {
+            } else if (TheIsleOfLaeso.players[i].getXPos() > 15) {
                 playerXOffset = -25;
             } else if (TheIsleOfLaeso.players[i].getXPos() > 10) {
                 playerXOffset = -22;
@@ -1386,6 +1409,7 @@ public class Graphics extends JFrame {
             displaySmallPlayer(TheIsleOfLaeso.players[i],
                     (TheIsleOfLaeso.players[i].getXPos() * 43) - 12 + playerXOffset,
                     (TheIsleOfLaeso.players[i].getYPos() * 40) + 56 + playerYOffset);
+
         }
         // Display buildings
 
@@ -1441,7 +1465,157 @@ public class Graphics extends JFrame {
 
     }
 
-    public int getStartingX(int playerNumber){
+    /**
+     * This method displays the resources, players, and structures on the Game Board
+     * screen.
+     */
+    // public void displayBoard() {
+    // String[][] theBoard = TheIsleOfLaeso.i.getBoard();
+
+    // int xOffset = 0;
+    // int yOffset = 0;
+
+    // int playerXOffset = 0;
+    // int playerYOffset = 0;
+
+    // int buildingXOffset = 0;
+    // int buildingYOffset = 0;
+
+    // for (int i = 0; i < theBoard.length; i++) {
+    // for (int j = 0; j < theBoard[i].length; j++) {
+
+    // if (j > 25) {
+    // xOffset = -20;
+    // } else if (j > 20) {
+    // xOffset = -10;
+    // } else if (j > 15) {
+    // xOffset = -5;
+    // } else if (j > 10) {
+    // xOffset = +2;
+    // } else if (j > 5) {
+    // xOffset = +10;
+    // } else if (j > 0) {
+    // xOffset = +12;
+    // }
+
+    // if (i > 8) {
+    // yOffset = 0;
+    // } else if (i > 4) {
+    // yOffset = -3;
+    // } else if (i > 0) {
+    // yOffset = -6;
+    // }
+
+    // // Display resources
+    // if (TheIsleOfLaeso.i.contains("wood", j, i)) {
+    // displayResource(0, (j * 43) - 35 + xOffset, (i * 40) + 73 + yOffset);
+    // } else if (TheIsleOfLaeso.i.contains("people", j, i)) {
+    // displayResource(1, (j * 43) - 33 + xOffset, (i * 40) + 67 + yOffset);
+    // } else if (TheIsleOfLaeso.i.contains("food", j, i)) {
+    // displayResource(2, (j * 43) - 31 + xOffset, (i * 40) + 73 + yOffset);
+    // } else if (TheIsleOfLaeso.i.contains("stone", j, i)) {
+    // displayResource(3, (j * 43) - 30 + xOffset, (i * 40) + 73 + yOffset);
+    // } else if (TheIsleOfLaeso.i.contains("ore", j, i)) {
+    // displayResource(4, (j * 43) - 33 + xOffset, (i * 40) + 73 + yOffset);
+    // } else if (TheIsleOfLaeso.i.contains("magic", j, i)) {
+    // displayResource(5, (j * 43) - 31 + xOffset, (i * 40) + 73 + yOffset);
+    // }
+    // }
+    // }
+
+    // // Display players
+    // for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
+
+    // if (TheIsleOfLaeso.players[i].getXPos() > 25) {
+    // playerXOffset = -20;
+    // } else if (TheIsleOfLaeso.players[i].getXPos() > 20) {
+    // playerXOffset = -35;
+    // } else if (TheIsleOfLaeso.players[i].getXPos() > 15) {
+    // playerXOffset = -20;
+    // } else if (TheIsleOfLaeso.players[i].getXPos() > 10) {
+    // playerXOffset = -10;
+    // } else if (TheIsleOfLaeso.players[i].getXPos() > 5) {
+    // playerXOffset = -15;
+    // } else if (TheIsleOfLaeso.players[i].getXPos() > 0) {
+    // playerXOffset = -20;
+    // }
+
+    // if (TheIsleOfLaeso.players[i].getYPos() > 8) {
+    // playerYOffset = 15;
+    // } else if (TheIsleOfLaeso.players[i].getYPos() > 4) {
+    // playerYOffset = 0;
+    // } else if (TheIsleOfLaeso.players[i].getYPos() > 0) {
+    // playerYOffset = -12;
+    // }
+
+    // if(!TheIsleOfLaeso.isDead(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn -
+    // 1])){
+    // displaySmallPlayer(TheIsleOfLaeso.players[i],
+    // (TheIsleOfLaeso.players[i].getXPos() * 43) - 12 + playerXOffset,
+    // (TheIsleOfLaeso.players[i].getYPos() * 40) + 56 + playerYOffset);
+    // }
+
+    // }
+
+    // // Display buildings
+
+    // for (Structure st : TheIsleOfLaeso.structures) {
+
+    // if (st.x > 25) {
+    // buildingXOffset = -20;
+    // } else if (st.x > 20) {
+    // buildingXOffset = -35;
+    // } else if (st.x > 15) {
+    // buildingXOffset = -20;
+    // } else if (st.x > 10) {
+    // buildingXOffset = -10;
+    // } else if (st.x > 5) {
+    // buildingXOffset = -15;
+    // } else if (st.x > 0) {
+    // buildingXOffset = -20;
+    // }
+
+    // if (st.y > 8) {
+    // buildingYOffset = 15;
+    // } else if (st.y > 4) {
+    // buildingYOffset = 0;
+    // } else if (st.y > 0) {
+    // buildingYOffset = -12;
+    // }
+
+    // if (st.type == 'r') {
+    // displayBuilding(3, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x *
+    // 43) - 33 + buildingXOffset,
+    // (st.y * 40) + 75 + buildingYOffset);
+    // } else if (st.type == 'v') {
+    // displayBuilding(0, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x *
+    // 43) - 33 + buildingXOffset,
+    // (st.y * 40) + 75 + buildingYOffset);
+    // } else if (st.type == 'f') {
+    // displayBuilding(1, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x *
+    // 43) - 33 + buildingXOffset,
+    // (st.y * 40) + 75 + buildingYOffset);
+    // } else if (st.type == 'p') {
+    // displayBuilding(2, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x *
+    // 43) - 33 + buildingXOffset,
+    // (st.y * 40) + 75 + buildingYOffset);
+    // } else if (st.type == 'b') {
+    // displayBuilding(4, TheIsleOfLaeso.players[st.owner - 1].getColor(), (st.x *
+    // 43) - 33 + buildingXOffset,
+    // (st.y * 40) + 75 + buildingYOffset);
+    // }
+    // }
+
+    // }
+
+    /**
+     * This method returns the starting x position for a player based on their turn
+     * number.
+     * 
+     * @param playerNumber
+     * @return
+     */
+    public int getStartingX(int playerNumber) {
         int x = 0;
         if (playerNumber == 1) {
             x = 7;
@@ -1455,7 +1629,14 @@ public class Graphics extends JFrame {
         return x;
     }
 
-    public int getStartingY(int playerNumber){
+    /**
+     * This method returns the starting y position for a player based on their turn
+     * number.
+     * 
+     * @param playerNumber
+     * @return
+     */
+    public int getStartingY(int playerNumber) {
         int y = 0;
         if (playerNumber == 1) {
             y = 8;
@@ -1778,10 +1959,32 @@ class GoToBoardToBuild implements ActionListener {
             } else {
                 TheIsleOfLaeso.playerTurn = 1;
             }
+
+            if (TheIsleOfLaeso.isDead(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1])) {
+                if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
+                    TheIsleOfLaeso.playerTurn++;
+                } else {
+                    TheIsleOfLaeso.playerTurn = 1;
+                }
+            }
+
+            if (TheIsleOfLaeso.playerTurn == 1) {
+                try {
+                    if (IOSettings.findNaturalDis().equals("naturalDistrue")) {
+                        System.out.println(EnhancedNaturalEventGenerator.generateGlobalEvent(TheIsleOfLaeso.players));
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
             TheIsleOfLaeso.g.diceRolled = false;
             TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
                     + "'s turn. Roll the dice!";
             TheIsleOfLaeso.i.resourceGeneration();
+            for(Structure s: TheIsleOfLaeso.structures){
+                s.gatherResources();
+            }
             TheIsleOfLaeso.g.refreshBoard();
 
             TheIsleOfLaeso.g.checkForWin();
@@ -2228,10 +2431,32 @@ class EndTurn implements ActionListener {
         } else {
             TheIsleOfLaeso.playerTurn = 1;
         }
+
+        if (TheIsleOfLaeso.isDead(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1])) {
+            if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
+                TheIsleOfLaeso.playerTurn++;
+            } else {
+                TheIsleOfLaeso.playerTurn = 1;
+            }
+        }
+
+        if (TheIsleOfLaeso.playerTurn == 1) {
+            try {
+                if (IOSettings.findNaturalDis().equals("naturalDistrue")) {
+                    System.out.println(EnhancedNaturalEventGenerator.generateGlobalEvent(TheIsleOfLaeso.players));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
         TheIsleOfLaeso.g.diceRolled = false;
         TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
                 + "'s turn. Roll the dice!";
         TheIsleOfLaeso.i.resourceGeneration();
+        for(Structure s: TheIsleOfLaeso.structures){
+            s.gatherResources();
+        }
         TheIsleOfLaeso.g.refreshBoard();
 
         TheIsleOfLaeso.g.checkForWin();
@@ -2268,29 +2493,59 @@ class Attack implements ActionListener {
             int currentPlayerX = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getXPos();
             int currentPlayerY = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getYPos();
 
-            if(Player.checkForPlayer(currentPlayerX + 1, currentPlayerY + 1)){
-                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX + 1, currentPlayerY + 1));
-                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX + 1, currentPlayerY + 1));
-            } else if(Player.checkForPlayer(currentPlayerX + 1, currentPlayerY - 1)){
-                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX + 1, currentPlayerY - 1));
-                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX + 1, currentPlayerY - 1));
-            } else if(Player.checkForPlayer(currentPlayerX - 1, currentPlayerY + 1)){
-                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX - 1, currentPlayerY + 1));
-                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX - 1, currentPlayerY + 1));
-            } else if(Player.checkForPlayer(currentPlayerX - 1, currentPlayerY - 1)){
-                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1], Player.getPlayerAt(currentPlayerX - 1, currentPlayerY - 1));
-                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked " + Player.getPlayerAt(currentPlayerX - 1, currentPlayerY - 1));
+            if (Player.checkForPlayer(currentPlayerX + 1, currentPlayerY + 1)) {
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1],
+                        Player.getPlayerAt(currentPlayerX + 1, currentPlayerY + 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked "
+                        + Player.getPlayerAt(currentPlayerX + 1, currentPlayerY + 1));
+            } else if (Player.checkForPlayer(currentPlayerX + 1, currentPlayerY - 1)) {
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1],
+                        Player.getPlayerAt(currentPlayerX + 1, currentPlayerY - 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked "
+                        + Player.getPlayerAt(currentPlayerX + 1, currentPlayerY - 1));
+            } else if (Player.checkForPlayer(currentPlayerX - 1, currentPlayerY + 1)) {
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1],
+                        Player.getPlayerAt(currentPlayerX - 1, currentPlayerY + 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked "
+                        + Player.getPlayerAt(currentPlayerX - 1, currentPlayerY + 1));
+            } else if (Player.checkForPlayer(currentPlayerX - 1, currentPlayerY - 1)) {
+                Player.attacking(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1],
+                        Player.getPlayerAt(currentPlayerX - 1, currentPlayerY - 1));
+                System.out.println(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName() + " attacked "
+                        + Player.getPlayerAt(currentPlayerX - 1, currentPlayerY - 1));
             }
-           
+
             if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
                 TheIsleOfLaeso.playerTurn++;
             } else {
                 TheIsleOfLaeso.playerTurn = 1;
             }
+
+            if (TheIsleOfLaeso.isDead(TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1])) {
+                if (TheIsleOfLaeso.playerTurn < TheIsleOfLaeso.numOfPlayer) {
+                    TheIsleOfLaeso.playerTurn++;
+                } else {
+                    TheIsleOfLaeso.playerTurn = 1;
+                }
+            }
+
+            if (TheIsleOfLaeso.playerTurn == 1) {
+                try {
+                    if (IOSettings.findNaturalDis().equals("naturalDistrue")) {
+                        System.out.println(EnhancedNaturalEventGenerator.generateGlobalEvent(TheIsleOfLaeso.players));
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
             TheIsleOfLaeso.g.diceRolled = false;
             TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
                     + "'s turn. Roll the dice!";
             TheIsleOfLaeso.i.resourceGeneration();
+            for(Structure s: TheIsleOfLaeso.structures){
+                s.gatherResources();
+            }
             TheIsleOfLaeso.g.refreshBoard();
 
             TheIsleOfLaeso.g.checkForWin();
