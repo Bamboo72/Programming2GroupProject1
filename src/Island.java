@@ -27,11 +27,14 @@ public class Island {
   /*12*/   {"o ","o ","o ","o ","r ","o ","r ","o ","r ","o ","o ","o ","r ","o ","o ","o ","o ","o ","o ","o ","r ","o ","r ","o ","o ","o ","o ","o ","o ","o ","o "}
 }; /* o = ocean, r = resource, l = land, v = village, m = mountain, c = crags, f = forest, p = plains, w = waste  */
 
+  /**
+   * Constructor for an Island object.
+   */
   public Island() {
     try {
-      if (IOSettings.findSpawnRate().equals("SpawnRateLow")) {
+      if (IOSettings.findSpawnRate().equals("low")) {
         resourceSpawnRate = 0.05;
-      } else if (IOSettings.findSpawnRate().equals("SpawnRateHigh")) {
+      } else if (IOSettings.findSpawnRate().equals("high")) {
         resourceSpawnRate = 0.2;
       } else {
         resourceSpawnRate = 0.1;
@@ -40,6 +43,9 @@ public class Island {
     catch (FileNotFoundException e){}
   }
 
+  /**
+   * This mutator method removes anything in the board except for the original terrain types.
+   */
     public void reset() {
       for (int i = 0; i < board.length; i++) {
         for (int j = 0; j < board[i].length; j++) {
@@ -50,7 +56,6 @@ public class Island {
 
     /**
      * Returns the board representing the island
-     *
      * @return the game board
      */
     public String[][] getBoard() {
@@ -87,22 +92,6 @@ public class Island {
     public boolean contains(String e, int x, int y) {
       if(board[y][x].contains(e)) return true;
       else return false;
-    }
-
-    public void build(char type, int x, int y) {
-      switch(type) {
-        case 's':
-          add("storehouse ", x, y);
-        case 'v':
-          add("village ", x, y);
-        case 'f':
-          add("fort ", x, y);
-        case 'p':
-          add("port ", x, y);
-        case 'b':
-          add("boat ", x, y);
-        default: break;
-      }
     }
 
     /**
@@ -228,26 +217,4 @@ public class Island {
         }
       }
     }
-
-    // // main method for testing
-    // public static void main(String[] args) {
-    //   Island i = new Island();
-    //   i.resourceGeneration();
-    //   i.resourceGeneration();
-    //   i.resourceGeneration();
-    //   for(String[] s : i.getBoard()){
-    //     for(String ss: s){
-    //       System.out.print(ss + " ");
-    //     }
-    //     System.out.println("");
-    //   }
-    //   i.reset();
-    //   for(String[] s : i.getBoard()){
-    //     for(String ss: s){
-    //       System.out.print(ss + " ");
-    //     }
-    //     System.out.println("");
-    //   }
-    // }
-
   }
