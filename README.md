@@ -32,15 +32,15 @@ There are multiple ways to win. You could escape the island, collect enough magi
 Download the zip file [here](https://github.com/Bamboo72/Programming2GroupProject1/raw/main/src/TheIsleOfLaeso.java). Extract the contents, and run the jar file.
 
 ## Year 2 Concepts: 
--GUI
--Enhanced For Loop
--Overloading
--Overriding
--Multidimensional Arrays
--I/O and Exception Handling
--Collections
--Inheritance
--Ternary Statements
+- GUI
+- Enhanced For Loop
+- Overloading
+- Overriding
+- Multidimensional Arrays
+- I/O and Exception Handling
+- Collections
+- Inheritance
+- Ternary Statements
 
 ## Documentation: 
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
