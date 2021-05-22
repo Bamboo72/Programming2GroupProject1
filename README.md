@@ -16,6 +16,17 @@ All graphics were created in Adobe Illustrator by Jacob Schwartz, and are displa
 - Jacob Schwartz: Graphics, Project Management, and GUI Programming 
 - Brandon Winters: Natural Events and Event Generation
 
+## Gameplay Instructions:
+
+After selecting the number of players and creating characters for each player, the game begins!  
+
+In order, each player will take their turn:  
+1. Roll the die using the die button.  
+2. Move and collect resources by clicking on desired locations and resources. (Careful! There's no takebacks!)  
+3. Choose to either build, attack, or end your turn by clicking the buttons at the bottom of the screen. Note that building or attacking will end your turn.  
+
+There are multiple ways to win. You could escape the island, collect enough magic to ascend, or be the last player alive on the island. Keep each win condition in mind as you play!  
+
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
 ![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
 
