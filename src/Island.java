@@ -5,10 +5,11 @@
  * @version 1.0
  * @since 2021-3-6
  */
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Island {
-    public double resourceSpawnRate = .1;
+    public double resourceSpawnRate = 0.1;
     String[][] board = {
   /*         0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 */
   /*0*/    {"o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","r ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o ","o "},
@@ -25,6 +26,19 @@ public class Island {
   /*11*/   {"o ","o ","o ","r ","f ","r ","l ","r ","f ","r ","o ","r ","p ","r ","o ","r ","o ","r ","o ","r ","f ","r ","f ","r ","o ","r ","o ","r ","o ","o ","o "},
   /*12*/   {"o ","o ","o ","o ","r ","o ","r ","o ","r ","o ","o ","o ","r ","o ","o ","o ","o ","o ","o ","o ","r ","o ","r ","o ","o ","o ","o ","o ","o ","o ","o "}
 }; /* o = ocean, r = resource, l = land, v = village, m = mountain, c = crags, f = forest, p = plains, w = waste  */
+
+  public Island() {
+    try {
+      if (IOSettings.findSpawnRate().equals("low")) {
+        resourceSpawnRate = 0.05;
+      } else if (IOSettings.findSpawnRate().equals("high")) {
+        resourceSpawnRate = 0.2;
+      } else {
+        resourceSpawnRate = 0.1;
+      }
+    }
+    catch (FileNotFoundException e){}
+  }
 
     public void reset() {
       for (int i = 0; i < board.length; i++) {
