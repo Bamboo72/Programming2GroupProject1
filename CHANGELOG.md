@@ -248,4 +248,4 @@ Updated Structure classes 2021-5-21 - Bamboo72, andrewblodgett, andrewblodgett
 
 Updated entry point (TheIsleOfLaeso) and Graphics classes 2021-5-21 - Bamboo72, HoldMyTyr, andrewblodgett, andrewblodgett
 
-Created Jar file - Bamboo72
+Created and tested Jar file - Bamboo72, HoldMyTyr, andrewblodgett, andrewblodgett
