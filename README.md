@@ -29,7 +29,7 @@ There are multiple ways to win. You could escape the island, collect enough magi
 
 ## Download Instructions:
 
-Download the zip file [here](https://github.com/Bamboo72/Programming2GroupProject1/raw/main/src/TheIsleOfLaeso.jar). Extract the contents, and run the jar file.
+Download the zip file [here](https://github.com/Bamboo72/Programming2GroupProject1/raw/main/src/TheIsleOfLaeso.java). Extract the contents, and run the jar file.
 
 ## Documentation: 
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
