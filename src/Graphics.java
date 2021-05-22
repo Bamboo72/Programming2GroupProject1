@@ -12,6 +12,7 @@ TO DO:
     - Do Later
         -  We could potentially randomize starting positions (keep the same starting places, but randomize assignment to players)
         - Maybe fix the offset issue by assigning each spot on the map with an x and y? Each thing would still have its own offset based on its image, but the locations will all be mapped..
+        - The kill condition winner
     
 */
 
@@ -1799,13 +1800,6 @@ class GoToBoard implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
 
-        TheIsleOfLaeso.players[0].addResource("wood ", 40);
-        TheIsleOfLaeso.players[0].addResource("people ", 40);
-        TheIsleOfLaeso.players[0].addResource("food ", 40);
-        TheIsleOfLaeso.players[0].addResource("stone ", 40);
-        TheIsleOfLaeso.players[0].addResource("ore ", 40);
-        TheIsleOfLaeso.players[0].addResource("magic ", 0);
-
         int x = 0;
         int y = 0;
 
@@ -2029,11 +2023,22 @@ class ResetBoard implements ActionListener {
     public void actionPerformed(ActionEvent event) {
 
         TheIsleOfLaeso.structures.clear();
+        TheIsleOfLaeso.i.reset();
         for (int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++) {
             TheIsleOfLaeso.players[i].clearInventory();
             TheIsleOfLaeso.players[i].setXPos(TheIsleOfLaeso.g.getStartingX(i));
             TheIsleOfLaeso.players[i].setYPos(TheIsleOfLaeso.g.getStartingY(i));
         }
+
+        TheIsleOfLaeso.playerTurn = 1;
+        TheIsleOfLaeso.g.boardText = TheIsleOfLaeso.players[TheIsleOfLaeso.playerTurn - 1].getName()
+                + "'s turn. Roll the dice!";
+
+        TheIsleOfLaeso.g.hideActivePanel();
+        TheIsleOfLaeso.g.sceneDisplay(5);
+        TheIsleOfLaeso.i.resourceGeneration();
+        TheIsleOfLaeso.g.refresh();
+        TheIsleOfLaeso.g.refreshBoard();
 
     }
 }
