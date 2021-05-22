@@ -39,7 +39,8 @@ public class TheIsleOfLaeso{
  
   static int numAlive = 2;
 
-  static int winType = 0; 
+  static int winType = 0;
+  static char boat = 'b';
 
   //an arry of player objects to access ez
   //static ArrayList<Player> players = new ArrayList<Player>();
