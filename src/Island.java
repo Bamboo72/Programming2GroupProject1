@@ -29,9 +29,9 @@ public class Island {
 
   public Island() {
     try {
-      if (IOSettings.findSpawnRate().equals("low")) {
+      if (IOSettings.findSpawnRate().equals("SpawnRateLow")) {
         resourceSpawnRate = 0.05;
-      } else if (IOSettings.findSpawnRate().equals("high")) {
+      } else if (IOSettings.findSpawnRate().equals("SpawnRateHigh")) {
         resourceSpawnRate = 0.2;
       } else {
         resourceSpawnRate = 0.1;
