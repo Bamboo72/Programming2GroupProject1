@@ -280,6 +280,7 @@ public class Player {
   * to check if a plater is on a passed in type of structure 
   * @param Player p
   * @param char type
+  * @returns boolean
   */
   public static boolean checkForPlayer(int x, int y){ // Checks if there is a player at the x and y
     for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
@@ -292,6 +293,14 @@ public class Player {
     return false;
   }
 
+	
+	
+  /**
+  * to check if a plater is on a passed in type of structure 
+  * @param Player p
+  * @param char type
+  * @returns Player
+  */
   public static Player getPlayerAt(int x, int y){ // returns the player at the x and y
     for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
       if(TheIsleOfLaeso.players[i].getXPos() == x){
