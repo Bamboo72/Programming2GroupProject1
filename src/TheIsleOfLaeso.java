@@ -58,7 +58,7 @@ public class TheIsleOfLaeso{
   * @pram int numOfP
   * @retunrs int winType
   */
-  public static int checkWin(int numOfP){
+  public static int checkWin(){
     int whichPlayerToCheck; 
     if(playerTurn == 1){ 
       whichPlayerToCheck = numOfPlayer - 1;
@@ -69,21 +69,21 @@ public class TheIsleOfLaeso{
     System.out.println("The player turn is now " + playerTurn + " so it's " + players[playerTurn - 1].getName() + "'s turn, but we are doing a win check for " + players[whichPlayerToCheck].getName() );
     System.out.print("Win Check: ");
     //the kill win
-    numAlive = numOfP;
+    numAlive = numOfPlayer;
     if(isDead(a) == true){
       numAlive--;
     }
     if(isDead(b) == true){
       numAlive--;
     }
-    if(numOfP == 4) {
+    if(numOfPlayer == 4) {
       if(isDead(c) == true){
         numAlive--;
       }
       if(isDead(d) == true){
         numAlive--;
       }
-    } else if(numOfP == 3){
+    } else if(numOfPlayer == 3){
       if(isDead(c) == true){
         numAlive--;
       }
