@@ -1392,23 +1392,31 @@ public class Graphics extends JFrame {
         for (Structure st : TheIsleOfLaeso.structures) {
 
             if (st.x > 25) {
-                buildingXOffset = -20;
+                buildingXOffset = -18;
+            } else if (st.x > 22) {
+                buildingXOffset = -16;
             } else if (st.x > 20) {
-                buildingXOffset = -35;
+                buildingXOffset = -12;
+            } else if (st.x > 17) {
+                buildingXOffset = -8;
             } else if (st.x > 15) {
-                buildingXOffset = -20;
+                buildingXOffset = -5;
+            } else if (st.x > 12) {
+                buildingXOffset = -2;
             } else if (st.x > 10) {
-                buildingXOffset = -10;
+                buildingXOffset = 0;
             } else if (st.x > 5) {
-                buildingXOffset = -15;
+                buildingXOffset = 5;
             } else if (st.x > 0) {
-                buildingXOffset = -20;
+                buildingXOffset = 10;
             }
 
-            if (st.y > 8) {
-                buildingYOffset = 15;
+            if (st.y > 10) {
+                buildingYOffset = 10;
+            } else if (st.y > 8) {
+                buildingYOffset = 6;
             } else if (st.y > 4) {
-                buildingYOffset = 0;
+                buildingYOffset = -2;
             } else if (st.y > 0) {
                 buildingYOffset = -12;
             }
