@@ -244,4 +244,6 @@ Updated README.md 2021-5-21 - HoldMyTyr
 
 Updated MousePressLissener classes - Bamboo72
 
-Updated entry point (TheIsleOfLaeso) and Structure classes 2021-5-21 - Bamboo72, HoldMyTyr, andrewblodgett, andrewblodgett
+Updated Structure classes 2021-5-21 - Bamboo72, andrewblodgett, andrewblodgett
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - Bamboo72, HoldMyTyr, andrewblodgett, andrewblodgett
