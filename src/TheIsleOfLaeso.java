@@ -92,52 +92,30 @@ public class TheIsleOfLaeso {
       System.out.println("MAGIC WIN!!");
     }
 
-    // the boat win
-    // if(players[whichPlayerToCheck].getResource(people) > 5 &&
-    // players[whichPlayerToCheck].getResource(food) > 11){ //checks if they have
-    // enought recorces
-    // if(checkForPlayerAtStructure(players[playerTurn - 1], boat) != null){
-    // winType = 3;
-    // System.out.println("BOAT WIN!!");
-    // }
-    // boolean boatNearby = false;
-    // for(Structure s: structures){
-    // if(s.getType() == 'p' && s.owner == whichPlayerToCheck && s.getX() ==
-    // players[whichPlayerToCheck].getXPos() && s.getY() ==
-    // players[whichPlayerToCheck].getYPos()){
-    // int currentPlayerX = TheIsleOfLaeso.players[whichPlayerToCheck].getXPos();
-    // int currentPlayerY = TheIsleOfLaeso.players[whichPlayerToCheck].getYPos();
-    // if (s.getY() == currentPlayerY + 1 && s.getX() == currentPlayerX + 1) {
-    // boatNearby = true;
-    // } else if (s.getY() == currentPlayerY + 1 && s.getX() == currentPlayerX - 1)
-    // {
-    // boatNearby = true;
-    // } else if (s.getY() == currentPlayerY - 1 && s.getX() == currentPlayerX + 1)
-    // {
-    // boatNearby = true;
-    // } else if (s.getY() == currentPlayerY - 1 && s.getX() == currentPlayerX - 1)
-    // {
-    // boatNearby = true;
-    // }
-    // }
-    // }
+    System.out.println("HEY");
 
     if (players[whichPlayerToCheck].getResource(people) > 5 && players[whichPlayerToCheck].getResource(food) > 11) {
       boolean boatNearby = false;
-      Structure thePort = Player.checkForPlayerAtStructure(TheIsleOfLaeso.players[whichPlayerToCheck]);
+      //Structure thePort = Player.checkForPlayerAtStructure(TheIsleOfLaeso.players[whichPlayerToCheck]);
       if (Player.checkForPlayerAtStructure(TheIsleOfLaeso.players[whichPlayerToCheck], 'p') != null) {
         int currentPlayerX = TheIsleOfLaeso.players[whichPlayerToCheck].getXPos();
         int currentPlayerY = TheIsleOfLaeso.players[whichPlayerToCheck].getYPos();
-        if (thePort.getY() == currentPlayerY + 1 && thePort.getX() == currentPlayerX + 1) {
-          boatNearby = true;
-        } else if (thePort.getY() == currentPlayerY + 1 && thePort.getX() == currentPlayerX - 1) {
-          boatNearby = true;
-        } else if (thePort.getY() == currentPlayerY - 1 && thePort.getX() == currentPlayerX + 1) {
-          boatNearby = true;
-        } else if (thePort.getY() == currentPlayerY - 1 && thePort.getX() == currentPlayerX - 1) {
-          boatNearby = true;
+        for(Structure s: structures){
+          if(s.getType() == 'b'){
+            if (s.y == currentPlayerY + 1 && s.x == currentPlayerX + 1) {
+              boatNearby = true;
+            } else if (s.y == currentPlayerY + 1 && s.x == currentPlayerX - 1) {
+              boatNearby = true;
+            } else if (s.y == currentPlayerY - 1 && s.x == currentPlayerX + 1) {
+              boatNearby = true;
+            } else if (s.y == currentPlayerY - 1 && s.x == currentPlayerX - 1) {
+              boatNearby = true;
+            }
+          }
         }
+       
       }
+      System.out.println("BoatNearby? " + boatNearby);
       if (boatNearby) {
         winType = 3;
         System.out.println("BOAT WIN!!");
