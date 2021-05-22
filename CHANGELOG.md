@@ -175,3 +175,43 @@ Updated Player class 2021-5-21 - HoldMyTyr
 Updated Player class 2021-5-21 - Bamboo72
 
 Updated MousePressLissener class 2021-5-21 - Bamboo72
+
+Updated Graphics and Player classes 2021-5-21 - Bamboo72
+
+Update NaturalEventGenerator classes 2021-5-21 - bran214
+
+Updated Player class 2021-5-21 - HoldMyTyr
+
+Updated Graphics 2021-5-20 - andrewblodgett
+
+Updated Player class 2021-5-21 - HoldMyTyr
+
+Update NaturalEventGenerator classes 2021-5-21 - bran214
+
+Updated Player class 2021-5-21 - HoldMyTyr
+
+Updated IOSettings class 2021-5-21 - HoldMyTyr
+
+Updated Player class 2021-5-21 - HoldMyTyr
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - Bamboo72
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - HoldMyTyr
+
+Update NaturalEventGenerator classes 2021-5-21 - bran214
+
+Updated Island classes 2021-5-21 - andrewblodgett
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - Bamboo72
+
+Updated Island classes 2021-5-21 - Bamboo72
+
+Update NaturalEventGenerator classes 2021-5-21 - bran214
+
+Updated Graphics 2021-5-20 - andrewblodgett
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - HoldMyTyr
+
+Update NaturalEventGenerator classes 2021-5-21 - bran214
+
+Updated entry point (TheIsleOfLaeso) class 2021-5-21 - HoldMyTyr
