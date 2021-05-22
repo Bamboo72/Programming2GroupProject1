@@ -107,10 +107,30 @@ public class TheIsleOfLaeso{
 
     //the boat win
     if(players[whichPlayerToCheck].getResource(people) > 5 && players[whichPlayerToCheck].getResource(food) > 11){ //checks if they have enought recorces
-        if(checkForPlayerAtStructure(players[playerTurn - 1], boat) != null){
+        //if(checkForPlayerAtStructure(players[playerTurn - 1], boat) != null){
+         // winType = 3;
+          //System.out.println("BOAT WIN!!");
+        //}
+	boolean boatNearby = false;
+        for(Structure s: structures){
+          if(s.getType() == 'p' && s.owner == whichPlayerToCheck && s.getX() == players[whichPlayerToCheck].getXPos() && s.getY() == players[whichPlayerToCheck].getYPos()){
+            int currentPlayerX = TheIsleOfLaeso.players[whichPlayerToCheck].getXPos();
+            int currentPlayerY = TheIsleOfLaeso.players[whichPlayerToCheck].getYPos();
+            if (s.getY() == currentPlayerY + 1 &&  s.getX() == currentPlayerX + 1) {
+                boatNearby = true;
+            } else if (s.getY() == currentPlayerY + 1 &&  s.getX() == currentPlayerX - 1) {
+              boatNearby = true;
+            } else if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX + 1) {
+              boatNearby = true;
+            } else if (s.getY() == currentPlayerY - 1 &&  s.getX() == currentPlayerX - 1) {
+              boatNearby = true;
+            }
+          }
+        }
+        if(boatNearby){
           winType = 3;
           System.out.println("BOAT WIN!!");
-        }
+        }     
     }
 
     if(winType == 0){
