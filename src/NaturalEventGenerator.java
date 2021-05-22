@@ -133,8 +133,8 @@ public class NaturalEventGenerator {
                 System.out.println("Warning: The player may have moved off the board.");
                 break;
             case FIRE:
-                lostWood = -(int)(Math.random() * 3) - 1;
-                impactedPlayer.addResource("wood ", lostWood);
+                lostWood = (int)(Math.random() * 3) - 1;
+                impactedPlayer.addResource("wood ", -lostWood);
                 break;
             case LIGHTNING:
                 random = Math.random();
@@ -151,8 +151,8 @@ public class NaturalEventGenerator {
                 impactedPlayer.addResource("people ", -1);
                 break;
             case BUGS:
-                int lostFood = -(int)(Math.random() * 2) - 1;
-                impactedPlayer.addResource("food ", lostFood);
+                int lostFood = (int)(Math.random() * 2) - 1;
+                impactedPlayer.addResource("food ", -lostFood);
                 break;
             case PLAGUE:
                 random = Math.random();
@@ -165,8 +165,8 @@ public class NaturalEventGenerator {
                 impactedPlayer.addResource("people ", -1);
                 break;
             case EXPLOSION:
-                int lostStone = -(int)(Math.random() * 3) - 1;
-                impactedPlayer.addResource("stone ", lostStone);
+                int lostStone = (int)(Math.random() * 3) - 1;
+                impactedPlayer.addResource("stone ", -lostStone);
                 break;
             case ABDUCTION:
                 int trade = (int)(Math.random() * 2) + 1;
@@ -192,9 +192,9 @@ public class NaturalEventGenerator {
                 }
                 break;
             case FAMINE:
-                int lostFoodAndPeople = -(int)(Math.random() * 2) - 1;
-                impactedPlayer.addResource("food ", lostFoodAndPeople);
-                impactedPlayer.addResource("people ", lostFoodAndPeople);
+                int lostFoodAndPeople = (int)(Math.random() * 2) - 1;
+                impactedPlayer.addResource("food ", -lostFoodAndPeople);
+                impactedPlayer.addResource("people ", -lostFoodAndPeople);
                 break;
             case RAIN:
                 food = (int)(Math.random() * 2) + 2;
