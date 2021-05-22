@@ -111,9 +111,9 @@ public class NaturalEventGenerator {
      * @return the name of the event which happened, with an exclamation point at the end. Example: "Tsunami!"
      */
     public static String generateEvent(int eventID, Player impactedPlayer) {
-        double random;
-        int lostWood;
-        int food;
+        double random = 0.0;
+        int lostWood = 0;
+        int food = 0;
         if (!isValidEventID(eventID))
             return generateEvent(generateRandomEventID(), impactedPlayer);
         switch (eventID) {
