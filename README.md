@@ -27,10 +27,7 @@ In order, each player will take their turn:
 
 There are multiple ways to win. You could escape the island, collect enough magic to ascend, or be the last player alive on the island. Keep each win condition in mind as you play!  
 
-
-
+## Documentation: 
 ![ClassDiagram](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/GroupProjectClassDiagram.png)
 ![IslandSurvivalIdea](https://github.com/Bamboo72/Programming2GroupProject1/blob/main/ConceptArt/Isle%20of%20Laeso.jpg)
 
-## Documentation: 
-*
