@@ -135,10 +135,13 @@ public class Player {
 	
 
   /**
-  * a method that dammages a player by 1 health point
+  * makes two platers fight and picks a winner based on random rolls
+  * a random resorce is rolled at a random amount, buildings add to rolls but can be dammaged
+  * only defender can take dammage if the attaker rolls 3 higher than them  
+  * @param Plater playerOne, playerTwo
   */
-  public void attacking(Player playerOne, Player playerTwo) {
-    roll1 = TheIsleOfLaeso.dice.roll() + 100;
+  public static void attacking(Player playerOne, Player playerTwo) {
+    roll1 = TheIsleOfLaeso.dice.roll();
     roll2 = TheIsleOfLaeso.dice.roll();
     rad1 = TheIsleOfLaeso.dice.roll() - 1;
     rad2 = TheIsleOfLaeso.dice.roll();
@@ -214,6 +217,13 @@ public class Player {
   }
   
   
+
+  /**
+  * to check if a player is on a type of structure that is passed in 
+  * @param Player p
+  * @param char type
+  * @returns Structure s
+  */
   public static Structure checkForPlayerAtStructure(Player p, char type){ // Checks if there is a specific building type at the player location
     for(Structure s: TheIsleOfLaeso.structures){
       if(p.getXPos() == s.getX()){
@@ -226,7 +236,14 @@ public class Player {
     }
     return null;
   }
-
+	
+	
+	
+  /**
+  * to check if a player is on a structure 
+  * @param Player p
+  * @returns Structure s
+  */
   public static Structure checkForPlayerAtStructure(Player p){ // Checks if there is a specific building type at the player location
     for(Structure s: TheIsleOfLaeso.structures){
       if(p.getXPos() == s.getX()){
@@ -238,84 +255,103 @@ public class Player {
     return null;
   }
 
- public static Structure checkForStructure(int x, int y){ // Checks if there is a structure at the x and y
-   for(Structure s: TheIsleOfLaeso.structures){
-     if(s.getX() == x){
-       if(s.getY() == y){
-         return s;
-       }
-     }
-   }
-   return null;
- }
+	
+	
+  /**
+  * to check if a plater is on a passed in type of structure 
+  * @param Player p
+  * @param char type
+  * @returns Structure s
+  */
+  public static Structure checkForStructure(int x, int y){ // Checks if there is a structure at the x and y
+    for(Structure s: TheIsleOfLaeso.structures){
+      if(s.getX() == x){
+        if(s.getY() == y){
+          return s;
+        }
+      }
+    }
+    return null;
+  }
 
- public static boolean checkForPlayer(int x, int y){ // Checks if there is a player at the x and y
-   for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
-     if(TheIsleOfLaeso.players[i].getXPos() == x){
-       if(TheIsleOfLaeso.players[i].getYPos() == y){
-         return true;
-       }
-     }
-   }
-   return false;
- }
+	
+	
+  /**
+  * to check if a plater is on a passed in type of structure 
+  * @param Player p
+  * @param char type
+  */
+  public static boolean checkForPlayer(int x, int y){ // Checks if there is a player at the x and y
+    for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
+      if(TheIsleOfLaeso.players[i].getXPos() == x){
+        if(TheIsleOfLaeso.players[i].getYPos() == y){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
- public static Player getPlayerAt(int x, int y){ // returns the player at the x and y
-   for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
-     if(TheIsleOfLaeso.players[i].getXPos() == x){
-       if(TheIsleOfLaeso.players[i].getYPos() == y){
-         return TheIsleOfLaeso.players[i];
-       }
-     }
-   }
-   return null;
- }
+  public static Player getPlayerAt(int x, int y){ // returns the player at the x and y
+    for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
+      if(TheIsleOfLaeso.players[i].getXPos() == x){
+        if(TheIsleOfLaeso.players[i].getYPos() == y){
+          return TheIsleOfLaeso.players[i];
+        }
+      }
+    }
+    return null;
+  }
 
- /**
- * a function to control movment 
- * @param String direction
- */
- public void move(String direction){
-   direction = direction.toLowerCase();
-   switch(direction){
-     case "lu":
-       x -= 1;
-       y += 1;
-       break;
-     case "ld":
-       x -= 1;
-       y -= 1;
-       break;
-     case "ru":
-       x += 1;
-       y += 1; 
-       break;
-     case "rd":
-       x += 1;
-       y -= 1; 
-       break;
-     default:
-       System.out.println("YOU BIG DUMB");
-   }
- }
+	
+	
+  /**
+  * a function to control movment 
+  * @param String direction
+  */
+  public void move(String direction){
+    direction = direction.toLowerCase();
+    switch(direction){
+      case "lu":
+        x -= 1;
+        y += 1;
+        break;
+      case "ld":
+        x -= 1;
+        y -= 1;
+        break;
+      case "ru":
+        x += 1;
+        y += 1; 
+        break;
+      case "rd":
+        x += 1;
+        y -= 1; 
+        break;
+      default:
+        System.out.println("YOU BIG DUMB");
+    }
+  }
 
 
- /**
- * a functionn to clear a players inventory
- */
- public void clearInventory() {
-   for(int i = 0; i < 6; i++) {
-     //first fill with empty int
-     inventory[i] = 0;
-   }  
- }
-
- /**
- * a functionn to get a resource in players inventory
- * @param String resource 
- * @returns int amount
- */
- public int getResource(String resource) {
+  /**
+  * a functionn to clear a players inventory
+  */
+  public void clearInventory() {
+    for(int i = 0; i < 6; i++) {
+      //first fill with empty int
+      inventory[i] = 0;
+    }  
+  }
+ 
+	
+	
+  /**
+  * a functionn to get a resource in players inventory
+  * @param String resource 
+  * @returns int amount
+  */
+  public int getResource(String resource) {
    resource = resource.toLowerCase();
    int amount = 0;
    switch(resource){
@@ -344,64 +380,68 @@ public class Player {
    return amount;
  }
 
+	
+	
  /**
  * a functionn to add to a recorce to a players inventory
  * @param String resource 
  */
- public void addResource(String resource) {
-   resource = resource.toLowerCase();
-   switch(resource){
-     case "wood ":
-       inventory[0] += 1;
-       break;
-     case "people ":
-       inventory[1] += 1;
-       break;
-     case "food ":
-       inventory[2] += 1;  
-       break;
-     case "stone ":
-       inventory[3] += 1;  
-       break;
-     case "ore ":
-       inventory[4] += 1; 
-       break;
-     case "magic ":
-       inventory[5] += 1; 
-       break;
-     default:
-       System.out.println("YOU BIG DUMB");
-   }
- }
+  public void addResource(String resource) {
+    resource = resource.toLowerCase();
+    switch(resource){
+      case "wood ":
+        inventory[0] += 1;
+        break;
+      case "people ":
+        inventory[1] += 1;
+        break;
+      case "food ":
+        inventory[2] += 1;  
+        break;
+      case "stone ":
+        inventory[3] += 1;  
+        break;
+      case "ore ":
+        inventory[4] += 1; 
+        break;
+      case "magic ":
+        inventory[5] += 1; 
+        break;
+      default:
+        System.out.println("YOU BIG DUMB");
+    }
+  }
 
- /**
- * a functionn to add to a players inventory, can add more than one
- * @param String resource 
- * @param int amount
- */
- public void addResource(String resource, int amount) {
-   resource = resource.toLowerCase();
-   switch(resource){
-     case "wood ":
-       inventory[0] += amount;
-       break;
-     case "people ":
-       inventory[1] += amount;
-       break;
-     case "food ":
-       inventory[2] += amount;  
-       break;
-     case "stone ":
-       inventory[3] += amount;  
-       break;
-     case "ore ":
-       inventory[4] += amount; 
-       break;
-     case "magic ":
-       inventory[5] += amount; 
-       break;
-     default:
-       System.out.println("YOU BIG DUMB");
-   }
- }
+	
+	
+  /**
+  * a functionn to add to a players inventory, can add more than one
+  * @param String resource 
+  * @param int amount
+  */
+  public void addResource(String resource, int amount) {
+    resource = resource.toLowerCase();
+    switch(resource){
+      case "wood ":
+        inventory[0] += amount;
+        break;
+      case "people ":
+        inventory[1] += amount;
+        break;
+      case "food ":
+        inventory[2] += amount;  
+        break;
+      case "stone ":
+        inventory[3] += amount;  
+        break;
+      case "ore ":
+        inventory[4] += amount; 
+        break;
+      case "magic ":
+        inventory[5] += amount; 
+        break;
+      default:
+        System.out.println("YOU BIG DUMB");
+    }
+  }
 }
