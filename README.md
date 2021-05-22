@@ -29,7 +29,7 @@ There are multiple ways to win. You could escape the island, collect enough magi
 
 ## Download Instructions:
 
-Download the zip file [here](https://github.com/Bamboo72/Programming2GroupProject1/raw/main/Group1.zip). Extract the contents, and run the jar file.
+Download the zip file [here](https://github.com/Bamboo72/Programming2GroupProject1/raw/main/GroupProject1.zip). Extract the contents, and run the jar file.
 
 ## Year 2 Concepts: 
 - GUI
