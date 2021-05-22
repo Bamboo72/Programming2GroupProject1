@@ -55,6 +55,7 @@ public class TheIsleOfLaeso{
   
   /**
   * checks all the win cons, kill, boat, and magic
+  * @pram int numOfP
   * @retunrs int winType
   */
   public static int checkWin(int numOfP){
