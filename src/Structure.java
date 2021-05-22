@@ -139,4 +139,20 @@ public class Structure {
             }
         }
     }
+    
+    /**
+     * if a player is on a storehouse building, this method will let the player collect the resources
+     */
+    public void emptyStorehouse() {
+        if (type == 'r') {
+            if (Player.checkForPlayer(x, y)) {
+                Scanner in = new Scanner(resources);
+                in.useDelimiter(" ");
+                while(in.hasNext()) {
+                    Player.getPlayerAt(x, y).getResource(in.next());
+                }
+                in.close();
+            }
+        }
+    }
 }
