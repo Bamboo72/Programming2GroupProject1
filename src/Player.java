@@ -135,7 +135,7 @@ public class Player {
 	
 
   /**
-  * makes two platers fight and picks a winner based on random rolls
+  * makes two players fight and picks a winner based on random rolls
   * a random resorce is rolled at a random amount, buildings add to rolls but can be dammaged
   * only defender can take dammage if the attaker rolls 3 higher than them  
   * @param Plater playerOne, playerTwo
@@ -258,9 +258,8 @@ public class Player {
 	
 	
   /**
-  * to check if a plater is on a passed in type of structure 
-  * @param Player p
-  * @param char type
+  * to check a tile and see if it has a structure on it
+  * @param int x, y
   * @returns Structure s
   */
   public static Structure checkForStructure(int x, int y){ // Checks if there is a structure at the x and y
@@ -277,9 +276,8 @@ public class Player {
 	
 	
   /**
-  * to check if a plater is on a passed in type of structure 
-  * @param Player p
-  * @param char type
+  * to check a tile and see if it has a player on it
+  * @param int x, y
   * @returns boolean
   */
   public static boolean checkForPlayer(int x, int y){ // Checks if there is a player at the x and y
@@ -296,12 +294,11 @@ public class Player {
 	
 	
   /**
-  * to check if a plater is on a passed in type of structure 
-  * @param Player p
-  * @param char type
+  * returns back a player at pos passed in
+  * @param int x, y
   * @returns Player
   */
-  public static Player getPlayerAt(int x, int y){ // returns the player at the x and y
+  public static Player getPlayerAt(int x, int y){ 
     for(int i = 0; i < TheIsleOfLaeso.numOfPlayer; i++){
       if(TheIsleOfLaeso.players[i].getXPos() == x){
         if(TheIsleOfLaeso.players[i].getYPos() == y){
