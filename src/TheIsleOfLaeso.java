@@ -12,14 +12,17 @@ public class TheIsleOfLaeso{
   *@Since 2021-5-20
   */
 
+  //graphics, dice, settings, and island objects 
   static Graphics g = new Graphics();
   static Dice dice = new Dice(6);
   static IOSettings s = new IOSettings();
   static Island i = new Island();
 
+  //turn vars
   static int moveLeft;
   static int collectsLeft;
 
+  //to make new player objects that dont crash the game
   static int[] inventory = new int[6];
   static String name = "duhadway";
   static String hat = "Casual";
@@ -29,29 +32,36 @@ public class TheIsleOfLaeso{
   static String people = "people";
   static String food = "food";
  
+  //more turn vars
   static int numOfPlayer = 4;
 
   static int playerTurn = 1;
  
   static int numAlive = 2;
 
-  static int winType = 0; // Replacement for boolean isWon so that we can display the different win screens
+  static int winType = 0; 
 
+  //an arry of player objects to access ez
   //static ArrayList<Player> players = new ArrayList<Player>();
   static Player[] players = new Player[numOfPlayer];
   static ArrayList<Structure> structures = new ArrayList<Structure>();
 
+  //empty player objects
   static Player a;
   static Player b;
   static Player c;
   static Player d;
 
+  
+  /**
+  * checks all the win cons, kill, boat, and magic
+  * @retunrs int winType
+  */
   public static int checkWin(){
-
-    int whichPlayerToCheck; // Because the win check happens after the turn is incremented, we have to account for the turn going from the last player to the first player
-    if(playerTurn == 1){ // So the last player went and the turn returned to player 1
+    int whichPlayerToCheck; 
+    if(playerTurn == 1){ 
       whichPlayerToCheck = numOfPlayer - 1;
-    } else { // So the previous player went, and turn moved to the next player
+    } else {
       whichPlayerToCheck = playerTurn - 2;
     }
 
@@ -120,6 +130,11 @@ public class TheIsleOfLaeso{
     return winType;
   }
 
+  /**
+  * checks to see if a player is passed in is dead
+  * @pram Player player
+  * @retunrs boolean isAreDead
+  */
   public static boolean isDead(Player player){
     int h = player.getHealth();
     boolean isAreDead = false; 
@@ -129,7 +144,10 @@ public class TheIsleOfLaeso{
     return isAreDead; 
   }
 
-
+  /**
+  * fills the players with things
+  * @pram int numOfP
+  */
   public static void makeMakeingMeMakeMethods(int numOfP){
     a = new Player(6, 6, name, hat, clothes, color, inventory, 3);
     b = new Player(6, 6, name, hat, clothes, color, inventory, 3);
