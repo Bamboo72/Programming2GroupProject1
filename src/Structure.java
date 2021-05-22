@@ -7,9 +7,9 @@
 
 public class Structure {
 
-    static char type; // Building types: 'r' for resource gatherer, 'v' for village, 'f' for fortress, 'p' for port, and 'b' for boat.
+    char type; // Building types: 'r' for resource gatherer, 'v' for village, 'f' for fortress, 'p' for port, and 'b' for boat.
     int[] cost;
-    static int x, y;
+    int x, y;
     int health, owner;
     static String resources;
 
@@ -122,7 +122,7 @@ public class Structure {
         health += amount;
     }
 
-    public static void gatherResources() {
+    public void gatherResources() {
         if (type == 'r') {
             if (TheIsleOfLaeso.i.getBoard()[y+1][x].length() > 2) {
                 resources += TheIsleOfLaeso.i.getBoard()[y+1][x].substring(2);
